@@ -15,9 +15,19 @@ public class CadenaDeFiltros {
     private ArrayList<Filtro> filtros;
     
     
+    public void addFiltro(Filtro nuevoFiltro)
+    {
+        filtros.add(nuevoFiltro);
+    }
+    
     public double ejecutar(double revoluciones, EstadoMotor estadoMotor)
     {
-        return 0;
+        for(int i=0; i < filtros.size(); i++)
+        {
+            filtros.get(0).ejecutar(revoluciones,estadoMotor);
+        }
+        
+        Objetivo.ejecutar(revoluciones, estadoMotor);
     }
     
 }
