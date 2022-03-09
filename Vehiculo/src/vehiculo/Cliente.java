@@ -9,7 +9,7 @@ package vehiculo;
  *
  * @author ravolk
  */
-public class Vehiculo {
+public class Cliente {
 
     /**
      * @param args the command line arguments
