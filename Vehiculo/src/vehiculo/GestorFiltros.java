@@ -10,4 +10,17 @@ package vehiculo;
  */
 public class GestorFiltros {
     
+    private CadenaDeFiltros filtros;
+    
+    GestorFiltros(){
+        Filtro filtroCV = new CalcularVelocidad();
+        Filtro filtroRR = new RepercutirRozamiento();
+        
+        filtros.addFiltro(filtroCV);
+        filtros.addFiltro(filtroRR);
+    }
+    
+    public void peticionFiltros(double revoluciones, EstadoMotor estadoMotor){
+        filtros.ejecutar(revoluciones, estadoMotor);
+    }
 }
