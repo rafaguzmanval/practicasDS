@@ -4,16 +4,12 @@
  */
 package vehiculo;
 
+import javax.swing.JPanel;
+
 /**
  *
- * @author javiermg
+ * @author rafag
  */
-public class Objetivo {
+public class Salpicadero extends JPanel{
     
-    public static double ejecutar(double revoluciones, EstadoMotor estadoMotor)
-    {
-        
-        
-        return revoluciones;
-    }
 }

@@ -8,6 +8,7 @@ package vehiculo;
  *
  * @author javiermg
  */
+
 public class CalcularVelocidad implements Filtro{
     
     private double incrementoVelocidad = 0;
