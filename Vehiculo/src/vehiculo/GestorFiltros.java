@@ -11,6 +11,8 @@ package vehiculo;
 public class GestorFiltros {
     
     private CadenaDeFiltros filtros;
+    private double revoluciones = 0;
+    private EstadoMotor estadoM = EstadoMotor.APAGADO; 
     
     GestorFiltros(){
         Filtro filtroCV = new CalcularVelocidad();
@@ -20,7 +22,7 @@ public class GestorFiltros {
         filtros.addFiltro(filtroRR);
     }
     
-    public void peticionFiltros(double revoluciones, EstadoMotor estadoMotor){
-        filtros.ejecutar(revoluciones, estadoMotor);
+    public void peticionFiltros(){
+        revoluciones = filtros.ejecutar(revoluciones, estadoM);
     }
 }
