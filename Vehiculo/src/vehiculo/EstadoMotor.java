@@ -8,6 +8,6 @@ package vehiculo;
  *
  * @author rafag
  */
-public class EstadoMotor {
-    
+public enum EstadoMotor {
+    APAGADO,ACELERANDO,FRENANDO;
 }
