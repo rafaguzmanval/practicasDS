@@ -22,12 +22,14 @@ public class CadenaDeFiltros {
     
     public double ejecutar(double revoluciones, EstadoMotor estadoMotor)
     {
+        double nuevasRevoluciones = revoluciones;
+        
         for(int i=0; i < filtros.size(); i++)
         {
-            filtros.get(0).ejecutar(revoluciones,estadoMotor);
+            nuevasRevoluciones = filtros.get(0).ejecutar(nuevasRevoluciones,estadoMotor);
         }
         
-        Objetivo.ejecutar(revoluciones, estadoMotor);
+        return Objetivo.ejecutar(nuevasRevoluciones, estadoMotor);
     }
     
 }
