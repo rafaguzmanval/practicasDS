@@ -9,5 +9,32 @@ package vehiculo;
  * @author javiermg
  */
 public class CalcularVelocidad implements Filtro{
-     
+    
+    private double incrementoVelocidad = 0;
+    
+    public double ejecutar(double revoluciones, EstadoMotor estadoMotor){
+         
+         //Actualiza incrementoVelocidad dependiendo del estado del motor;
+         switch(estadoMotor){
+            case ACELERANDO:
+                    incrementoVelocidad=-100;
+                 break;
+                 
+            case FRENANDO:
+                    incrementoVelocidad=100;
+                 break;
+            case ENCENDIDO:
+                    incrementoVelocidad=0;
+                 break;
+            case APAGADO:
+                    incrementoVelocidad=0;
+                 break;
+         }
+         
+         //Calculo velocidad : v = 2πr × RP M × (60/1000)km/h
+          
+         double velocidad = 2*Math.PI*0.15 * revoluciones * 60/1000;
+         
+         return velocidad;
+     }
 }
