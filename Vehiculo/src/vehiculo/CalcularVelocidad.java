@@ -31,11 +31,9 @@ public class CalcularVelocidad implements Filtro{
                     incrementoVelocidad=0;
                  break;
          }
-         
-         //Calculo velocidad : v = 2πr × RPM × (60/1000)km/h
           
-         double velocidad = 2*Math.PI*0.15 * (revoluciones-incrementoVelocidad) * 60/1000;
+         double rev = revoluciones-incrementoVelocidad;
          
-         return velocidad;
+         return rev;
      }
 }
