@@ -10,8 +10,6 @@ import javax.swing.JPanel;
  *
  * @author rafag
  */
-public class Salpicadero extends JPanel{
-    
-    
+public class Velocimetro extends JPanel{
     
 }
