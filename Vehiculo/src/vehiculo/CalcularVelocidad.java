@@ -10,7 +10,7 @@ package vehiculo;
  */
 public class CalcularVelocidad implements Filtro{
     
-    private double incrementoVelocidad = 0;
+    private double incrementoRevoluciones = 0;
     
     @Override
     public double ejecutar(double revoluciones, EstadoMotor estadoMotor){
@@ -18,21 +18,21 @@ public class CalcularVelocidad implements Filtro{
          //Actualiza incrementoVelocidad dependiendo del estado del motor;
          switch(estadoMotor){
             case ACELERANDO:
-                    incrementoVelocidad=-100;
+                    incrementoRevoluciones=100;
                  break;
                  
             case FRENANDO:
-                    incrementoVelocidad=100;
+                    incrementoRevoluciones=-100;
                  break;
             case ENCENDIDO:
-                    incrementoVelocidad=0;
+                    incrementoRevoluciones=0;
                  break;
             case APAGADO:
-                    incrementoVelocidad=0;
+                    incrementoRevoluciones=0;
                  break;
          }
           
-         double rev = revoluciones-incrementoVelocidad;
+         double rev = revoluciones+incrementoRevoluciones;
          
          return rev;
      }
