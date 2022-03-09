@@ -4,10 +4,20 @@
  */
 package vehiculo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author javiermg
  */
 public class CadenaDeFiltros {
+    
+    private ArrayList<Filtro> filtros;
+    
+    
+    public double ejecutar(double revoluciones, EstadoMotor estadoMotor)
+    {
+        return 0;
+    }
     
 }
