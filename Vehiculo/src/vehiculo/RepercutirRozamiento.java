@@ -10,12 +10,11 @@ package vehiculo;
  */
 public class RepercutirRozamiento implements Filtro{
     
+    private final double rozamiento = 1;
     
-    
-    
+    @Override
     public double ejecutar(double revoluciones, EstadoMotor estadoMotor)
     {
-        
-        return 0;
+        return revoluciones - rozamiento;
     }
 }
