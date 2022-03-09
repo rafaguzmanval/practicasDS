@@ -9,5 +9,5 @@ package vehiculo;
  * @author javiermg
  */
 public class CalcularVelocidad implements Filtro{
-    
+     
 }
