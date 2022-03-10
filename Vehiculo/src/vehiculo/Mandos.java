@@ -23,29 +23,18 @@ import java.awt.event.WindowEvent;
 
 public class Mandos extends JPanel{
     
-    Salpicadero salpicadero;
     JLabel estadoDelmotor;
     JToggleButton botonEncender;
     JToggleButton botonAcelerar;
     JToggleButton botonFrenar;
-    JFrame f;
-    JPanel mandos;
     
-    public void InicializarVentana()
-    {
 
-       salpicadero = new Salpicadero();
-
-       InicializarJPanelMandos();
-       InicializarJFrame();
-    }
     
-    private void InicializarJPanelMandos()
+    Mandos()
     {
-       mandos = new JPanel();
-       mandos.setBounds(40,100,500,200);    
-       mandos.setBackground(Color.gray);  
-       mandos.setLayout(null);
+       this.setBounds(40,100,500,200);    
+       this.setBackground(Color.gray);  
+       this.setLayout(null);
        
        InicializarEtiquetaEstado();
        InicializarBotonEncender();
@@ -58,7 +47,7 @@ public class Mandos extends JPanel{
        estadoDelmotor = new JLabel("Apagado");
        estadoDelmotor.setBackground(Color.LIGHT_GRAY);
        estadoDelmotor.setBounds(220,50,150,30);
-       mandos.add(estadoDelmotor);       
+       this.add(estadoDelmotor);       
     }
     
     private void InicializarBotonEncender()
@@ -93,7 +82,7 @@ public class Mandos extends JPanel{
                
        }
        );
-       mandos.add(botonEncender);
+       this.add(botonEncender);
     }
     
     private void InicializarBotonAcelerar()
@@ -107,7 +96,7 @@ public class Mandos extends JPanel{
             
             if(botonAcelerar.isSelected() && !botonFrenar.isSelected() && botonEncender.isSelected())
             {
-                botonAcelerar.setText("Acelerando");
+                botonAcelerar.setText("Soltar acelerador");
                 GestorFiltros.setEstadoMotor(EstadoMotor.ACELERANDO);
                 estadoDelmotor.setText("Acelerando");
                 
@@ -128,7 +117,7 @@ public class Mandos extends JPanel{
                
        }
        );
-       mandos.add(botonAcelerar);        
+       this.add(botonAcelerar);        
     }
     
     private void InicializarBotonFrenar()
@@ -141,7 +130,7 @@ public class Mandos extends JPanel{
         public void actionPerformed(ActionEvent event){
             if(botonFrenar.isSelected() && !botonAcelerar.isSelected() && botonEncender.isSelected())
             {
-                botonFrenar.setText("Frenando");
+                botonFrenar.setText("Soltar freno");
                 GestorFiltros.setEstadoMotor(EstadoMotor.FRENANDO);
                 estadoDelmotor.setText("Frenando");
             }
@@ -160,33 +149,7 @@ public class Mandos extends JPanel{
                
        }
        );
-       mandos.add(botonFrenar);        
+       this.add(botonFrenar);        
     }
-    
-    private void InicializarJFrame()
-    {
-       f = new JFrame("Coche");
-       f.add(mandos);
-       f.add(salpicadero);
-       f.setSize(1200,400);    
-       f.setLayout(null);    
-       f.setVisible(true); 
-        //Cerrar aplicación al cerrar ventana
-       FuncionCerrarVentana();
-    }
-    
-    private void FuncionCerrarVentana()
-    {
-         f.addWindowListener( new WindowAdapter() { 
-           @Override
-            public void windowClosing( WindowEvent evt ) { 
-            System.exit( 0 ); 
-            } 
-        } ); 
-    }
-    
 
-    
-    
-    
 }

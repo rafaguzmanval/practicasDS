@@ -36,6 +36,6 @@ public class CuentaKilometros extends JPanel{
     
     public void actualizarValor(double k){
         kRecorridos += k;
-        kilometros.setText(String.valueOf(kRecorridos));
+        kilometros.setText(String.valueOf((int)kRecorridos));
     }
 }

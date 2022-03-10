@@ -10,7 +10,7 @@ package vehiculo;
  */
 public class RepercutirRozamiento implements Filtro{
     
-    private final double rozamiento = 1;
+    private final double rozamiento = 5;
     
     RepercutirRozamiento()
     {

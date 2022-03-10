@@ -4,6 +4,9 @@
  */
 package vehiculo;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author javiermg
@@ -19,7 +22,15 @@ public class Hebra extends Thread{
     @Override
     public void run(){
         while(true)
+        {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Hebra.class.getName()).log(Level.SEVERE, null, ex);
+            }
             gestor.peticionFiltros();
+        }
+
     }
     
 }

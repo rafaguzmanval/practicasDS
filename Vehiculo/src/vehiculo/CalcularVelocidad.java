@@ -38,10 +38,14 @@ public class CalcularVelocidad implements Filtro{
                  break;
          }
          
-        if(revoluciones>=5000 && revoluciones<=0) incrementoRevoluciones = 0;
-         
         double rev = revoluciones+incrementoRevoluciones;
          
-         return rev;
+        if(rev > 5000)
+            rev = 5005;
+        
+        if(rev < 0)
+            rev = 0;
+        
+        return rev;
      }
 }

@@ -19,12 +19,12 @@ public class Cliente{
      */
 
     public static void main(String[] args) {
+      
+        Vista vista = new Vista();
         
-        Mandos mandos = new Mandos();
         GestorFiltros gestor = new GestorFiltros();
         Hebra hebra = new Hebra(gestor);
         
-        mandos.InicializarVentana();
         gestor.peticionFiltros();
         hebra.start();
     }
