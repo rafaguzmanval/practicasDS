@@ -33,6 +33,7 @@ public class Mandos extends JPanel{
     {
        JFrame f = new JFrame("Coche");
        JPanel mandos = new JPanel();
+       salpicadero = new Salpicadero();
        
         mandos.setBounds(40,100,500,200);    
         mandos.setBackground(Color.gray);  
@@ -141,7 +142,8 @@ public class Mandos extends JPanel{
 
        
        f.add(mandos);
-       f.setSize(600,400);    
+       f.add(salpicadero);
+       f.setSize(1200,400);    
        f.setLayout(null);    
        f.setVisible(true); 
        
