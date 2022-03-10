@@ -94,7 +94,13 @@ public class Mandos extends JPanel{
             {
                 botonAcelerar.setText("Acelerar");
                 botonAcelerar.setSelected(false);
-                estadoDelmotor.setText("Encendido");
+                
+                if(!botonAcelerar.isSelected() && estadoDelmotor.getText() != "Apagado")
+                {
+                   estadoDelmotor.setText("Encendido");
+                   GestorFiltros.setEstadoMotor(EstadoMotor.ENCENDIDO);
+                }
+
             }
         }
                
@@ -119,7 +125,11 @@ public class Mandos extends JPanel{
             {
                 botonFrenar.setText("Frenar");
                 botonFrenar.setSelected(false);
-                estadoDelmotor.setText("Encendido");
+                if(!botonFrenar.isSelected() && estadoDelmotor.getText() != "Apagado")
+                {
+                   estadoDelmotor.setText("Encendido");
+                   GestorFiltros.setEstadoMotor(EstadoMotor.ENCENDIDO);
+                }
             }
             
         }
