@@ -5,10 +5,14 @@
  */
 package Bicicletas;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ravolk
  */
 public abstract class Carrera extends Thread{
+    
+    private ArrayList<Bicicleta> bicicletas;
     
 }

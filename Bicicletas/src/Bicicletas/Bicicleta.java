@@ -11,4 +11,7 @@ package Bicicletas;
  */
 public abstract class Bicicleta extends Thread{
     
+    
+    private int indentificador;
+    
 }

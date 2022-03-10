@@ -11,4 +11,17 @@ package Bicicletas;
  */
 public class FactoriaCarretera implements FactoriaCarreraYBicicleta{
     
+    
+    @Override
+    public void crearCarrera()
+    {
+        
+    }
+    
+    @Override 
+    public void crearBicicleta()
+    {
+        
+    }
+    
 }
