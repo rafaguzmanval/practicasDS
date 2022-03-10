@@ -75,7 +75,7 @@ public class Mandos extends JPanel{
                estadoDelmotor.setText("Encendido");
                botonEncender.setText("Apagar");
                botonEncender.setForeground(Color.RED);
-               GestorFiltros.setEstadoMotor(EstadoMotor.ACELERANDO);
+               GestorFiltros.setEstadoMotor(EstadoMotor.ENCENDIDO);
             }
             else
             {
