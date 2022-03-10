@@ -32,7 +32,7 @@ public class CadenaDeFiltros {
         
         for(int i=0; i < filtros.size(); i++)
         {
-            nuevasRevoluciones = filtros.get(0).ejecutar(nuevasRevoluciones,estadoMotor);
+            nuevasRevoluciones = filtros.get(i).ejecutar(nuevasRevoluciones,estadoMotor);
         }
         
         return Salpicadero.ejecutar(nuevasRevoluciones, estadoMotor);

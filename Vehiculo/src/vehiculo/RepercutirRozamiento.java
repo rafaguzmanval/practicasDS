@@ -20,6 +20,7 @@ public class RepercutirRozamiento implements Filtro{
     @Override
     public double ejecutar(double revoluciones, EstadoMotor estadoMotor)
     {
-        return revoluciones - rozamiento;
+        double roz = revoluciones>0 ? rozamiento : 0;
+        return revoluciones - roz;
     }
 }
