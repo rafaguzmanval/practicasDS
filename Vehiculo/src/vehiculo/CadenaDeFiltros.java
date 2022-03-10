@@ -35,7 +35,7 @@ public class CadenaDeFiltros {
             nuevasRevoluciones = filtros.get(0).ejecutar(nuevasRevoluciones,estadoMotor);
         }
         
-        return Objetivo.ejecutar(nuevasRevoluciones, estadoMotor);
+        return Salpicadero.ejecutar(nuevasRevoluciones, estadoMotor);
     }
     
 }
