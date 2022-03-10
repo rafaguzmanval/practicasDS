@@ -7,6 +7,7 @@ package vehiculo;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -41,12 +42,17 @@ public class Salpicadero extends JPanel{
         
         //Calculo velocidad v = 2πr × RPM × (60/1000)km/h
         double v = 2*Math.PI*0.15 * revoluciones * 60/1000;
-        v = Math.round(v);
+        DecimalFormat df = new DecimalFormat("###.##");
         
-        velocimetro.actualizarValor(v);
+        velocimetro.actualizarValor(df.format(v));
+        
+        //Añado kilometros recorridos
+        
+        double k = v * (0.5/3600);
+        cuentaKilometros.actualizarValor(k);
         
         //Actualizo revoluciones
-        
+        cuentaRevoluciones.actualizarValor(df.format(revoluciones));
         
         return revoluciones;
     }

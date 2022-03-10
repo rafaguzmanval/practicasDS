@@ -34,7 +34,7 @@ public class Velocimetro extends JPanel{
         this.add(velocidad);
     }
     
-    public void actualizarValor(double v){
-        velocidad.setText(String.valueOf(v));
+    public void actualizarValor(String v){
+        velocidad.setText(v);
     }
 }

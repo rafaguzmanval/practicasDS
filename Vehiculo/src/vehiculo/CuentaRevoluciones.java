@@ -18,7 +18,7 @@ public class CuentaRevoluciones extends JPanel{
     
     CuentaRevoluciones(){
         JLabel r = new JLabel("Cuentarrevoluciones (RPM):");
-        revoluciones = new JLabel("100");
+        revoluciones = new JLabel("0");
 
         this.setBounds(10,130,400,30);    
         this.setBackground(Color.LIGHT_GRAY);  
@@ -34,7 +34,7 @@ public class CuentaRevoluciones extends JPanel{
         this.add(revoluciones);
     }
     
-    public void actualizarValor(float r){
-        revoluciones.setText(String.valueOf(r));
+    public void actualizarValor(String r){
+        revoluciones.setText(r);
     }
 }
