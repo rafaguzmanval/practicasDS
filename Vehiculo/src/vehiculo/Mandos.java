@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  *
@@ -81,9 +83,17 @@ public class Mandos extends JPanel{
 
        
        f.add(mandos);
-                f.setSize(600,400);    
-                f.setLayout(null);    
-                f.setVisible(true);    
+       f.setSize(600,400);    
+       f.setLayout(null);    
+       f.setVisible(true); 
+       
+       //Cerrar aplicación al cerrar ventana
+       f.addWindowListener( new WindowAdapter() { 
+           @Override
+            public void windowClosing( WindowEvent evt ) { 
+            System.exit( 0 ); 
+            } 
+        } ); 
     }
     
     
