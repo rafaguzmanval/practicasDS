@@ -13,15 +13,15 @@ public class FactoriaMontana implements FactoriaCarreraYBicicleta{
     
     
     @Override
-    public void crearCarrera()
+    public CarreraMontana crearCarrera()
     {
-        
+        return new CarreraMontana();
     }
     
     @Override 
-    public void crearBicicleta()
+    public BicicletaMontana crearBicicleta()
     {
-        
+        return new BicicletaMontana();
     }
     
 }
