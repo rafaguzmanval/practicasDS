@@ -21,7 +21,7 @@ public class FactoriaMontana implements FactoriaCarreraYBicicleta{
     @Override 
     public BicicletaMontana crearBicicleta()
     {
-        return new BicicletaMontana();
+        return new BicicletaMontana(int id);
     }
     
 }
