@@ -18,16 +18,15 @@ public class Cliente{
      * 
      */
 
-    
-    
     public static void main(String[] args) {
         
         Mandos mandos = new Mandos();
-        mandos.InicializarVentana();
         GestorFiltros gestor = new GestorFiltros();
+        Hebra hebra = new Hebra(gestor);
+        
+        mandos.InicializarVentana();
         gestor.peticionFiltros();
-        
-        
+        hebra.start();
     }
     
 }
