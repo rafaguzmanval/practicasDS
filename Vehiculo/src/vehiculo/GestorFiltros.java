@@ -9,6 +9,10 @@ package vehiculo;
  * @author rafag
  */
 public class GestorFiltros {
+
+    static void setEstadoMotor() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     private CadenaDeFiltros filtros;
     private double revoluciones = 0;
@@ -29,7 +33,7 @@ public class GestorFiltros {
         revoluciones = filtros.ejecutar(revoluciones, estadoM);
     }
     
-    public void setEstadoMotor(EstadoMotor estado)
+    public static void setEstadoMotor(EstadoMotor estado)
     {
         estadoM = estado;
     }

@@ -55,13 +55,19 @@ public class Mandos extends JPanel{
                estadoDelmotor.setText("Encendido");
                botonEncender.setText("Apagar");
                botonEncender.setForeground(Color.RED);
+               GestorFiltros.setEstadoMotor(EstadoMotor.ACELERANDO);
             }
             else
             {
                  
                estadoDelmotor.setText("Apagado");
                botonEncender.setText("Encender");
-               botonEncender.setForeground(Color.GREEN);           
+               botonEncender.setForeground(Color.GREEN);          
+               botonFrenar.setText("Frenar");
+               botonAcelerar.setText("Acelerar");
+               botonFrenar.setSelected(false);
+               botonAcelerar.setSelected(false);
+               GestorFiltros.setEstadoMotor(EstadoMotor.APAGADO);
             }
         }
                
@@ -72,12 +78,54 @@ public class Mandos extends JPanel{
        
        botonAcelerar = new JToggleButton("Acelerar");
        botonAcelerar.setBounds(170,100,150,30);
+       botonAcelerar.addActionListener(new ActionListener()
+       {
+        @Override
+        public void actionPerformed(ActionEvent event){
+            
+            if(botonAcelerar.isSelected() && !botonFrenar.isSelected() && botonEncender.isSelected())
+            {
+                botonAcelerar.setText("Acelerando");
+                GestorFiltros.setEstadoMotor(EstadoMotor.ACELERANDO);
+                estadoDelmotor.setText("Acelerando");
+                
+            }
+            else
+            {
+                botonAcelerar.setText("Acelerar");
+                botonAcelerar.setSelected(false);
+                estadoDelmotor.setText("Encendido");
+            }
+        }
+               
+       }
+       );
        mandos.add(botonAcelerar);
        
        
        botonFrenar = new JToggleButton("Frenar");
-       
        botonFrenar.setBounds(330,100,150,30);
+       botonFrenar.addActionListener(new ActionListener()
+       {
+        @Override
+        public void actionPerformed(ActionEvent event){
+            if(botonFrenar.isSelected() && !botonAcelerar.isSelected() && botonEncender.isSelected())
+            {
+                botonFrenar.setText("Frenando");
+                GestorFiltros.setEstadoMotor(EstadoMotor.FRENANDO);
+                estadoDelmotor.setText("Frenando");
+            }
+            else
+            {
+                botonFrenar.setText("Frenar");
+                botonFrenar.setSelected(false);
+                estadoDelmotor.setText("Encendido");
+            }
+            
+        }
+               
+       }
+       );
        mandos.add(botonFrenar);
        
 
