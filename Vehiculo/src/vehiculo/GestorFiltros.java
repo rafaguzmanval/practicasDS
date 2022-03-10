@@ -12,7 +12,7 @@ public class GestorFiltros {
     
     private CadenaDeFiltros filtros;
     private double revoluciones = 0;
-    private EstadoMotor estadoM = EstadoMotor.APAGADO; 
+    private static EstadoMotor estadoM = EstadoMotor.APAGADO; 
     
     GestorFiltros(){
         

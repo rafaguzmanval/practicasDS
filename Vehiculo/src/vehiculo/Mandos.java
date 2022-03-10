@@ -32,15 +32,17 @@ public class Mandos extends JPanel{
        JFrame f = new JFrame("Coche");
        JPanel mandos = new JPanel();
        
-        mandos.setBounds(40,100,300,100);    
+        mandos.setBounds(40,100,500,200);    
         mandos.setBackground(Color.gray);  
+        mandos.setLayout(null);
         
        estadoDelmotor = new JLabel("Apagado");
        estadoDelmotor.setBackground(Color.LIGHT_GRAY);
+       estadoDelmotor.setBounds(220,50,150,30);
        mandos.add(estadoDelmotor);
        
        botonEncender = new JToggleButton("Encender");
-       botonEncender.setBounds(200,100,10,10);
+       botonEncender.setBounds(10,100,150,30);
        botonEncender.setForeground(Color.GREEN);
        botonEncender.addActionListener(new ActionListener()
        {
@@ -67,13 +69,13 @@ public class Mandos extends JPanel{
        
        
        botonAcelerar = new JToggleButton("Acelerar");
-       botonAcelerar.setBounds(200,200,10,10);
+       botonAcelerar.setBounds(170,100,150,30);
        mandos.add(botonAcelerar);
        
        
        botonFrenar = new JToggleButton("Frenar");
        
-       botonFrenar.setBounds(200,200,10,10);
+       botonFrenar.setBounds(330,100,150,30);
        mandos.add(botonFrenar);
        
 
