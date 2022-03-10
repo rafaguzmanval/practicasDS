@@ -9,6 +9,6 @@ package Bicicletas;
  *
  * @author ravolk
  */
-public abstract class Bicicleta {
+public abstract class Bicicleta extends Thread{
     
 }
