@@ -7,6 +7,7 @@ package vehiculo;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.text.DecimalFormat;
 /**
  *
  * @author rafag
@@ -36,6 +37,8 @@ public class CuentaKilometros extends JPanel{
     
     public void actualizarValor(double k){
         kRecorridos += k;
-        kilometros.setText(String.valueOf((int)kRecorridos));
+        DecimalFormat df = new DecimalFormat("###.##");
+        
+        kilometros.setText(df.format(kRecorridos));
     }
 }

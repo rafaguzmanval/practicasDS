@@ -46,9 +46,10 @@ public class Salpicadero extends JPanel{
         
         velocimetro.actualizarValor(df.format(v));
         
-        //Añado kilometros recorridos
+        //Calculo kilometros recorridos en 0.2 segundos que es el tiempo de
+        //espera de la hebra
         
-        double k = v * (0.5/3600);
+        double k = v * (0.2/3600);
         cuentaKilometros.actualizarValor(k);
         
         //Actualizo revoluciones
