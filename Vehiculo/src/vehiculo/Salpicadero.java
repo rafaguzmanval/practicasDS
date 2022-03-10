@@ -12,7 +12,8 @@ import javax.swing.JPanel;
  */
 public class Salpicadero extends JPanel{
     
-    
-    
+    Velocimetro velocimetro;
+    CuentaKilometros cuentaKilometros;
+    CuentaRevoluciones cuentaRevoluciones;
     
 }
