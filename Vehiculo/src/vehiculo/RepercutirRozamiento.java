@@ -12,6 +12,11 @@ public class RepercutirRozamiento implements Filtro{
     
     private final double rozamiento = 1;
     
+    RepercutirRozamiento()
+    {
+        
+    }
+    
     @Override
     public double ejecutar(double revoluciones, EstadoMotor estadoMotor)
     {

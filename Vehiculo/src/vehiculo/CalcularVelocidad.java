@@ -13,6 +13,11 @@ public class CalcularVelocidad implements Filtro{
     
     private double incrementoRevoluciones = 0;
     
+    CalcularVelocidad()
+    {
+        
+    }
+    
     @Override
     public double ejecutar(double revoluciones, EstadoMotor estadoMotor){
          

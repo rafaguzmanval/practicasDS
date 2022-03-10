@@ -12,6 +12,8 @@ import javax.swing.JPanel;
  */
 public class Salpicadero extends JPanel{
     
+    static double revoluciones;
+    
     
     
 }

@@ -15,6 +15,9 @@ public class GestorFiltros {
     private EstadoMotor estadoM = EstadoMotor.APAGADO; 
     
     GestorFiltros(){
+        
+        filtros = new CadenaDeFiltros();
+        
         Filtro filtroCV = new CalcularVelocidad();
         Filtro filtroRR = new RepercutirRozamiento();
         

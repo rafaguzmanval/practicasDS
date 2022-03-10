@@ -10,6 +10,9 @@ package vehiculo;
  */
 public class Objetivo {
     
+    
+    
+    
     public static double ejecutar(double revoluciones, EstadoMotor estadoMotor)
     {
         

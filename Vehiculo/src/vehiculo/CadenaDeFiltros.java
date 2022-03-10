@@ -14,6 +14,12 @@ public class CadenaDeFiltros {
     
     private ArrayList<Filtro> filtros;
     
+    CadenaDeFiltros()
+    {
+        filtros = new ArrayList<Filtro>();
+    }
+    
+    
     
     public void addFiltro(Filtro nuevoFiltro)
     {
