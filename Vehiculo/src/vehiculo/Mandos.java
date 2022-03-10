@@ -28,22 +28,41 @@ public class Mandos extends JPanel{
     JToggleButton botonEncender;
     JToggleButton botonAcelerar;
     JToggleButton botonFrenar;
+    JFrame f;
+    JPanel mandos;
     
     public void InicializarVentana()
     {
-       JFrame f = new JFrame("Coche");
-       JPanel mandos = new JPanel();
+
        salpicadero = new Salpicadero();
+
+       InicializarJPanelMandos();
+       InicializarJFrame();
+    }
+    
+    private void InicializarJPanelMandos()
+    {
+       mandos = new JPanel();
+       mandos.setBounds(40,100,500,200);    
+       mandos.setBackground(Color.gray);  
+       mandos.setLayout(null);
        
-        mandos.setBounds(40,100,500,200);    
-        mandos.setBackground(Color.gray);  
-        mandos.setLayout(null);
-        
+       InicializarEtiquetaEstado();
+       InicializarBotonEncender();
+       InicializarBotonAcelerar();
+       InicializarBotonFrenar();
+    }
+    
+    private void InicializarEtiquetaEstado()
+    {
        estadoDelmotor = new JLabel("Apagado");
        estadoDelmotor.setBackground(Color.LIGHT_GRAY);
        estadoDelmotor.setBounds(220,50,150,30);
-       mandos.add(estadoDelmotor);
-       
+       mandos.add(estadoDelmotor);       
+    }
+    
+    private void InicializarBotonEncender()
+    {
        botonEncender = new JToggleButton("Encender");
        botonEncender.setBounds(10,100,150,30);
        botonEncender.setForeground(Color.GREEN);
@@ -75,8 +94,10 @@ public class Mandos extends JPanel{
        }
        );
        mandos.add(botonEncender);
-       
-       
+    }
+    
+    private void InicializarBotonAcelerar()
+    {
        botonAcelerar = new JToggleButton("Acelerar");
        botonAcelerar.setBounds(170,100,150,30);
        botonAcelerar.addActionListener(new ActionListener()
@@ -107,9 +128,11 @@ public class Mandos extends JPanel{
                
        }
        );
-       mandos.add(botonAcelerar);
-       
-       
+       mandos.add(botonAcelerar);        
+    }
+    
+    private void InicializarBotonFrenar()
+    {
        botonFrenar = new JToggleButton("Frenar");
        botonFrenar.setBounds(330,100,150,30);
        botonFrenar.addActionListener(new ActionListener()
@@ -137,18 +160,24 @@ public class Mandos extends JPanel{
                
        }
        );
-       mandos.add(botonFrenar);
-       
-
-       
+       mandos.add(botonFrenar);        
+    }
+    
+    private void InicializarJFrame()
+    {
+       f = new JFrame("Coche");
        f.add(mandos);
        f.add(salpicadero);
        f.setSize(1200,400);    
        f.setLayout(null);    
        f.setVisible(true); 
-       
-       //Cerrar aplicación al cerrar ventana
-       f.addWindowListener( new WindowAdapter() { 
+        //Cerrar aplicación al cerrar ventana
+       FuncionCerrarVentana();
+    }
+    
+    private void FuncionCerrarVentana()
+    {
+         f.addWindowListener( new WindowAdapter() { 
            @Override
             public void windowClosing( WindowEvent evt ) { 
             System.exit( 0 ); 
@@ -156,11 +185,7 @@ public class Mandos extends JPanel{
         } ); 
     }
     
-    
-    private void funcionBotonEncender()
-    {
 
-    }
     
     
     
