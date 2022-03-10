@@ -28,4 +28,9 @@ public class GestorFiltros {
     public void peticionFiltros(){
         revoluciones = filtros.ejecutar(revoluciones, estadoM);
     }
+    
+    public void setEstadoMotor(EstadoMotor estado)
+    {
+        estadoM = estado;
+    }
 }
