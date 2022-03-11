@@ -11,4 +11,8 @@ package Bicicletas;
  */
 public class BicicletaCarretera extends Bicicleta{
     
+    BicicletaCarretera(int i)
+    {
+        super(i);
+    }
 }

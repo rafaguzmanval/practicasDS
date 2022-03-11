@@ -5,6 +5,7 @@
  */
 package Bicicletas;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -14,13 +15,27 @@ import java.util.Random;
 public class main {
     
     private static int N;
+
     
     public static void main(String[] args)
     {
         Random r = new Random();
         
-        N = r.nextInt(17) + 3;
+        N = r.nextInt(15) + 5;
         System.out.print(N);
+
+        FactoriaCarretera fcarretera = new FactoriaCarretera();
+        FactoriaMontana fmontana = new FactoriaMontana();
+        
+        ArrayList<Bicicleta> bicisCarretera = new ArrayList<Bicicleta>();
+        ArrayList<Bicicleta> bicisMontana = new ArrayList<Bicicleta>();
+        
+        for(int i = 0; i < N ; i++)
+        {
+            bicisCarretera.add(fcarretera.crearBicicleta(i));
+        }
+        
+        
         
     }
     

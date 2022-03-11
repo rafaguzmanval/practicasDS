@@ -14,4 +14,15 @@ public abstract class Bicicleta extends Thread{
     
     private int indentificador;
     
+    Bicicleta(int i)
+    { this.indentificador = i;
+    }
+    
+    
+    @Override
+    public void run()
+    {
+        
+    }
+    
 }

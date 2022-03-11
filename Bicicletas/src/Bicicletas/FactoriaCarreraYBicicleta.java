@@ -12,7 +12,7 @@ package Bicicletas;
 public interface FactoriaCarreraYBicicleta{
     
     
-    public void crearCarrera();
-    public void crearBicicleta();
+    public Carrera crearCarrera();
+    public Bicicleta crearBicicleta(int identificador);
     
 }

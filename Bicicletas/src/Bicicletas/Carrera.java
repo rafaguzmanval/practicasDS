@@ -15,4 +15,9 @@ public abstract class Carrera extends Thread{
     
     private ArrayList<Bicicleta> bicicletas;
     
+    @Override public void run()
+    {
+        
+    }
+    
 }

@@ -13,15 +13,15 @@ public class FactoriaCarretera implements FactoriaCarreraYBicicleta{
     
     
     @Override
-    public void crearCarrera()
+    public CarreraCarretera crearCarrera()
     {
-        
+        return new CarreraCarretera();
     }
     
     @Override 
-    public void crearBicicleta()
+    public BicicletaCarretera crearBicicleta(int identificador)
     {
-        
+        return new BicicletaCarretera(identificador);
     }
     
 }
