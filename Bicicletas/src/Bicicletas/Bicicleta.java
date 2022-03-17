@@ -12,10 +12,10 @@ package Bicicletas;
 public abstract class Bicicleta extends Thread{
     
     
-    private int indentificador;
+    private int identificador;
     
     Bicicleta(int i)
-    { this.indentificador = i;
+    { this.identificador = i;
     }
     
     
@@ -23,6 +23,10 @@ public abstract class Bicicleta extends Thread{
     public void run()
     {
         
+    }
+    
+    void retirarse(){
+        System.out.println("La bicleta con identificador "+this.identificador+" se retira.");
     }
     
 }

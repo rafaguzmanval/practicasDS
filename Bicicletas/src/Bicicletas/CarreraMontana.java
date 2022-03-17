@@ -10,5 +10,11 @@ package Bicicletas;
  * @author ravolk
  */
 public class CarreraMontana extends Carrera{
-    
+
+    @Override
+    void retiradaParticipantes(){
+        for(int i = 0; i < bicicletas.size()*0.2; i++){
+            
+        }
+    }
 }
