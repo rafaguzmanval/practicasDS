@@ -22,7 +22,7 @@ public class main {
         Random r = new Random();
         
         N = r.nextInt(26) + 5;
-        System.out.print("Existen " + N + " bicicletas\n");
+        System.out.print("Existen " + N*2 + " bicicletas\n");
 
         FactoriaCarretera fcarretera = new FactoriaCarretera();
         FactoriaMontana fmontana = new FactoriaMontana();
@@ -52,8 +52,8 @@ public class main {
         
         CC.join();
         CM.join();
-        System.out.print("Terminan las carreras");
-        
+        System.out.print("\nTerminan las carreras ");
+
     }
     
 }

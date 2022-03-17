@@ -14,22 +14,6 @@ public class BicicletaMontana extends Bicicleta{
     BicicletaMontana(int i)
     {
         super(i);
-    }
-    
-    @Override
-    void retirarse(){
-        System.out.println("La bicleta de montaña con identificador "+this.identificador+" se retira.");
-        salir = true;
-    }
-    
-    @Override
-    void finalizar(){
-        
-        if(!salir)
-        {
-              System.out.println("La bicleta de montaña con identificador "+this.identificador+" ha llegado al final.");
-              salir = true;      
-        }
-
+        this.tipo = "montaña";
     }
 }

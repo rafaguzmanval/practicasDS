@@ -17,8 +17,10 @@ import java.util.logging.Logger;
 public abstract class Carrera extends Thread{
     
     protected ArrayList<Bicicleta> bicicletas;
+    protected String tipo = "";
     
-    @Override public void run()
+    @Override 
+    public void run()
     {
     
         Random r = new Random();
@@ -26,12 +28,10 @@ public abstract class Carrera extends Thread{
         
         //Tiempo aleatorio en el que se van a retirar
         long seg = 0;
-        seg = r.nextInt(10);
+        seg = r.nextInt(60);
         
         //Tiempo restante de carrera tras retirarse
-        long segRes = 10 - seg;
-        
-        
+        long segRes = 60 - seg;
         
         //Empieza la carrera
         try {
@@ -42,10 +42,6 @@ public abstract class Carrera extends Thread{
         } catch (InterruptedException ex) {
                 Logger.getLogger(CarreraCarretera.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        //Empiezan bicicletas
-        
-        System.out.print("Se retiran varios ciclistas de la carrera\n");
         
         this.retiradaParticipantes();
         
@@ -58,8 +54,14 @@ public abstract class Carrera extends Thread{
         
         this.finalizarCarrera();
         
-
-        
+        for(int i = 0; i<bicicletas.size(); i++){
+            try{
+               if(bicicletas.get(i).isAlive())
+                bicicletas.get(i).join(); 
+            } catch (InterruptedException ex) {
+                Logger.getLogger(CarreraCarretera.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }
     }
     
     abstract void retiradaParticipantes();
@@ -71,6 +73,7 @@ public abstract class Carrera extends Thread{
     
     void finalizarCarrera()
     {
+        System.out.print("\n");
         for(int i = 0; i < bicicletas.size(); i++)
         {
             bicicletas.get(i).finalizar();
