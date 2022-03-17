@@ -32,8 +32,6 @@ public abstract class Carrera extends Thread{
         long segRes = 10 - seg;
         
         
-        System.out.print("Empieza la carrera\n");
-        
         
         //Empieza la carrera
         try {
@@ -59,7 +57,8 @@ public abstract class Carrera extends Thread{
         }
         
         this.finalizarCarrera();
-        System.out.print("Termina la carrera");
+        
+
         
     }
     

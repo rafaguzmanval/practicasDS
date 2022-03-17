@@ -15,4 +15,21 @@ public class BicicletaCarretera extends Bicicleta{
     {
         super(i);
     }
+    
+    @Override
+    void retirarse(){
+        System.out.println("La bicleta de carretera con identificador "+this.identificador+" se retira.");
+        salir = true;
+    }
+    
+    @Override
+    void finalizar(){
+        
+        if(!salir)
+        {
+              System.out.println("La bicleta de carretera con identificador "+this.identificador+" ha llegado al final.");
+              salir = true;      
+        }
+
+    }
 }

@@ -17,7 +17,7 @@ public class main {
     private static int N;
 
     
-    public static void main(String[] args)
+    public static void main(String[] args) throws InterruptedException
     {
         Random r = new Random();
         
@@ -31,17 +31,28 @@ public class main {
         CarreraMontana CM = fmontana.crearCarrera();
         
         ArrayList<Bicicleta> bicisCarretera = new ArrayList<Bicicleta>();
+        ArrayList<Bicicleta> bicisMontana = new ArrayList<Bicicleta>();
         
         for(int i = 0; i < N ; i++)
         {
             BicicletaCarretera nuevaBici = fcarretera.crearBicicleta(i);
             bicisCarretera.add(nuevaBici);
+            
+            BicicletaMontana nuevaBiciM = fmontana.crearBicicleta(i + N);
+            bicisMontana.add(nuevaBiciM);
         }
         
         CC.añadirBicicletas(bicisCarretera);
+        CM.añadirBicicletas(bicisMontana);
         
         
+        System.out.print("Empiezan las carreras\n");
         CC.start();
+        CM.start();
+        
+        CC.join();
+        CM.join();
+        System.out.print("Terminan las carreras");
         
     }
     
