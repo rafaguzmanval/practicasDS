@@ -15,6 +15,8 @@ public class CarreraMontana extends Carrera{
     void retiradaParticipantes(){
         for(int i = 0; i < bicicletas.size()*0.2; i++){
             
+            bicicletas.get(i).retirarse();
+            
         }
     }
 }

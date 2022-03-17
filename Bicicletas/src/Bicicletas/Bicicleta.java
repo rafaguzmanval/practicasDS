@@ -13,6 +13,7 @@ public abstract class Bicicleta extends Thread{
     
     
     private int identificador;
+    private boolean salir = false;
     
     Bicicleta(int i)
     { this.identificador = i;
@@ -22,11 +23,23 @@ public abstract class Bicicleta extends Thread{
     @Override
     public void run()
     {
-        
+        while(!salir)
+        {};
     }
     
     void retirarse(){
         System.out.println("La bicleta con identificador "+this.identificador+" se retira.");
+        salir = true;
+    }
+    
+    void finalizar(){
+        
+        if(!salir)
+        {
+              System.out.println("La bicleta con identificador "+this.identificador+" ha llegado al final.");
+            salir = true;      
+        }
+
     }
     
 }
