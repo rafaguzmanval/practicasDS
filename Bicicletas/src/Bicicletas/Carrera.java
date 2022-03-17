@@ -53,4 +53,8 @@ public abstract class Carrera extends Thread{
     }
     
     abstract void retiradaParticipantes();
+    
+    void añadirBicicleta(Bicicleta b){
+        bicicletas.add(b);
+    }
 }
