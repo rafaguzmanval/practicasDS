@@ -37,7 +37,7 @@ public abstract class Bicicleta extends Thread{
         if(!salir)
         {
               System.out.println("La bicleta con identificador "+this.identificador+" ha llegado al final.");
-            salir = true;      
+              salir = true;      
         }
 
     }

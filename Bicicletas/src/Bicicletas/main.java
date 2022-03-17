@@ -21,8 +21,8 @@ public class main {
     {
         Random r = new Random();
         
-        N = r.nextInt(15) + 5;
-        System.out.print(N);
+        N = r.nextInt(26) + 5;
+        System.out.print("Existen " + N + " bicicletas\n");
 
         FactoriaCarretera fcarretera = new FactoriaCarretera();
         FactoriaMontana fmontana = new FactoriaMontana();
@@ -30,15 +30,18 @@ public class main {
         CarreraCarretera CC = fcarretera.crearCarrera();
         CarreraMontana CM = fmontana.crearCarrera();
         
+        ArrayList<Bicicleta> bicisCarretera = new ArrayList<Bicicleta>();
+        
         for(int i = 0; i < N ; i++)
         {
             BicicletaCarretera nuevaBici = fcarretera.crearBicicleta(i);
-           CC.añadirBicicleta(nuevaBici);
+            bicisCarretera.add(nuevaBici);
         }
+        
+        CC.añadirBicicletas(bicisCarretera);
         
         
         CC.start();
-        
         
     }
     

@@ -26,11 +26,13 @@ public abstract class Carrera extends Thread{
         
         //Tiempo aleatorio en el que se van a retirar
         long seg = 0;
-        seg = r.nextInt(60);
+        seg = r.nextInt(10);
         
         //Tiempo restante de carrera tras retirarse
-        long segRes = 60 - seg;
+        long segRes = 10 - seg;
         
+        
+        System.out.print("Empieza la carrera\n");
         
         
         //Empieza la carrera
@@ -45,6 +47,8 @@ public abstract class Carrera extends Thread{
         
         //Empiezan bicicletas
         
+        System.out.print("Se retiran varios ciclistas de la carrera\n");
+        
         this.retiradaParticipantes();
         
         //Resto de la carrera
@@ -54,12 +58,23 @@ public abstract class Carrera extends Thread{
                 Logger.getLogger(CarreraCarretera.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        this.finalizarCarrera();
+        System.out.print("Termina la carrera");
         
     }
     
     abstract void retiradaParticipantes();
     
-    void añadirBicicleta(Bicicleta b){
-        bicicletas.add(b);
+    
+    void añadirBicicletas(ArrayList<Bicicleta> bicis){
+        bicicletas = bicis;
+    }
+    
+    void finalizarCarrera()
+    {
+        for(int i = 0; i < bicicletas.size(); i++)
+        {
+            bicicletas.get(i).finalizar();
+        }
     }
 }

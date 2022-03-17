@@ -14,7 +14,8 @@ public class CarreraCarretera extends Carrera{
     @Override
     void retiradaParticipantes(){
         for(int i = 0; i < bicicletas.size()*0.1; i++){
-            
+            bicicletas.get(i).retirarse();
         }
     }
+    
 }
