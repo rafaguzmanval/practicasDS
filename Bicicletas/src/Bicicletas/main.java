@@ -30,14 +30,22 @@ public class main {
         ArrayList<Bicicleta> bicisCarretera = new ArrayList<Bicicleta>();
         ArrayList<Bicicleta> bicisMontana = new ArrayList<Bicicleta>();
         
+        CarreraCarretera CC = fcarretera.crearCarrera();
+        CarreraMontana CM = fmontana.crearCarrera();
+        
         for(int i = 0; i < N ; i++)
         {
             bicisCarretera.add(fcarretera.crearBicicleta(i));
         }
         
+        
+        
         for(int i=N; i<2*N ; i++){
             bicisMontana.add(fmontana.crearBicicleta(i));
         }
+        
+        
+        CC.run();
         
     }
     
