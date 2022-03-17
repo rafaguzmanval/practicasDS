@@ -35,7 +35,9 @@ public class main {
             bicisCarretera.add(fcarretera.crearBicicleta(i));
         }
         
-        
+        for(int i=N; i<2*N ; i++){
+            bicisMontana.add(fmontana.crearBicicleta(i));
+        }
         
     }
     
