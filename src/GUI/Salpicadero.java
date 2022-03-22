@@ -28,7 +28,7 @@ public class Salpicadero extends JPanel{
         cuentaKilometros = new CuentaKilometros();
         cuentaRevoluciones = new CuentaRevoluciones();
 
-        this.setBounds(560,100,500,200);    
+        this.setBounds(560,50,500,700);    
         this.setBackground(Color.gray);  
         this.setLayout(null);
         
@@ -45,9 +45,8 @@ public class Salpicadero extends JPanel{
         
         //Calculo velocidad v = 2πr × RPM × (60/1000)km/h
         double v = 2*Math.PI*0.15 * revoluciones * 60/1000;
-        DecimalFormat df = new DecimalFormat("###.##");
         
-        velocimetro.actualizarValor(df.format(v));
+        velocimetro.actualizarValor(v);
         
         //Calculo kilometros recorridos en 0.2 segundos que es el tiempo de
         //espera de la hebra
@@ -56,7 +55,7 @@ public class Salpicadero extends JPanel{
         cuentaKilometros.actualizarValor(k);
         
         //Actualizo revoluciones
-        cuentaRevoluciones.actualizarValor(df.format(revoluciones));
+        cuentaRevoluciones.actualizarValor(revoluciones);
         
         return revoluciones;
     }

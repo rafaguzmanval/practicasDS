@@ -4,9 +4,11 @@
  */
 package GUI;
 
+import eu.hansolo.steelseries.gauges.Radial;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.util.HashSet;
 
 /**
  *
@@ -14,9 +16,24 @@ import java.awt.Color;
  */
 public class CuentaRevoluciones extends JPanel{
     
-    JLabel revoluciones;
+    Radial gauge;
     
     CuentaRevoluciones(){
+        
+        gauge = new Radial();
+        
+        this.setBounds(10,400,250,250);
+        this.setBackground(Color.gray);
+        
+        gauge.setBounds(0, 0, 250, 250);
+        gauge.setMaxValue(5000);
+        gauge.setTitle("Cuentarrevoluciones");
+        gauge.setUnitString("RPM");
+        
+        
+        
+        this.add(gauge);
+   /*     
         JLabel r = new JLabel("Cuentarrevoluciones (RPM):");
         revoluciones = new JLabel("0");
 
@@ -31,10 +48,10 @@ public class CuentaRevoluciones extends JPanel{
         revoluciones.setBounds(250,0,100,30);
         
         this.add(r);
-        this.add(revoluciones);
+        this.add(revoluciones);*/
     }
     
-    public void actualizarValor(String r){
-        revoluciones.setText(r);
+    public void actualizarValor(double r){
+        gauge.setValueAnimated(r);
     }
 }

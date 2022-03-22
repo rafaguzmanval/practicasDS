@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import eu.hansolo.steelseries.gauges.DisplaySingle;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -14,31 +15,33 @@ import java.text.DecimalFormat;
  */
 public class CuentaKilometros extends JPanel{
     
-    JLabel kilometros;
+    DisplaySingle display;
     double kRecorridos = 0;
     
     CuentaKilometros(){
-        JLabel c = new JLabel("Cuentakilometros:");
-        kilometros = new JLabel("0");
+        
+        this.setBounds(50,360,200,30);
+        this.setBackground(Color.gray);
+        
+        JLabel titulo = new JLabel();
+        display = new DisplaySingle();
+        
+        titulo.setText("Distancia recorrida: ");
+        
+        titulo.setBounds(0, 0, 100, 10);
 
-        this.setBounds(10,90,400,30);    
-        this.setBackground(Color.LIGHT_GRAY);  
-        this.setLayout(null);
+        display.setBounds(100, 0, 50, 30);
+        display.setLcdUnitString("km");
         
-        c.setBackground(Color.LIGHT_GRAY);
-        c.setBounds(5,0,200,30);
         
-        kilometros.setForeground(Color.BLUE);
-        kilometros.setBounds(250,0,100,30);
+        this.add(titulo);
+        this.add(display);
         
-        this.add(c);
-        this.add(kilometros);
     }
     
     public void actualizarValor(double k){
         kRecorridos += k;
-        DecimalFormat df = new DecimalFormat("###.##");
         
-        kilometros.setText(df.format(kRecorridos));
+        display.setLcdValue(kRecorridos);
     }
 }

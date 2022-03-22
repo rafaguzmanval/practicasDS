@@ -4,17 +4,12 @@
  */
 package GUI;
 
-import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import vehiculo.EstadoMotor;
 import vehiculo.GestorFiltros;
 
@@ -34,7 +29,7 @@ public class Mandos extends JPanel{
     
     Mandos()
     {
-       this.setBounds(40,100,500,200);    
+       this.setBounds(40,50,500,200);    
        this.setBackground(Color.gray);  
        this.setLayout(null);
        
