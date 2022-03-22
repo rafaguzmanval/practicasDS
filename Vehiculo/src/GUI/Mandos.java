@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package vehiculo;
+package GUI;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import vehiculo.EstadoMotor;
+import vehiculo.GestorFiltros;
 
 /**
  *

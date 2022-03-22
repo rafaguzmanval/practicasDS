@@ -2,12 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package vehiculo;
+package GUI;
 
+import GUI.CuentaRevoluciones;
+import GUI.CuentaKilometros;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.text.DecimalFormat;
+import vehiculo.EstadoMotor;
 
 /**
  *

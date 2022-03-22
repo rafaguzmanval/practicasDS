@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package vehiculo;
+package GUI;
 
 /**
  *
  * @author rafag
  */
+import GUI.Salpicadero;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -28,7 +29,7 @@ public class Vista extends JPanel{
     private Salpicadero salpicadero;
     private Mandos mandos;
     
-    Vista()
+    public Vista()
     {
         InicializarVentana();
     }

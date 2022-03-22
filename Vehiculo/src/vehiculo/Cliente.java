@@ -5,6 +5,8 @@
  */
 package vehiculo;
 
+import GUI.Vista;
+
 
 /**
  *

@@ -4,6 +4,7 @@
  */
 package vehiculo;
 
+import GUI.Salpicadero;
 import java.util.ArrayList;
 
 /**
