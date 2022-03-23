@@ -122,9 +122,7 @@ public class Palanca extends JPanel{
         public void actionPerformed(ActionEvent event){
             
             if(mando.botonFrenar.isSelected() && (GestorFiltros.getEstadoMotor()==EstadoMotor.ACELERANDOAUTO || GestorFiltros.getEstadoMotor()==EstadoMotor.REINICIAR || GestorFiltros.getEstadoMotor()==EstadoMotor.MANTENER))
-            {
                 pal3.setBounds(175, 150, 50, 50);
-            }
         }
         }
         );
@@ -136,9 +134,19 @@ public class Palanca extends JPanel{
         public void actionPerformed(ActionEvent event){
             
             if(!mando.botonEncender.isSelected())
-            {
                 pal3.setBounds(175, 150, 50, 50);
-            }
+        }
+        }
+        );
+        
+        //Restablece la palanca al acelerar
+        mando.botonAcelerar.addActionListener(new ActionListener()
+        {
+        @Override
+        public void actionPerformed(ActionEvent event){
+            
+            if(mando.botonAcelerar.isSelected())
+                pal3.setBounds(175, 150, 50, 50);
         }
         }
         );
