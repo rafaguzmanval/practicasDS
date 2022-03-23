@@ -54,7 +54,12 @@ public class Salpicadero extends JPanel{
         this.add(velocidadAlmacenada);
     }
     
-    public static double ejecutar(double revoluciones, EstadoMotor estadoMotor){
+    public void establecerVelocidadAlmacenada(double r){
+        double v = 2*Math.PI*0.15 * r * 60/1000;
+        velocidadAlmacenada.setLcdValue(v);
+    }
+    
+    public double ejecutar(double revoluciones, EstadoMotor estadoMotor){
         
         //Calculo velocidad v = 2πr × RPM × (60/1000)km/h
         double v = 2*Math.PI*0.15 * revoluciones * 60/1000;
@@ -69,14 +74,6 @@ public class Salpicadero extends JPanel{
         
         //Actualizo revoluciones
         cuentaRevoluciones.actualizarValor(revoluciones);
-        
-        if(estadoMotor==EstadoMotor.MANTENER && velocidadAlm==0){
-            velocidadAlm=v;
-            velocidadAlmacenada.setLcdValue(velocidadAlm);
-        }
-        else if(estadoMotor!=EstadoMotor.MANTENER){
-            velocidadAlm=0;
-        }
         
         return revoluciones;
     }

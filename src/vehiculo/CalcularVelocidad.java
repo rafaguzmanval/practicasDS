@@ -13,7 +13,6 @@ public class CalcularVelocidad implements Filtro{
     
     private double incrementoRevoluciones = 0;
     private double revolucionesAlmacenadas = 0;
-    private double revolucionesAlmacenadasAnt = 0;
     
     @Override
     public double ejecutar(double revoluciones, EstadoMotor estadoMotor){
@@ -26,34 +25,28 @@ public class CalcularVelocidad implements Filtro{
                  
             case FRENANDO:
                     incrementoRevoluciones=-100;
-                    if(revolucionesAlmacenadas!=0){
-                        revolucionesAlmacenadasAnt=revolucionesAlmacenadas;
-                        revolucionesAlmacenadas=0;
-                    }
                  break;
             case ENCENDIDO:
                     incrementoRevoluciones=0;
-                    if(revolucionesAlmacenadas!=0){
-                        revolucionesAlmacenadasAnt=revolucionesAlmacenadas;
-                        revolucionesAlmacenadas = 0;
-                    }
                  break;
             case APAGADO:
                     incrementoRevoluciones=0;
+                    revolucionesAlmacenadas = 0;
                  break;
             case MANTENER:
                     if(revolucionesAlmacenadas==0){
                         revolucionesAlmacenadas=revoluciones;
-                        revolucionesAlmacenadasAnt=revolucionesAlmacenadas;
+                        GestorFiltros.setVelocidadAlmacenada(revoluciones);
                     }
                     else{
                         if(revoluciones>revolucionesAlmacenadas)incrementoRevoluciones=0;
-                        else incrementoRevoluciones=100;
+                        else incrementoRevoluciones=10;
                     }
+                    System.out.println(revoluciones);
                     break;
             case REINICIAR:
-                    if(revoluciones>(revolucionesAlmacenadasAnt+100)) incrementoRevoluciones=-100;
-                    else if(revoluciones<(revolucionesAlmacenadasAnt-100)) incrementoRevoluciones=100;
+                    if(revoluciones>(revolucionesAlmacenadas+50)) incrementoRevoluciones=-100;
+                    else if(revoluciones<(revolucionesAlmacenadas-50)) incrementoRevoluciones=100;
                     else GestorFiltros.setEstadoMotor(EstadoMotor.MANTENER);
                 break;
          }

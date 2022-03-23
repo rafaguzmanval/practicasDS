@@ -6,9 +6,14 @@ package GUI;
 
 import GUI.Salpicadero;
 import GUI.Palanca;
+import static GUI.Salpicadero.cuentaKilometros;
+import static GUI.Salpicadero.cuentaRevoluciones;
+import static GUI.Salpicadero.velocidadAlmacenada;
+import static GUI.Salpicadero.velocimetro;
 import javax.swing.JFrame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import vehiculo.EstadoMotor;
 /**
  *
  * @author javiermg
@@ -16,9 +21,9 @@ import java.awt.event.WindowEvent;
 public class Vista extends javax.swing.JPanel {
 
     private JFrame f;
-    private Salpicadero salpicadero;
-    private Mandos mandos;
-    private Palanca palanca;
+    private static Salpicadero salpicadero;
+    private static Mandos mandos;
+    private static Palanca palanca;
     
     /**
      * Creates new form Vista
@@ -57,6 +62,19 @@ public class Vista extends javax.swing.JPanel {
             System.exit( 0 ); 
             } 
         } ); 
+    }
+    
+        
+    public static double ejecutar(double revoluciones, EstadoMotor estadoMotor, double velocidadAlmacenada){
+        
+        salpicadero.ejecutar(revoluciones,estadoMotor);
+        if(estadoMotor==EstadoMotor.MANTENER){
+            palanca.pulsarMantener(mandos);
+            salpicadero.establecerVelocidadAlmacenada(velocidadAlmacenada);
+        }
+        
+        
+        return revoluciones;
     }
 
     /**

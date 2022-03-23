@@ -4,7 +4,7 @@
  */
 package vehiculo;
 
-import GUI.Salpicadero;
+import GUI.Vista;
 import java.util.ArrayList;
 
 /**
@@ -36,7 +36,7 @@ public class CadenaDeFiltros {
             nuevasRevoluciones = filtros.get(i).ejecutar(nuevasRevoluciones,estadoMotor);
         }
         
-        return Salpicadero.ejecutar(nuevasRevoluciones, estadoMotor);
+        return Vista.ejecutar(nuevasRevoluciones, estadoMotor, GestorFiltros.getVelocidadAlmacenada());
     }
     
 }
