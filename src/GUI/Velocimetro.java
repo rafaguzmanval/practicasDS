@@ -4,10 +4,8 @@
  */
 package GUI;
 
-import javax.swing.JPanel;
+
 import eu.hansolo.steelseries.gauges.Radial;
-import eu.hansolo.steelseries.tools.BackgroundColor;
-import eu.hansolo.steelseries.tools.LcdColor;
 import java.awt.Color;
 
 /**

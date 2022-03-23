@@ -17,6 +17,8 @@ public class GestorFiltros {
     private CadenaDeFiltros filtros;
     private double revoluciones = 0;
     private static EstadoMotor estadoM = EstadoMotor.APAGADO; 
+    private static double velocidadAlmacenada = 0;
+    private static double velocidadAlmacenadaAnt = 0;
     
     GestorFiltros(){
         
@@ -36,5 +38,13 @@ public class GestorFiltros {
     public static void setEstadoMotor(EstadoMotor estado)
     {
         estadoM = estado;
+    }
+    
+    public static EstadoMotor getEstadoMotor(){
+        return estadoM;
+    }
+    
+    public static void setVelocidadAlmacenadaAnt(double v){
+        velocidadAlmacenadaAnt = v;
     }
 }

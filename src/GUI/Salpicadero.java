@@ -9,8 +9,8 @@ import GUI.CuentaKilometros;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Color;
-import java.text.DecimalFormat;
 import vehiculo.EstadoMotor;
+import eu.hansolo.steelseries.gauges.DisplaySingle;
 
 /**
  *
@@ -21,12 +21,16 @@ public class Salpicadero extends JPanel{
     static Velocimetro velocimetro = null;
     static CuentaKilometros cuentaKilometros = null;
     static CuentaRevoluciones cuentaRevoluciones = null;
+    static DisplaySingle velocidadAlmacenada = null;
+    private static double velocidadAlm = 0;
 
     Salpicadero(){
         JLabel s = new JLabel("Salpicadero");
         velocimetro = new Velocimetro();
         cuentaKilometros = new CuentaKilometros();
         cuentaRevoluciones = new CuentaRevoluciones();
+        JLabel vA = new JLabel("Velocidad Almacenada");
+        velocidadAlmacenada = new DisplaySingle();
 
         this.setBounds(560,50,500,700);    
         this.setBackground(Color.gray);  
@@ -35,10 +39,19 @@ public class Salpicadero extends JPanel{
         s.setBackground(Color.LIGHT_GRAY);
         s.setBounds(220,20,150,30);
         
+        vA.setBackground(Color.LIGHT_GRAY);
+        vA.setBounds(320,50,150,30);
+        
+        velocidadAlmacenada.setLcdValue(0);
+        velocidadAlmacenada.setLcdUnitString("km/h");
+        velocidadAlmacenada.setBounds(350,80,150,50);
+        
         this.add(s);
         this.add(velocimetro);
         this.add(cuentaKilometros);
         this.add(cuentaRevoluciones);
+        this.add(vA);
+        this.add(velocidadAlmacenada);
     }
     
     public static double ejecutar(double revoluciones, EstadoMotor estadoMotor){
@@ -56,6 +69,14 @@ public class Salpicadero extends JPanel{
         
         //Actualizo revoluciones
         cuentaRevoluciones.actualizarValor(revoluciones);
+        
+        if(estadoMotor==EstadoMotor.MANTENER && velocidadAlm==0){
+            velocidadAlm=v;
+            velocidadAlmacenada.setLcdValue(velocidadAlm);
+        }
+        else if(estadoMotor!=EstadoMotor.MANTENER){
+            velocidadAlm=0;
+        }
         
         return revoluciones;
     }
