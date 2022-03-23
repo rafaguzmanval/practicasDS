@@ -9,5 +9,5 @@ package vehiculo;
  * @author rafag
  */
 public enum EstadoMotor {
-    APAGADO,ACELERANDO,FRENANDO,ENCENDIDO;
+    APAGADO,ACELERANDO,FRENANDO,ENCENDIDO,MANTENER;
 }

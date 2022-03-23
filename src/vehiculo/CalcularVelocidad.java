@@ -36,6 +36,8 @@ public class CalcularVelocidad implements Filtro{
             case APAGADO:
                     incrementoRevoluciones=0;
                  break;
+            case MANTENER:
+                    incrementoRevoluciones=0;
          }
          
         double rev = revoluciones+incrementoRevoluciones;

@@ -32,7 +32,7 @@ public class Vista extends javax.swing.JPanel {
     {
        salpicadero = new Salpicadero();
        mandos = new Mandos();
-       palanca = new Palanca();
+       palanca = new Palanca(mandos);
        InicializarJFrame();
     }
     
