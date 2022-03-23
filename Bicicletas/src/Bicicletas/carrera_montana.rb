@@ -10,7 +10,7 @@ class CarreraMontana < PrototipoCarrera
   def retirarBicicletas
 
     (@bicis.size * @porcentaje_bicis_a_retirar / 100).times do |i|
-      @bicis.at(i).retirarse
+      @bicis.at(i).retirar
     end
 
   end

@@ -6,13 +6,11 @@ class BicicletaMontana < PrototipoBicicleta
     super
   end
 
-  def finalizar
-    super
+  def mensajeFinalizar
     puts "La bicicleta de montana #{@identificador} ha terminado"
   end
 
-  def retirarse
-    super
+  def mensajeRetirarse
     puts "La bicicleta de montaña #{@identificador} se ha retirado antes de terminar"
   end
 end

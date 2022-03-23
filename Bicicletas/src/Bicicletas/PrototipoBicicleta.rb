@@ -9,6 +9,7 @@ class PrototipoBicicleta
   def initialize
     @identificador
     @compitiendo = true
+    @retirado = false;
   end
 
   public
@@ -17,17 +18,35 @@ class PrototipoBicicleta
   end
 
   def competir
-      while(@compitiendo)
+    while(@compitiendo)
 
-      end
+    end
+
+    if @retirado
+      mensajeRetirarse
+    else
+      mensajeFinalizar
+    end
+
   end
+
+
 
   def finalizar
     @compitiendo = false
   end
 
-  def retirarse
-    @compitiendo = false
+  def retirar
+    @retirado = true;
+    @compitiendo = false;
+  end
+
+  def mensajeFinalizar
+
+  end
+
+  def mensajeRetirarse
+
   end
 
 end
