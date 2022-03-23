@@ -47,14 +47,14 @@ public class CalcularVelocidad implements Filtro{
                         revolucionesAlmacenadasAnt=revolucionesAlmacenadas;
                     }
                     else{
-                        if(revoluciones>revolucionesAlmacenadas)incrementoRevoluciones=-100;
+                        if(revoluciones>revolucionesAlmacenadas)incrementoRevoluciones=0;
                         else incrementoRevoluciones=100;
                     }
                     break;
             case REINICIAR:
                     if(revoluciones>(revolucionesAlmacenadasAnt+100)) incrementoRevoluciones=-100;
                     else if(revoluciones<(revolucionesAlmacenadasAnt-100)) incrementoRevoluciones=100;
-                    GestorFiltros.setEstadoMotor(EstadoMotor.MANTENER);
+                    else GestorFiltros.setEstadoMotor(EstadoMotor.MANTENER);
                 break;
          }
          

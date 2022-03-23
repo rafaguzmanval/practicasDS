@@ -105,22 +105,9 @@ public class Palanca extends JPanel{
             
             if(botParar.isSelected() && mando.botonEncender.isSelected() && (botAcelerar.isSelected() || botMantener.isSelected()))
             {
-                botMantener.setText("Parar");
                 GestorFiltros.setEstadoMotor(EstadoMotor.ENCENDIDO);
                 mando.estadoDelmotor.setText("Encendido"); 
                 pal3.setBounds(175, 150, 50, 50);
-            }
-            else
-            {
-                botMantener.setText("Mantener");
-                botMantener.setSelected(false);
-                
-                if(!botMantener.isSelected() && mando.estadoDelmotor.getText() == "Manteniendo Velocidad")
-                {
-                   mando.estadoDelmotor.setText("Encendido");
-                   GestorFiltros.setEstadoMotor(EstadoMotor.ENCENDIDO);
-                }
-
             }
         }
         }
@@ -182,7 +169,7 @@ public class Palanca extends JPanel{
         @Override
         public void actionPerformed(ActionEvent event){
             
-            if(botReiniciar.isSelected() && botParar.isSelected() && mando.botonEncender.isSelected() && GestorFiltros.getEstadoMotor()!=EstadoMotor.MANTENER)
+            if(botReiniciar.isSelected() && botParar.isSelected() && mando.botonEncender.isSelected())
             {
                 GestorFiltros.setEstadoMotor(EstadoMotor.REINICIAR);
                 mando.estadoDelmotor.setText("REINICIANDO"); 
