@@ -13,6 +13,7 @@ public class CalcularVelocidad implements Filtro{
     
     private double incrementoRevoluciones = 0;
     private double revolucionesAlmacenadas = 0;
+    private boolean manteniendo = false;
     
     @Override
     public double ejecutar(double revoluciones, EstadoMotor estadoMotor){
@@ -22,7 +23,12 @@ public class CalcularVelocidad implements Filtro{
             case ACELERANDO:
                     incrementoRevoluciones=100;
                  break;
-                 
+            
+            case ACELERANDOAUTO:
+                    incrementoRevoluciones=100;
+                    manteniendo = false;
+                 break;
+                
             case FRENANDO:
                     incrementoRevoluciones=-100;
                  break;
@@ -34,15 +40,14 @@ public class CalcularVelocidad implements Filtro{
                     revolucionesAlmacenadas = 0;
                  break;
             case MANTENER:
-                    if(revolucionesAlmacenadas==0){
+                    if(!manteniendo){
                         revolucionesAlmacenadas=revoluciones;
                         GestorFiltros.setVelocidadAlmacenada(revoluciones);
+                        manteniendo=true;
                     }
-                    else{
-                        if(revoluciones>revolucionesAlmacenadas)incrementoRevoluciones=0;
-                        else incrementoRevoluciones=10;
-                    }
-                    System.out.println(revoluciones);
+                    if(revoluciones>revolucionesAlmacenadas)incrementoRevoluciones=0;
+                    else incrementoRevoluciones=10;
+
                     break;
             case REINICIAR:
                     if(revoluciones>(revolucionesAlmacenadas+50)) incrementoRevoluciones=-100;
