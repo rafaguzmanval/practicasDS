@@ -1,19 +1,17 @@
 
-require_relative 'PrototipoBicicleta'
-require_relative 'PrototipoCarrera'
-
 class FactoriaCarreraYBicicleta
 
+  private
   def initialize
   end
 
-  def crearPrototipoBicicleta
-    return PrototipoBicicleta.new
+  public
+  def crearBicicleta
+
   end
 
-  def crearPrototipoCarrera
-    return PrototipoCarrera.new
-  end
+  def crearCarrera
 
+  end
 
 end

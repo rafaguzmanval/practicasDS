@@ -1,13 +1,33 @@
 
-require_relative 'BicicletaCarretera'
-require_relative 'BicicletaMontana'
+require_relative 'FactoriaCarreraYBicicleta'
 
 class PrototipoBicicleta
-  def crearPrototipoBicicletaCarretera
-    clone
+
+  attr_reader :compitiendo
+
+  private
+  def initialize
+    @identificador
+    @compitiendo = true
   end
 
-  def crearPrototipoBicicletaMontana
-
+  public
+  def setId(identificador)
+    @identificador = identificador
   end
+
+  def competir
+      while(@compitiendo)
+
+      end
+  end
+
+  def finalizar
+    @compitiendo = false
+  end
+
+  def retirarse
+    @compitiendo = false
+  end
+
 end

@@ -1,10 +1,10 @@
-require_relative 'PrototipoCarrera'
 
-class CarreraCarretera < PrototipoCarrera
+require_relative 'PrototipoCarrera'
+class CarreraMontana < PrototipoCarrera
 
   def initialize
     super
-    @porcentaje_bicis_a_retirar = 10
+    @porcentaje_bicis_a_retirar = 20
   end
 
   def retirarBicicletas
