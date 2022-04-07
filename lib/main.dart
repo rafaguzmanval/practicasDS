@@ -59,7 +59,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
   final data = [
     new ValorEmpresa(0, 0),
@@ -95,17 +94,6 @@ class _MyHomePageState extends State<MyHomePage> {
     new ValorEmpresa(30, 0),
   ];
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -128,9 +116,9 @@ class _MyHomePageState extends State<MyHomePage> {
         )
 
       ),
-        floatingActionButton: FloatingActionButton(child: Icon(Icons.add),onPressed: (){
-          _actualizar();
-        })
+      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),onPressed: (){
+        _actualizar();
+      })
     );
 
   }
@@ -149,13 +137,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _actualizar () {
-    var rng = Random();
+     setState(() {
+       var rng = Random();
 
-    for(int i = 0; i<29; i++){
-      data[i].valor = data[i+1].valor;
-    }
+       for(int i = 1; i<30; i++){
+         data[i].valor = data[i+1].valor;
+       }
 
-    data[29].valor = rng.nextInt(10000000);
-    print(data[29].valor);
+       data[30].valor = rng.nextInt(10000000);
+     });
   }
 }
