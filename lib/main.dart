@@ -60,37 +60,37 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   final data = [
-    new ValorEmpresa(0, 1500000),
-    new ValorEmpresa(1, 1735000),
-    new ValorEmpresa(2, 1678000),
-    new ValorEmpresa(3, 1890000),
-    new ValorEmpresa(4, 1907000),
-    new ValorEmpresa(5, 2300000),
-    new ValorEmpresa(6, 2360000),
-    new ValorEmpresa(7, 1980000),
-    new ValorEmpresa(8, 2654000),
-    new ValorEmpresa(9, 2789070),
-    new ValorEmpresa(10, 3020000),
-    new ValorEmpresa(11, 3245900),
-    new ValorEmpresa(12, 4098500),
-    new ValorEmpresa(13, 4500000),
-    new ValorEmpresa(14, 4456500),
-    new ValorEmpresa(15, 3900500),
-    new ValorEmpresa(16, 5123400),
-    new ValorEmpresa(17, 5589000),
-    new ValorEmpresa(18, 5940000),
-    new ValorEmpresa(19, 6367000),
-    new ValorEmpresa(20, 7367000),
-    new ValorEmpresa(21, 3245900),
-    new ValorEmpresa(22, 4098500),
-    new ValorEmpresa(23, 4500000),
-    new ValorEmpresa(24, 4456500),
-    new ValorEmpresa(25, 3900500),
-    new ValorEmpresa(26, 5123400),
-    new ValorEmpresa(27, 5589000),
-    new ValorEmpresa(28, 5940000),
-    new ValorEmpresa(29, 6367000),
-    new ValorEmpresa(30, 7367000),
+    new ValorEmpresa(0, 0),
+    new ValorEmpresa(1, 0),
+    new ValorEmpresa(2, 0),
+    new ValorEmpresa(3, 0),
+    new ValorEmpresa(4, 0),
+    new ValorEmpresa(5, 0),
+    new ValorEmpresa(6, 0),
+    new ValorEmpresa(7, 0),
+    new ValorEmpresa(8, 0),
+    new ValorEmpresa(9, 0),
+    new ValorEmpresa(10, 0),
+    new ValorEmpresa(11, 0),
+    new ValorEmpresa(12, 0),
+    new ValorEmpresa(13, 0),
+    new ValorEmpresa(14, 0),
+    new ValorEmpresa(15, 0),
+    new ValorEmpresa(16, 0),
+    new ValorEmpresa(17, 0),
+    new ValorEmpresa(18, 0),
+    new ValorEmpresa(19, 0),
+    new ValorEmpresa(20, 0),
+    new ValorEmpresa(21, 0),
+    new ValorEmpresa(22, 0),
+    new ValorEmpresa(23, 0),
+    new ValorEmpresa(24, 0),
+    new ValorEmpresa(25, 0),
+    new ValorEmpresa(26, 0),
+    new ValorEmpresa(27, 0),
+    new ValorEmpresa(28, 0),
+    new ValorEmpresa(29, 0),
+    new ValorEmpresa(30, 0),
   ];
 
   void _incrementCounter() {
@@ -123,7 +123,10 @@ class _MyHomePageState extends State<MyHomePage> {
         // in the middle of the parent.
         child: Expanded(
           child: new charts.LineChart(_getSeriesData(), animate: true,),
-        ),)
+        ),
+      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),onPressed: (){
+        _actualizar();
+      }))
     );
 
   }
@@ -139,5 +142,15 @@ class _MyHomePageState extends State<MyHomePage> {
       )
     ];
     return series;
+  }
+
+  void _actualizar () {
+    var rng = Random();
+
+    for(int i = 0; i<29; i++){
+      data(i).valor = data(i+1).valor;
+    }
+
+    data(29).valor = rng.nextInt(10000000);
   }
 }
