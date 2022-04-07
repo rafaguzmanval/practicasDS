@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -6,8 +8,8 @@ void main() {
 }
 
 class ValorEmpresa {
-  final int valor;
-  final int hora;
+  int valor;
+  int hora;
 
   ValorEmpresa(this.hora, this.valor);
 }
@@ -124,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Expanded(
           child: new charts.LineChart(_getSeriesData(), animate: true,),
         ),
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),onPressed: (){
+        floatingActionButton: FloatingActionButton(child: Icon(Icons.add),onPressed: (){
         _actualizar();
       }))
     );
@@ -148,9 +150,9 @@ class _MyHomePageState extends State<MyHomePage> {
     var rng = Random();
 
     for(int i = 0; i<29; i++){
-      data(i).valor = data(i+1).valor;
+      data[i].valor = data[i+1].valor;
     }
 
-    data(29).valor = rng.nextInt(10000000);
+    data[29].valor = rng.nextInt(10000000);
   }
 }
