@@ -125,10 +125,12 @@ class _MyHomePageState extends State<MyHomePage> {
         // in the middle of the parent.
         child: Expanded(
           child: new charts.LineChart(_getSeriesData(), animate: true,),
-        ),
+        )
+
+      ),
         floatingActionButton: FloatingActionButton(child: Icon(Icons.add),onPressed: (){
-        _actualizar();
-      }))
+          _actualizar();
+        })
     );
 
   }
@@ -154,5 +156,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     data[29].valor = rng.nextInt(10000000);
+    print(data[29].valor);
   }
 }
