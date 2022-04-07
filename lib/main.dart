@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 void main() {
   runApp(const MyApp());
+}
+
+class ValorEmpresa {
+  final int valor;
+  final int hora;
+
+  ValorEmpresa(this.hora, this.valor);
 }
 
 class MyApp extends StatelessWidget {
@@ -10,6 +18,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -50,6 +59,40 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  final data = [
+    new ValorEmpresa(0, 1500000),
+    new ValorEmpresa(1, 1735000),
+    new ValorEmpresa(2, 1678000),
+    new ValorEmpresa(3, 1890000),
+    new ValorEmpresa(4, 1907000),
+    new ValorEmpresa(5, 2300000),
+    new ValorEmpresa(6, 2360000),
+    new ValorEmpresa(7, 1980000),
+    new ValorEmpresa(8, 2654000),
+    new ValorEmpresa(9, 2789070),
+    new ValorEmpresa(10, 3020000),
+    new ValorEmpresa(11, 3245900),
+    new ValorEmpresa(12, 4098500),
+    new ValorEmpresa(13, 4500000),
+    new ValorEmpresa(14, 4456500),
+    new ValorEmpresa(15, 3900500),
+    new ValorEmpresa(16, 5123400),
+    new ValorEmpresa(17, 5589000),
+    new ValorEmpresa(18, 5940000),
+    new ValorEmpresa(19, 6367000),
+    new ValorEmpresa(20, 7367000),
+    new ValorEmpresa(21, 3245900),
+    new ValorEmpresa(22, 4098500),
+    new ValorEmpresa(23, 4500000),
+    new ValorEmpresa(24, 4456500),
+    new ValorEmpresa(25, 3900500),
+    new ValorEmpresa(26, 5123400),
+    new ValorEmpresa(27, 5589000),
+    new ValorEmpresa(28, 5940000),
+    new ValorEmpresa(29, 6367000),
+    new ValorEmpresa(30, 7367000),
+  ];
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -78,38 +121,23 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        child: Expanded(
+          child: new charts.LineChart(_getSeriesData(), animate: true,),
+        ),)
     );
+
+  }
+
+  List<charts.Series<ValorEmpresa, int>> _getSeriesData() {
+    List<charts.Series<ValorEmpresa, int>> series = [
+      charts.Series(
+          id: "Sales",
+          data: data,
+          domainFn: (ValorEmpresa series, _) => series.hora,
+          measureFn: (ValorEmpresa series, _) => series.valor,
+          colorFn: (ValorEmpresa series, _) => charts.MaterialPalette.blue.shadeDefault
+      )
+    ];
+    return series;
   }
 }
