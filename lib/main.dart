@@ -209,13 +209,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _actualizar () {
      setState(() {
-      /* var rng = Random();
+      var rng = Random();
 
        for(int i = 1; i<30; i++){
-         data[i].valor = data[i+1].valor;
+         merca.empresas[cont].data[i].valor = merca.empresas[cont].data[i+1].valor;
        }
 
-       data[30].valor = rng.nextInt(10000000);*/
+      merca.empresas[cont].data[30].valor = rng.nextInt(10000000);
      });
   }
 }

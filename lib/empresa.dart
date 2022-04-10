@@ -4,12 +4,12 @@ import 'package:proyecto_bolsa/valorEmpresa.dart';
 class empresa{
 
   var nombre;
-  var data = [new ValorEmpresa(0, 0), new ValorEmpresa(1, 0)];
+  List<ValorEmpresa> data = [];
 
   empresa(n)
   {
     this.nombre = n;
-    /*var dat = [
+    this.data = [
       new ValorEmpresa(0, 0),
       new ValorEmpresa(1, 0),
       new ValorEmpresa(2, 0),
@@ -43,7 +43,6 @@ class empresa{
       new ValorEmpresa(30, 0),
     ];
 
-    data = dat;*/
 
 
   }
