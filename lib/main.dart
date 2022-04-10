@@ -59,8 +59,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   int cont=0;
-  var nombre = 'Empresa Defecto';
+
   var merca = new mercado();
+
+  var nombre = 'Empresa defecto';
+
 
 
   @override
@@ -93,6 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }*/
 
   Widget build(BuildContext context) {
+    nombre = merca.empresas[cont].nombre;
     return Scaffold(
       key: GlobalKey<ScaffoldState>(),
       appBar: AppBar(
