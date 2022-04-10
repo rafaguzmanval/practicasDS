@@ -1,17 +1,14 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:proyecto_bolsa/empresa.dart';
+import 'package:proyecto_bolsa/mercado.dart';
+import 'valorEmpresa.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class ValorEmpresa {
-  int valor;
-  int hora;
-
-  ValorEmpresa(this.hora, this.valor);
-}
 
 class MyApp extends StatelessWidget {
 
@@ -60,42 +57,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var nombre = 'Empresa 1';
-  int cont=0;
 
-  final data = [
-    new ValorEmpresa(0, 0),
-    new ValorEmpresa(1, 0),
-    new ValorEmpresa(2, 0),
-    new ValorEmpresa(3, 0),
-    new ValorEmpresa(4, 0),
-    new ValorEmpresa(5, 0),
-    new ValorEmpresa(6, 0),
-    new ValorEmpresa(7, 0),
-    new ValorEmpresa(8, 0),
-    new ValorEmpresa(9, 0),
-    new ValorEmpresa(10, 0),
-    new ValorEmpresa(11, 0),
-    new ValorEmpresa(12, 0),
-    new ValorEmpresa(13, 0),
-    new ValorEmpresa(14, 0),
-    new ValorEmpresa(15, 0),
-    new ValorEmpresa(16, 0),
-    new ValorEmpresa(17, 0),
-    new ValorEmpresa(18, 0),
-    new ValorEmpresa(19, 0),
-    new ValorEmpresa(20, 0),
-    new ValorEmpresa(21, 0),
-    new ValorEmpresa(22, 0),
-    new ValorEmpresa(23, 0),
-    new ValorEmpresa(24, 0),
-    new ValorEmpresa(25, 0),
-    new ValorEmpresa(26, 0),
-    new ValorEmpresa(27, 0),
-    new ValorEmpresa(28, 0),
-    new ValorEmpresa(29, 0),
-    new ValorEmpresa(30, 0),
-  ];
+  int cont=0;
+  var nombre = 'Empresa Defecto';
+  var merca = new mercado();
+
 
   @override
   /*Widget build(BuildContext context) {
@@ -169,8 +135,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: new MaterialButton(child: Text('->', style: TextStyle(color: Colors.white)),onPressed: (){
                           //Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp2()));
                           setState(() {
-                            this.nombre = 'Empresa ' + ((this.cont)+1).toString();
-                            this.cont= (this.cont + 1) % 2;
+                            this.nombre = this.merca.empresas[cont].nombre;
+                            this.cont= (this.cont + 1) % merca.empresas.length;
                           });
                         }, color: Colors.blue),
                       ),
@@ -232,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
     List<charts.Series<ValorEmpresa, int>> series = [
       charts.Series(
           id: "Sales",
-          data: data,
+          data: merca.empresas[cont].data,
           domainFn: (ValorEmpresa series, _) => series.hora,
           measureFn: (ValorEmpresa series, _) => series.valor,
           colorFn: (ValorEmpresa series, _) => charts.MaterialPalette.blue.shadeDefault
@@ -243,13 +209,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _actualizar () {
      setState(() {
-       var rng = Random();
+      /* var rng = Random();
 
        for(int i = 1; i<30; i++){
          data[i].valor = data[i+1].valor;
        }
 
-       data[30].valor = rng.nextInt(10000000);
+       data[30].valor = rng.nextInt(10000000);*/
      });
   }
 }
