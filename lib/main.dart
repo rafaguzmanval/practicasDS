@@ -121,11 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: new MaterialButton(child: Text('<-', style: TextStyle(color: Colors.white)),onPressed: (){
                           setState(() {
                             this.nombre = this.merca.empresas[cont].nombre;
-                            this.cont = this.cont - 1;
-                            if(this.cont < 0)
-                              {
-                                this.cont = this.merca.empresas.length-1;
-                              }
+                            this.cont = (this.cont - 1) % this.merca.empresas.length;
 
                           });
                         }, color: Colors.blue),
