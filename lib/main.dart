@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -61,6 +60,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var nombre = 'Empresa 1';
+  int cont=0;
 
   final data = [
     new ValorEmpresa(0, 0),
@@ -137,11 +138,45 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             children: <Widget>[
               Container(
-                child: const Text(
-                  'Empresa número 1',
-                  style: TextStyle(fontSize: 20),
-                ),
-                padding: const EdgeInsets.fromLTRB(20, 40, 20, 5),
+                  margin: const EdgeInsets.only(top: 10),
+                  width: 650,
+                  height: 150,
+                  child:
+                    new Row(
+                    children: [
+                      new Container(
+                        margin: const EdgeInsets.only(left: 100),
+                        height: 50,
+                        width: 100,
+                        child: new MaterialButton(child: Text('<-', style: TextStyle(color: Colors.white)),onPressed: (){
+                          _actualizar();
+                        }, color: Colors.blue),
+                      ),
+
+                      new Container(
+                        margin: const EdgeInsets.only(left: 100),
+                        height: 50,
+                        width: 100,
+                        child:Text(
+                          this.nombre,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                      new Container(
+                        margin: const EdgeInsets.only(left: 100),
+                        height: 50,
+                        width: 100,
+                        child: new MaterialButton(child: Text('->', style: TextStyle(color: Colors.white)),onPressed: (){
+                          //Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp2()));
+                          setState(() {
+                            this.nombre = 'Empresa ' + ((this.cont)+1).toString();
+                            this.cont= (this.cont + 1) % 2;
+                          });
+                        }, color: Colors.blue),
+                      ),
+        ],          )
+
+
               ),
               Container(
                 child: const Text(
@@ -152,18 +187,38 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 10),
-                width: 350,
-                height: 150,
-                child: new charts.LineChart(_getSeriesData(), animate: true,),
-              ),
-              Container(
+                width: 650,
+                height: 450,
+                child: new Row(
+                  children: [
+
+                new Container(
+                    margin: const EdgeInsets.only(top: 10),
+                    width: 350,
+                    height: 150,
+                    child: new charts.LineChart(_getSeriesData(), animate: true,),
+                    ),
+
+                    new Container(
+                      margin: const EdgeInsets.only(left: 100),
+                      height: 50,
+                      width: 100,
+                      child: new MaterialButton(child: Text('Actualizar', style: TextStyle(color: Colors.white)),onPressed: (){
+                        _actualizar();
+                      }, color: Colors.blue),
+                    ),
+
+
+                  ],),),
+
+              /*Container(
                 margin: const EdgeInsets.only(top: 10),
                 width: 350,
-                height: 150,
+                height: 50,
                 child: new FloatingActionButton(child: Icon(Icons.add),onPressed: (){
                         _actualizar();
                       }),
-              ),
+              ),*/
             ],
           ),
         ),
