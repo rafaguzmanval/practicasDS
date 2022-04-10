@@ -217,19 +217,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _actualizar () {
      setState(() {
-      var rng = Random();
 
-      for(int i = 0; i < merca.empresas.length; i++)
-        {
-          for(int j = 1; j<30; j++){
-            merca.empresas[i].data[j].valor = merca.empresas[i].data[j+1].valor;
-          }
-        }
-
-      for(int i = 0; i < merca.empresas.length; i++)
-        {
-          merca.empresas[i].data[30].valor = rng.nextInt(10000000);
-        }
+       merca.actualizarMercado();
 
      });
   }
