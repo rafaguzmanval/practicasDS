@@ -123,7 +123,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                 this.cont = this.merca.empresas.length-1;
                               }
 
-
                           });
                         }, color: Colors.blue),
                       ),
@@ -142,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 50,
                         width: 100,
                         child: new MaterialButton(child: Text('->', style: TextStyle(color: Colors.white)),onPressed: (){
-                          //Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp2()));
+
                           setState(() {
                             this.nombre = this.merca.empresas[cont].nombre;
                             this.cont= (this.cont + 1) % merca.empresas.length;
@@ -220,11 +219,18 @@ class _MyHomePageState extends State<MyHomePage> {
      setState(() {
       var rng = Random();
 
-       for(int i = 1; i<30; i++){
-         merca.empresas[cont].data[i].valor = merca.empresas[cont].data[i+1].valor;
-       }
+      for(int i = 0; i < merca.empresas.length; i++)
+        {
+          for(int j = 1; j<30; j++){
+            merca.empresas[i].data[j].valor = merca.empresas[i].data[j+1].valor;
+          }
+        }
 
-      merca.empresas[cont].data[30].valor = rng.nextInt(10000000);
+      for(int i = 0; i < merca.empresas.length; i++)
+        {
+          merca.empresas[i].data[30].valor = rng.nextInt(10000000);
+        }
+
      });
   }
 }
