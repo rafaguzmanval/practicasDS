@@ -15,7 +15,9 @@ class ValorEmpresa {
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({Key? key}) : super(key: key);
+
 
   // This widget is the root of your application.
   @override
@@ -95,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  /*Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -108,10 +110,10 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Expanded(
+        child: Center(
           child: new charts.LineChart(_getSeriesData(), animate: true,),
         )
 
@@ -121,6 +123,54 @@ class _MyHomePageState extends State<MyHomePage> {
       })
     );
 
+  }*/
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: GlobalKey<ScaffoldState>(),
+      appBar: AppBar(
+        title: const Text('Dynamic'),
+      ),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Container(
+                child: const Text(
+                  'Empresa número 1',
+                  style: TextStyle(fontSize: 20),
+                ),
+                padding: const EdgeInsets.fromLTRB(20, 40, 20, 5),
+              ),
+              Container(
+                child: const Text(
+                  'Pulsa el botón para generar nuevos valores',
+                ),
+                padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+                alignment: Alignment.centerLeft,
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                width: 350,
+                height: 150,
+                child: new charts.LineChart(_getSeriesData(), animate: true,),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                width: 350,
+                height: 150,
+                child: new FloatingActionButton(child: Icon(Icons.add),onPressed: (){
+                        _actualizar();
+                      }),
+              ),
+            ],
+          ),
+        ),
+      ),
+
+
+    );
   }
 
   List<charts.Series<ValorEmpresa, int>> _getSeriesData() {
