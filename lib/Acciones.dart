@@ -1,0 +1,12 @@
+
+
+
+class Acciones
+{
+
+  var AccionesEmpresa = [];
+
+
+
+
+}
