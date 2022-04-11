@@ -63,9 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int cont=0;
 
-  var mercado = new Mercado();
-
   var jugador = new Jugador();
+
+  var mercado = new Mercado();
 
   var nombre = 'Empresa defecto';
 
@@ -73,7 +73,12 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<String> todos=[];
   @override
   Widget build(BuildContext context) {
+
+    mercado.addJugador(jugador);
     nombre = mercado.empresas[cont].nombre;
+
+
+
     return DefaultTabController(
       initialIndex: 0,
       length: 3,
@@ -115,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: MaterialButton(child: Text('<-', style: TextStyle(color: Colors.white)),onPressed: (){
                                 setState(() {
                                   this.nombre = this.mercado.getEmpresa(cont).nombre;
-                                  this.cont = (this.cont - 1) % this.mercado.empresas.length;
+                                  this.cont = (this.cont - 1) % this.mercado.empresas.length as int;
 
                                 });
                               }, color: Colors.blue),
@@ -137,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: MaterialButton(child: Text('->', style: TextStyle(color: Colors.white)),onPressed: (){
                                 setState(() {
                                   this.nombre = this.mercado.getEmpresa(cont).nombre;
-                                  this.cont= (this.cont + 1) % mercado.empresas.length;
+                                  this.cont= (this.cont + 1) % mercado.empresas.length as int ;
                                 });
                               }, color: Colors.blue),
                             ),
@@ -274,7 +279,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       var precioAccion = mercado.getEmpresa(cont).getPrecioAccion();
       String nombreEmpresaActual = mercado.getEmpresa(cont).nombre;
-      if(jugador.getSaldo() > precioAccion)
+      if(jugador.getSaldo() > (precioAccion * numeroAcciones))
       {
         jugador.modificarSaldo(-precioAccion * numeroAcciones);
 
@@ -291,8 +296,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
         todos.add(numeroAcciones.toString() + ' acciones compradas de ' + mercado.getEmpresa(cont).nombre + ' al precio de ' + (precioAccion * numeroAcciones).toString() + '\$ , '
             + precioAccion.toString() + '\$ por accion');
+        print(todos.last);
       }
     });
+
 
 
   }
@@ -305,11 +312,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
       int indice = jugador.acciones.buscarAccionesEmpresa(nombreEmpresaActual);
       if (indice > -1) {
-        if (jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal() >= numeroAcciones) {
+        if (jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal() >= numeroAcciones && numeroAcciones > 0 && jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal() > 0) {
           jugador.modificarSaldo(precioAccion * numeroAcciones);
-          jugador.acciones.accionesEmpresas[indice].venderAcciones(numeroAcciones, nombreEmpresaActual);
+          jugador.acciones.accionesEmpresas[indice].eliminarAcciones(numeroAcciones, nombreEmpresaActual);
           todos.add(numeroAcciones.toString() + ' acciones vendidas de ' + mercado.getEmpresa(cont).nombre + ' al precio de ' +
                   (precioAccion * numeroAcciones).toString() + '\$ , ' + precioAccion.toString() + '\$ por accion');
+          print(todos.last);
         }
       }
     });

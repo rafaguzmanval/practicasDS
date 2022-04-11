@@ -24,17 +24,16 @@ class AccionesEmpresa
     return acciones;
   }
 
-  void venderAcciones(int nAcciones, String nombre)
+  void eliminarAcciones(int nAcciones, String nombre)
   {
       int accionesVendidas = nAcciones;
 
-      for(int i = 0; i < paqueteAcciones.length;i++)
+      for(int i = 0; i < paqueteAcciones.length && accionesVendidas > 0 ;i++)
         {
-          if(accionesVendidas > (paqueteAcciones[i].NumeroAccionesCompradas as int))
+          if(accionesVendidas >= (paqueteAcciones[i].NumeroAccionesCompradas as int))
             {
               accionesVendidas -= paqueteAcciones[i].NumeroAccionesCompradas as int;
               paqueteAcciones.removeAt(i);
-
             }
           else
             {

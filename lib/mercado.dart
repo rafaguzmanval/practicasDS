@@ -7,6 +7,7 @@ import 'empresa.dart';
 class Mercado{
   var empresas = [];
   var gestorF;
+  var jugador;
 
   var nombreEmpresas = ['Apple','Microsoft','Tesla','Amazon','Google','Yahoo','Sony','CDproyect','Nintendo','Samsung','Huawei','Xiaomi','Electronic Arts','Ubisoft'
     ,'Asus','Toyota','BMW','Inditex','Repsol','Telefonica','Vodafone','Orange','Mediaset','Iberdrola','Mapfre','Endesa','CaixaBank','BBVA','Santander','IBM','Facebook',
@@ -21,6 +22,7 @@ class Mercado{
 
     var rand = Random();
 
+    this.jugador = jugador;
 
     for(int i = 0 ; i < 7; i++)
       {
@@ -38,6 +40,10 @@ class Mercado{
 
   }
 
+  void addJugador(jugador)
+  {
+    this.jugador = jugador;
+  }
 
   void actualizarMercado()
   {
@@ -68,7 +74,10 @@ class Mercado{
             var nuevaEmpresa = empresa(nombreEmpresas[numero]);
 
             empresas.add(nuevaEmpresa);
+
+            print(nuevaEmpresa.nombre + ' ha entrado en el mercado');
           }
+
 
       }
     else
@@ -88,7 +97,18 @@ class Mercado{
               min = i;
             }
           }
+          // Se eliminan las acciones del jugador
+
+          var indice = jugador.acciones.buscarAccionesEmpresa(empresas[min].nombre);
+          print(empresas[min].nombre + ' se ha retirado del mercado');
+          print('El jugador ha perdido : ' + jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal().toString() + ' en ' + empresas[min].nombre);
+          jugador.acciones.accionesEmpresas.remove(indice);
+
+
+
           empresas.removeAt(min);
+
+
         }
 
 
