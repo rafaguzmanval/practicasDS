@@ -1,16 +1,20 @@
 import 'dart:math';
 
+import 'package:proyecto_bolsa/GestorFiltros.dart';
+
 import 'empresa.dart';
 
-class mercado{
+class Mercado{
   var empresas = [];
+  var gestorF;
 
-  mercado()
+  Mercado()
   {
-    var empresa1 = new empresa('Apple');
-    var empresa2 = new empresa('Microsoft');
-    var empresa3 = new empresa('Tesla');
-    var empresa4 = new empresa('Amazon');
+    gestorF = GestorFiltros(this);
+    var empresa1 = empresa('Apple');
+    var empresa2 = empresa('Microsoft');
+    var empresa3 = empresa('Tesla');
+    var empresa4 = empresa('Amazon');
 
     empresas.add(empresa1);
     empresas.add(empresa2);
@@ -18,26 +22,30 @@ class mercado{
     empresas.add(empresa4);
   }
 
+
   void actualizarMercado()
   {
-    var rng = Random();
-
-    for(int i = 0; i < empresas.length; i++)
-    {
-      for(int j = 1; j<30; j++){
-        empresas[i].data[j].valor = empresas[i].data[j+1].valor;
+    for(int i =0; i < empresas.length; i++)
+      {
+        for(int k = 0 ; k < empresas[i].data.length - 1; k++)
+        {
+          empresas[i].data[k].valor = empresas[i].data[k + 1].valor;
+        }
       }
-    }
 
-    for(int i = 0; i < empresas.length; i++)
-    {
-      empresas[i].data[30].valor = rng.nextInt(10000000);
-    }
+
+
+    gestorF.PeticionFiltros();
   }
 
   empresa getEmpresa(int i)
   {
     return empresas[i];
+  }
+
+  int getNumeroEmpresas()
+  {
+    return empresas.length;
   }
 
 

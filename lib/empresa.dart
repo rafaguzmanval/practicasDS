@@ -1,10 +1,15 @@
 
+import 'dart:math';
+
 import 'package:proyecto_bolsa/valorEmpresa.dart';
 
 class empresa{
 
   var nombre;
   List<ValorEmpresa> data = [];
+  
+  var suerte = Random();
+  
 
   empresa(n)
   {
@@ -40,7 +45,7 @@ class empresa{
       new ValorEmpresa(27, 0),
       new ValorEmpresa(28, 0),
       new ValorEmpresa(29, 0),
-      new ValorEmpresa(30, 0),
+      new ValorEmpresa(30, suerte.nextInt(1000000)),
     ];
 
 

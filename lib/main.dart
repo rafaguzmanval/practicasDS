@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int cont=0;
 
-  var merca = new mercado();
+  var mercado = new Mercado();
 
   var nombre = 'Empresa defecto';
 
@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }*/
 
   Widget build(BuildContext context) {
-    nombre = merca.getEmpresa(cont).nombre;
+    nombre = mercado.getEmpresa(cont).nombre;
     return Scaffold(
       key: GlobalKey<ScaffoldState>(),
       appBar: AppBar(
@@ -120,8 +120,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 100,
                         child: new MaterialButton(child: Text('<-', style: TextStyle(color: Colors.white)),onPressed: (){
                           setState(() {
-                            this.nombre = this.merca.getEmpresa(cont).nombre;
-                            this.cont = (this.cont - 1) % this.merca.empresas.length;
+                            this.nombre = this.mercado.getEmpresa(cont).nombre;
+                            this.cont = (this.cont - 1) % this.mercado.empresas.length;
 
                           });
                         }, color: Colors.blue),
@@ -143,8 +143,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: new MaterialButton(child: Text('->', style: TextStyle(color: Colors.white)),onPressed: (){
 
                           setState(() {
-                            this.nombre = this.merca.getEmpresa(cont).nombre;
-                            this.cont= (this.cont + 1) % merca.empresas.length;
+                            this.nombre = this.mercado.getEmpresa(cont).nombre;
+                            this.cont= (this.cont + 1) % mercado.empresas.length;
                           });
                         }, color: Colors.blue),
                       ),
@@ -206,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
     List<charts.Series<ValorEmpresa, int>> series = [
       charts.Series(
           id: "Sales",
-          data: merca.getEmpresa(cont).data,
+          data: mercado.getEmpresa(cont).data,
           domainFn: (ValorEmpresa series, _) => series.hora,
           measureFn: (ValorEmpresa series, _) => series.valor,
           colorFn: (ValorEmpresa series, _) => charts.MaterialPalette.blue.shadeDefault
@@ -218,7 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _actualizar () {
      setState(() {
 
-       merca.actualizarMercado();
+       mercado.actualizarMercado();
 
      });
   }
