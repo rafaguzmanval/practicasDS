@@ -5,6 +5,8 @@ class PaqueteAccionesCompradas
 {
 
 int NumeroAccionesCompradas = 0;
-double DineroGastado = 0;
+int DineroGastado = 0;
+
+PaqueteAccionesCompradas(this.NumeroAccionesCompradas,this.DineroGastado);
 
 }

@@ -1,6 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:proyecto_bolsa/AccionesEmpresa.dart';
+import 'package:proyecto_bolsa/Jugador.dart';
+import 'package:proyecto_bolsa/PaqueteAccionesCompradas.dart';
 import 'package:proyecto_bolsa/empresa.dart';
 import 'package:proyecto_bolsa/mercado.dart';
 import 'valorEmpresa.dart';
@@ -62,10 +65,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var mercado = new Mercado();
 
+  var jugador = new Jugador();
+
   var nombre = 'Empresa defecto';
 
   final controller = TextEditingController();
-  final List<String> todos=['Vacio'];
+  final List<String> todos=[];
   @override
   Widget build(BuildContext context) {
     nombre = mercado.empresas[cont].nombre;
@@ -172,6 +177,30 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],),
                     ),
                     Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      width: 650,
+                      height: 450,
+                      child: Text(('Saldo: ' + jugador.getSaldo().toString() + '\$'))
+                    ),
+                    Container(
+                        margin: const EdgeInsets.only(top: 10),
+                        width: 650,
+                        height: 450,
+                      child: MaterialButton(child: Text('Comprar', style: TextStyle(color: Colors.white)),onPressed: (){
+                        _comprarAcciones(1);
+                      }, color: Colors.green),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      width: 650,
+                      height: 450,
+                      child: MaterialButton(child: Text('Vender', style: TextStyle(color: Colors.white)),onPressed: (){
+                        _venderAcciones(1);
+                      }, color: Colors.red),
+                    )
+                    
+
+                    /*Container(
                         margin: const EdgeInsets.only(top: 10),
                         width: 350,
                         height: 280,
@@ -194,7 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                           ],
                         )
-                    ),
+                    ),*/
                   ],
                 ),
               ),
@@ -204,7 +233,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Center(
                 child: Column(
                   children: <Widget>[
-                    Text('${todos.toString()}'),
+                    Text('${_textoDeAcciones()}'),
                   ],
                 ),
               ),
@@ -238,5 +267,62 @@ class _MyHomePageState extends State<MyHomePage> {
       mercado.actualizarMercado();
 
     });
+  }
+  
+  void _comprarAcciones(int numeroAcciones)
+  {
+    setState(() {
+      var precioAccion = mercado.getEmpresa(cont).getPrecioAccion();
+      String nombreEmpresaActual = mercado.getEmpresa(cont).nombre;
+      if(jugador.getSaldo() > precioAccion)
+      {
+        jugador.modificarSaldo(-precioAccion * numeroAcciones);
+
+        var paquete = new PaqueteAccionesCompradas(numeroAcciones,precioAccion);
+        int indice = jugador.acciones.buscarAccionesEmpresa(nombreEmpresaActual);
+        if(indice > -1)
+          {
+            jugador.acciones.accionesEmpresas[indice].paqueteAcciones.add(paquete);
+          }
+        else
+          {
+            jugador.acciones.accionesEmpresas.add(new AccionesEmpresa(nombreEmpresaActual,paquete));
+          }
+
+        todos.add(numeroAcciones.toString() + ' acciones compradas de ' + mercado.getEmpresa(cont).nombre + ' al precio de ' + (precioAccion * numeroAcciones).toString() + '\$ , '
+            + precioAccion.toString() + '\$ por accion');
+      }
+    });
+
+
+  }
+  
+  void _venderAcciones(int numeroAcciones)
+  {
+    setState(() {
+      var precioAccion = mercado.getEmpresa(cont).getPrecioAccion();
+      String nombreEmpresaActual = mercado.getEmpresa(cont).nombre;
+
+      int indice = jugador.acciones.buscarAccionesEmpresa(nombreEmpresaActual);
+      if (indice > -1) {
+        if (jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal() <= numeroAcciones) {
+          jugador.modificarSaldo(precioAccion * numeroAcciones);
+          jugador.acciones.accionesEmpresas[indice].venderAcciones(numeroAcciones, nombreEmpresaActual);
+          todos.add(numeroAcciones.toString() + ' acciones vendidas de ' + mercado.getEmpresa(cont).nombre + ' al precio de ' +
+                  (precioAccion * numeroAcciones).toString() + '\$ , ' + precioAccion.toString() + '\$ por accion');
+        }
+      }
+    });
+  }
+
+  String _textoDeAcciones()
+  {
+    String devolver = '';
+    for(int i = 0; i < todos.length; i++)
+      {
+        devolver += todos[i] + '\n';
+      }
+
+    return devolver;
   }
 }
