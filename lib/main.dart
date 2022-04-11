@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }*/
 
   Widget build(BuildContext context) {
-    nombre = merca.empresas[cont].nombre;
+    nombre = merca.getEmpresa(cont).nombre;
     return Scaffold(
       key: GlobalKey<ScaffoldState>(),
       appBar: AppBar(
@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 100,
                         child: new MaterialButton(child: Text('<-', style: TextStyle(color: Colors.white)),onPressed: (){
                           setState(() {
-                            this.nombre = this.merca.empresas[cont].nombre;
+                            this.nombre = this.merca.getEmpresa(cont).nombre;
                             this.cont = (this.cont - 1) % this.merca.empresas.length;
 
                           });
@@ -143,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: new MaterialButton(child: Text('->', style: TextStyle(color: Colors.white)),onPressed: (){
 
                           setState(() {
-                            this.nombre = this.merca.empresas[cont].nombre;
+                            this.nombre = this.merca.getEmpresa(cont).nombre;
                             this.cont= (this.cont + 1) % merca.empresas.length;
                           });
                         }, color: Colors.blue),
@@ -206,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
     List<charts.Series<ValorEmpresa, int>> series = [
       charts.Series(
           id: "Sales",
-          data: merca.empresas[cont].data,
+          data: merca.getEmpresa(cont).data,
           domainFn: (ValorEmpresa series, _) => series.hora,
           measureFn: (ValorEmpresa series, _) => series.valor,
           colorFn: (ValorEmpresa series, _) => charts.MaterialPalette.blue.shadeDefault
