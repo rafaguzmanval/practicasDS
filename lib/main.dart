@@ -253,6 +253,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // este método introduce en la gráfica los valores que tiene una empresa.
   List<charts.Series<ValorEmpresa, int>> _getSeriesData() {
     List<charts.Series<ValorEmpresa, int>> series = [
       charts.Series(
@@ -279,21 +280,26 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       var precioAccion = mercado.getEmpresa(cont).getPrecioAccion();
       String nombreEmpresaActual = mercado.getEmpresa(cont).nombre;
+
+      //Solo se pueden comprar las acciones si el jugador tiene el dinero suficiente. Podría impedirse en la interfaz que se pudiesen añadir más de las que se pueden
       if(jugador.getSaldo() > (precioAccion * numeroAcciones))
       {
+        // se decrementa el saldo del jugador
         jugador.modificarSaldo(-precioAccion * numeroAcciones);
 
+        // se crea un nuevo paquete de acciones que se compran y se comprueba si ya existe un array de acciones de la empresa de la que se quiere comprar
         var paquete = new PaqueteAccionesCompradas(numeroAcciones,precioAccion);
         int indice = jugador.acciones.buscarAccionesEmpresa(nombreEmpresaActual);
-        if(indice > -1)
+        if(indice > -1)// si existe la empresa entonces añadimos al paquete al array ya existente
           {
             jugador.acciones.accionesEmpresas[indice].paqueteAcciones.add(paquete);
           }
         else
-          {
+          {// si no, creamos un nuevo array con los paquetes de acciones de la empresa seleccionada
             jugador.acciones.accionesEmpresas.add(new AccionesEmpresa(nombreEmpresaActual,paquete));
           }
 
+        // Se envía al historial la nueva transacción
         todos.add(numeroAcciones.toString() + ' acciones compradas de ' + mercado.getEmpresa(cont).nombre + ' al precio de ' + (precioAccion * numeroAcciones).toString() + '\$ , '
             + precioAccion.toString() + '\$ por accion');
         print(todos.last);
@@ -310,11 +316,19 @@ class _MyHomePageState extends State<MyHomePage> {
       var precioAccion = mercado.getEmpresa(cont).getPrecioAccion();
       String nombreEmpresaActual = mercado.getEmpresa(cont).nombre;
 
+      //Se buscan en las acciones del jugador si existen algunas que hayan sido compradas y que sean de la empresa que está seleccionada en el momento
       int indice = jugador.acciones.buscarAccionesEmpresa(nombreEmpresaActual);
       if (indice > -1) {
-        if (jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal() >= numeroAcciones && numeroAcciones > 0 && jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal() > 0) {
+
+        //Si el numero de acciones que se quieren vender es mayor que el que se ha comprado, no hay transacción. En la interfaz se debería impedir que se introdujesen
+        // mas de las que se tienen. Y tampoco se pueden vender 0 acciones naturalmente.
+        var accionesJugador = jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal();
+        if (accionesJugador >= numeroAcciones && numeroAcciones > 0 && accionesJugador > 0)
+        {
           jugador.modificarSaldo(precioAccion * numeroAcciones);
           jugador.acciones.accionesEmpresas[indice].eliminarAcciones(numeroAcciones, nombreEmpresaActual);
+
+          // Se envía al historial la nueva transacción
           todos.add(numeroAcciones.toString() + ' acciones vendidas de ' + mercado.getEmpresa(cont).nombre + ' al precio de ' +
                   (precioAccion * numeroAcciones).toString() + '\$ , ' + precioAccion.toString() + '\$ por accion');
           print(todos.last);
@@ -323,6 +337,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // función auxiliar para el historial de transacciones
   String _textoDeAcciones()
   {
     String devolver = '';

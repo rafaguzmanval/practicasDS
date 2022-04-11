@@ -15,6 +15,7 @@ class CadenaFiltros{
     void ejecutar(Mercado mercado)
     {
       int n = mercado.getNumeroEmpresas();
+      // se itera por cada filtro que se va a aplicar.
       for(int i = 0; i < n; i++)
         {
           var valor = mercado.getEmpresa(i).data.last.valor;

@@ -6,7 +6,7 @@ class Acciones
 
   var accionesEmpresas = [];
 
-
+// Devuelve el indice donde se encuentra la empresa. Devuelve -1 no existe o no se ha encontrado la empresa en el la cartera del jugador
   int buscarAccionesEmpresa(String nombre)
   {
     int dev = -1;

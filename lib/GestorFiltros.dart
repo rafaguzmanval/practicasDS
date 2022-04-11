@@ -11,6 +11,7 @@ class GestorFiltros{
 
   GestorFiltros(Mercado m)
   {
+    // Se inicializa la cadena y los filtros.
     cadena = new CadenaFiltros();
     cadena.addFiltro(new FiltroBeneficios());
     cadena.addFiltro(new FiltroGastos());
