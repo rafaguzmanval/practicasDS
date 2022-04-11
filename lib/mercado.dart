@@ -8,18 +8,34 @@ class Mercado{
   var empresas = [];
   var gestorF;
 
+  var nombreEmpresas = ['Apple','Microsoft','Tesla','Amazon','Google','Yahoo','Sony','CDproyect','Nintendo','Samsung','Huawei','Xiaomi','Electronic Arts','Ubisoft'
+    ,'Asus','Toyota','BMW','Inditex','Repsol','Telefonica','Vodafone','Orange','Mediaset','Iberdrola','Mapfre','Endesa','CaixaBank','BBVA','Santander','IBM','Facebook',
+    'Cocacola','Disney','Mercadona','Seat','Bitcoin','Cepsa','El Pozo','Prosegur','Mercedes','Alphabet','Alibaba','Berkshire','Netflix','Walmart','PepsiCo','SpaceX','Pfizer'
+    ,'Moderna','AstraZeneca','Adobe','Paypal','Bank of America','Mastercard','Johnson & Johnson','Nestlé','Nvidia','Intel','AMD','Visa','Warner Bros','Nike','Adidas'];
+
+  var empresasAparecidas = [];
+
   Mercado()
   {
     gestorF = GestorFiltros(this);
-    var empresa1 = empresa('Apple');
-    var empresa2 = empresa('Microsoft');
-    var empresa3 = empresa('Tesla');
-    var empresa4 = empresa('Amazon');
 
-    empresas.add(empresa1);
-    empresas.add(empresa2);
-    empresas.add(empresa3);
-    empresas.add(empresa4);
+    var rand = Random();
+
+
+    for(int i = 0 ; i < 7; i++)
+      {
+        var numero = rand.nextInt(nombreEmpresas.length);
+        while(empresasAparecidas.contains(nombreEmpresas[numero]))
+          {
+            numero = rand.nextInt(nombreEmpresas.length);
+          }
+
+        empresasAparecidas.add(nombreEmpresas[numero]);
+        var nuevaEmpresa = empresa(nombreEmpresas[numero]);
+
+        empresas.add(nuevaEmpresa);
+      }
+
   }
 
 
@@ -33,9 +49,52 @@ class Mercado{
         }
       }
 
-
-
     gestorF.PeticionFiltros();
+
+    if(empresas.length < 10)
+      {
+        var rand = Random();
+
+        if(rand.nextInt(10) < 1 && empresasAparecidas.length < nombreEmpresas.length)
+          {
+            var numero = rand.nextInt(nombreEmpresas.length);
+            while(empresasAparecidas.contains(nombreEmpresas[numero]))
+            {
+              numero = rand.nextInt(nombreEmpresas.length);
+            }
+
+            empresasAparecidas.add(nombreEmpresas[numero]);
+
+            var nuevaEmpresa = empresa(nombreEmpresas[numero]);
+
+            empresas.add(nuevaEmpresa);
+          }
+
+      }
+    else
+    {
+
+      var rand = Random();
+
+      if(rand.nextInt(10) < 3 && empresas.length > 7)
+        {
+          int min = 0;
+          int minimoValor = empresas[0].data.last.valor;
+          for(int i = 1; i < empresas.length; i++)
+          {
+            if(minimoValor > empresas[i].data.last.valor)
+            {
+              minimoValor =  empresas[i].data.last.valor;
+              min = i;
+            }
+          }
+          empresas.removeAt(min);
+        }
+
+
+    }
+
+
   }
 
   empresa getEmpresa(int i)

@@ -6,7 +6,7 @@ class FiltroBeneficios implements Filtro{
   int ejecutar(int valor)
   {
     var ran = Random();
-    var suerte = ran.nextInt(valor ~/ 4);
+    var suerte = ran.nextInt(valor ~/ 3);
     return suerte;
   }
 
