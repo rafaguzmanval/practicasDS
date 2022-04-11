@@ -305,7 +305,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       int indice = jugador.acciones.buscarAccionesEmpresa(nombreEmpresaActual);
       if (indice > -1) {
-        if (jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal() <= numeroAcciones) {
+        if (jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal() >= numeroAcciones) {
           jugador.modificarSaldo(precioAccion * numeroAcciones);
           jugador.acciones.accionesEmpresas[indice].venderAcciones(numeroAcciones, nombreEmpresaActual);
           todos.add(numeroAcciones.toString() + ' acciones vendidas de ' + mercado.getEmpresa(cont).nombre + ' al precio de ' +
