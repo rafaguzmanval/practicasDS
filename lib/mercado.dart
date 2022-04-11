@@ -35,5 +35,10 @@ class mercado{
     }
   }
 
+  empresa getEmpresa(int i)
+  {
+    return empresas[i];
+  }
+
 
 }
