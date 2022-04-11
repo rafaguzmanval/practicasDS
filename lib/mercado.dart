@@ -101,8 +101,12 @@ class Mercado{
 
           var indice = jugador.acciones.buscarAccionesEmpresa(empresas[min].nombre);
           print(empresas[min].nombre + ' se ha retirado del mercado');
-          print('El jugador ha perdido : ' + jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal().toString() + ' en ' + empresas[min].nombre);
-          jugador.acciones.accionesEmpresas.remove(indice);
+
+          if(indice > -1)
+            {
+              print('El jugador ha perdido : ' + jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal().toString() + ' acciones en ' + empresas[min].nombre);
+              jugador.acciones.accionesEmpresas.remove(indice);
+            }
 
 
 
