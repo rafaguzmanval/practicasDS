@@ -64,13 +64,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var nombre = 'Empresa defecto';
 
-
-
+  final controller = TextEditingController();
+  final List<String> todos=['Vacio'];
   @override
   Widget build(BuildContext context) {
     nombre = mercado.empresas[cont].nombre;
     return DefaultTabController(
-      initialIndex: 1,
+      initialIndex: 0,
       length: 3,
       child: Scaffold(
         key: GlobalKey<ScaffoldState>(),
@@ -171,38 +171,44 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ],),
                     ),
-
                     Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      width: 650,
-                      height: 450,
-                      child: Row(
-                        children: [
+                        margin: const EdgeInsets.only(top: 10),
+                        width: 350,
+                        height: 280,
+                        child:
+                        new Column(
+                          children: [
 
-                          Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            width: 350,
-                            height: 150,
-                            child: charts.LineChart(_getSeriesData(), animate: true,),
-                          ),
+                            TextField(
+                              controller: controller,
+                            ),
+                            new Container (
+                              margin: const EdgeInsets.only(top: 20,bottom: 10),
+                              child: new FloatingActionButton(child: Icon(Icons.add),onPressed: (){
+                                setState(() {
+                                  todos.insert(0,controller.text);
+                                });
+                              }),
 
-                          Container(
-                            margin: const EdgeInsets.only(left: 100),
-                            height: 50,
-                            width: 100,
-                            child: MaterialButton(child: Text('Actualizar', style: TextStyle(color: Colors.white)),onPressed: (){
-                              _actualizar();
-                            }, color: Colors.blue),
-                          ),
-                        ],),
+                            ),
+
+                          ],
+                        )
                     ),
                   ],
                 ),
               ),
 
             ),
-            Center(
-              child: Text("Aqui va el historial"),
+            SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    Text('${todos.toString()}'),
+                  ],
+                ),
+              ),
+
             ),
             Center(
               child: Text("Aqui va otra cosa o nada"),
