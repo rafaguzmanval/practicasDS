@@ -67,138 +67,149 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   @override
-  /*Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: SingleChildScrollView(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Center(
-          child: new charts.LineChart(_getSeriesData(), animate: true,),
-        )
-
-      ),
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),onPressed: (){
-        _actualizar();
-      })
-    );
-
-  }*/
-
   Widget build(BuildContext context) {
-    nombre = mercado.getEmpresa(cont).nombre;
-    return Scaffold(
-      key: GlobalKey<ScaffoldState>(),
-      appBar: AppBar(
-        title: const Text('Dynamic'),
-      ),
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  width: 650,
-                  height: 150,
-                  child:
-                    new Row(
-                    children: [
-                      new Container(
-                        margin: const EdgeInsets.only(left: 100),
-                        height: 50,
-                        width: 100,
-                        child: new MaterialButton(child: Text('<-', style: TextStyle(color: Colors.white)),onPressed: (){
-                          setState(() {
-                            this.nombre = this.mercado.getEmpresa(cont).nombre;
-                            this.cont = (this.cont - 1) % this.mercado.empresas.length;
+    nombre = mercado.empresas[cont].nombre;
+    return DefaultTabController(
+      initialIndex: 1,
+      length: 3,
+      child: Scaffold(
+        key: GlobalKey<ScaffoldState>(),
+        appBar: AppBar(
+          title: const Text('Bolsa'),
+          bottom: const TabBar(tabs: <Widget>[
+            Tab(
+              icon: Icon(Icons.align_vertical_bottom_outlined),
+            ),
+            Tab(
+              icon: Icon(Icons.feed_outlined),
+            ),
+            Tab(
+              icon: Icon(Icons.brightness_5_sharp),
+            ),
+          ]),
+        ),
+        backgroundColor: Colors.white,
 
-                          });
-                        }, color: Colors.blue),
+        body: TabBarView(
+          children: <Widget>[
+            SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                        margin: const EdgeInsets.only(top: 10),
+                        width: 650,
+                        height: 150,
+                        child:
+                        Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(left: 100),
+                              height: 50,
+                              width: 100,
+                              child: MaterialButton(child: Text('<-', style: TextStyle(color: Colors.white)),onPressed: (){
+                                setState(() {
+                                  this.nombre = this.mercado.getEmpresa(cont).nombre;
+                                  this.cont = (this.cont - 1) % this.mercado.empresas.length;
+
+                                });
+                              }, color: Colors.blue),
+                            ),
+
+                            Container(
+                              margin: const EdgeInsets.only(left: 100),
+                              height: 50,
+                              width: 100,
+                              child:Text(
+                                this.nombre,
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(left: 100),
+                              height: 50,
+                              width: 100,
+                              child: MaterialButton(child: Text('->', style: TextStyle(color: Colors.white)),onPressed: (){
+                                setState(() {
+                                  this.nombre = this.mercado.getEmpresa(cont).nombre;
+                                  this.cont= (this.cont + 1) % mercado.empresas.length;
+                                });
+                              }, color: Colors.blue),
+                            ),
+                          ],)
+                    ),
+
+                    Container(
+                      child: const Text(
+                        'Pulsa el botón para generar nuevos valores',
                       ),
+                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+                      alignment: Alignment.centerLeft,
 
-                      new Container(
-                        margin: const EdgeInsets.only(left: 100),
-                        height: 50,
-                        width: 100,
-                        child:Text(
-                          this.nombre,
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      new Container(
-                        margin: const EdgeInsets.only(left: 100),
-                        height: 50,
-                        width: 100,
-                        child: new MaterialButton(child: Text('->', style: TextStyle(color: Colors.white)),onPressed: (){
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      width: 650,
+                      height: 450,
+                      child: Row(
+                        children: [
 
-                          setState(() {
-                            this.nombre = this.mercado.getEmpresa(cont).nombre;
-                            this.cont= (this.cont + 1) % mercado.empresas.length;
-                          });
-                        }, color: Colors.blue),
-                      ),
-        ],          )
+                          Container(
+                            margin: const EdgeInsets.only(top: 10),
+                            width: 350,
+                            height: 150,
+                            child: charts.LineChart(_getSeriesData(), animate: true,),
+                          ),
 
+                          Container(
+                            margin: const EdgeInsets.only(left: 100),
+                            height: 50,
+                            width: 100,
+                            child: MaterialButton(child: Text('Actualizar', style: TextStyle(color: Colors.white)),onPressed: (){
+                              _actualizar();
+                            }, color: Colors.blue),
+                          ),
+                        ],),
+                    ),
 
-              ),
-              Container(
-                child: const Text(
-                  'Pulsa el botón para generar nuevos valores',
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      width: 650,
+                      height: 450,
+                      child: Row(
+                        children: [
+
+                          Container(
+                            margin: const EdgeInsets.only(top: 10),
+                            width: 350,
+                            height: 150,
+                            child: charts.LineChart(_getSeriesData(), animate: true,),
+                          ),
+
+                          Container(
+                            margin: const EdgeInsets.only(left: 100),
+                            height: 50,
+                            width: 100,
+                            child: MaterialButton(child: Text('Actualizar', style: TextStyle(color: Colors.white)),onPressed: (){
+                              _actualizar();
+                            }, color: Colors.blue),
+                          ),
+                        ],),
+                    ),
+                  ],
                 ),
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
-                alignment: Alignment.centerLeft,
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 10),
-                width: 650,
-                height: 450,
-                child: new Row(
-                  children: [
 
-                new Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    width: 350,
-                    height: 150,
-                    child: new charts.LineChart(_getSeriesData(), animate: true,),
-                    ),
-
-                    new Container(
-                      margin: const EdgeInsets.only(left: 100),
-                      height: 50,
-                      width: 100,
-                      child: new MaterialButton(child: Text('Actualizar', style: TextStyle(color: Colors.white)),onPressed: (){
-                        _actualizar();
-                      }, color: Colors.blue),
-                    ),
-
-
-                  ],),),
-
-              /*Container(
-                margin: const EdgeInsets.only(top: 10),
-                width: 350,
-                height: 50,
-                child: new FloatingActionButton(child: Icon(Icons.add),onPressed: (){
-                        _actualizar();
-                      }),
-              ),*/
-            ],
-          ),
+            ),
+            Center(
+              child: Text("Aqui va el historial"),
+            ),
+            Center(
+              child: Text("Aqui va otra cosa o nada"),
+            ),
+          ],
         ),
       ),
-
-
     );
   }
 
@@ -216,10 +227,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _actualizar () {
-     setState(() {
+    setState(() {
 
-       mercado.actualizarMercado();
+      mercado.actualizarMercado();
 
-     });
+    });
   }
 }
