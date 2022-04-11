@@ -185,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       margin: const EdgeInsets.only(top: 10),
                       width: 650,
                       height: 450,
-                      child: Text(('Saldo: ' + jugador.getSaldo().toString() + '\$'))
+                      child: Text(('Saldo: \$' + jugador.getSaldo().toString()))
                     ),
                     Container(
                         margin: const EdgeInsets.only(top: 10),
@@ -238,7 +238,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Center(
                 child: Column(
                   children: <Widget>[
-                    Text('${_textoDeAcciones()}'),
+                    Text('${_TextoAccionesPoseidas()}'),
                   ],
                 ),
               ),
@@ -329,9 +329,15 @@ class _MyHomePageState extends State<MyHomePage> {
           jugador.acciones.accionesEmpresas[indice].eliminarAcciones(numeroAcciones, nombreEmpresaActual);
 
           // Se envía al historial la nueva transacción
-          todos.add(numeroAcciones.toString() + ' acciones vendidas de ' + mercado.getEmpresa(cont).nombre + ' al precio de ' +
-                  (precioAccion * numeroAcciones).toString() + '\$ , ' + precioAccion.toString() + '\$ por accion');
+          todos.add(numeroAcciones.toString() + ' acciones vendidas de ' + mercado.getEmpresa(cont).nombre + ' al precio de \$' +
+                  (precioAccion * numeroAcciones).toString() + ' , \$' + precioAccion.toString() + 'por accion');
           print(todos.last);
+
+          // si se han vendido todas las acciones, se elimina el array de las accionesEmpresa
+          if(jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal() < 1)
+            {
+              jugador.acciones.accionesEmpresas.removeAt(indice);
+            }
         }
       }
     });
@@ -345,6 +351,25 @@ class _MyHomePageState extends State<MyHomePage> {
       {
         devolver += todos[i] + '\n';
       }
+
+    return devolver;
+  }
+
+  String _TextoAccionesPoseidas()
+  {
+    String devolver = '';
+    for(int i = 0; i < jugador.acciones.accionesEmpresas.length; i++)
+    {
+      devolver += (jugador.acciones.accionesEmpresas[i].idEmpresa as String) + ': \n';
+          for(int j = 0; j < jugador.acciones.accionesEmpresas[i].paqueteAcciones.length; j++)
+            {
+              devolver += jugador.acciones.accionesEmpresas[i].paqueteAcciones[j].NumeroAccionesCompradas.toString() + ' acciones por : \$'
+                  + jugador.acciones.accionesEmpresas[i].paqueteAcciones[j].DineroGastado.toString() + ' \n';
+            }
+      devolver += 'TOTAL: ' + jugador.acciones.accionesEmpresas[i].getNumeroAccionesTotal().toString()
+          + ' acciones  por : \$' + jugador.acciones.accionesEmpresas[i].getTotalDineroInvertido().toString() + ' \n';
+      devolver += '----------------------------------------------------------------------\n';
+    }
 
     return devolver;
   }

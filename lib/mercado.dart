@@ -143,7 +143,7 @@ class Mercado{
         {
           print('El jugador ha perdido : ' + jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal().toString() + ' acciones en ' + empresas[min].nombre);
           // se elimina el array de las acciones de empresa que se han eliminado
-          jugador.acciones.accionesEmpresas.remove(indice);
+          jugador.acciones.accionesEmpresas.removeAt(indice);
         }
 
         // finalmente se elimina la empresa que se ha arruinado
