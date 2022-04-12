@@ -47,6 +47,17 @@ class Mercado{
     }
 
 
+  empresa getEmpresaPorNombre(String nombre){
+    var empresa = null;
+
+    for(int i=0; i<empresas.length && empresa==null; i++){
+      if(empresas[i].nombre == nombre)
+        empresa = empresas[i];
+    }
+
+    return empresa;
+  }
+
     void actualizarMercado()
     {
 
@@ -64,6 +75,8 @@ class Mercado{
     {
       return empresas[i];
     }
+
+
 
     int getNumeroEmpresas()
     {
