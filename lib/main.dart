@@ -479,13 +479,18 @@ class _MyHomePageState extends State<MyHomePage> {
       for(int i = 0; i < jugador.acciones.accionesEmpresas.length; i++)
       {
         var precioAccion = mercado.getEmpresaPorNombre(jugador.acciones.accionesEmpresas[i].idEmpresa).getPrecioAccion();
+        var accionesDelJugador = jugador.acciones.accionesEmpresas[i].getNumeroAccionesTotal();
+        var dineroTotalInvertido = jugador.acciones.accionesEmpresas[i].getTotalDineroInvertido();
+
         devolver += (jugador.acciones.accionesEmpresas[i].idEmpresa as String) + ': \n';
 
         devolver += 'Precio por acción: \$' + precioAccion.toString() + '\n';
-        devolver += 'TOTAL: ' + jugador.acciones.accionesEmpresas[i].getNumeroAccionesTotal().toString()
+        devolver += 'TOTAL: ' + accionesDelJugador.toString()
             + ' acciones  por : \$' +
-            (precioAccion*jugador.acciones.accionesEmpresas[i].getNumeroAccionesTotal()).toString() + ' \n';
-        devolver += '----------------------------------------------------------------------\n';
+            (precioAccion*accionesDelJugador).toString() + ' \n';
+        devolver += '\n Dinero invertido: \$' + dineroTotalInvertido.toString();
+        devolver += '\n Balance: \$' + ((precioAccion*accionesDelJugador) - dineroTotalInvertido).toString();
+        devolver += '\n----------------------------------------------------------------------\n';
       }
 
       return devolver;
