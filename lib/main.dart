@@ -314,13 +314,11 @@ class _MyHomePageState extends State<MyHomePage> {
       return series;
     }
 
-    /*Creación de una alerta que avisa de que no se pueden comprar
-  el número de acciones indicadas*/
-    Widget _AlertaCompra() {
+    Widget _Alerta(String tituloTexto,String textoAlerta) {
       return AlertDialog(
-        title: Text('Error'),
+        title: Text(tituloTexto),
         content:
-        Text("No puedes comprar tantas acciones"),
+        Text(textoAlerta),
         actions: <Widget>[
           MaterialButton(
               child: Text("Aceptar"),
@@ -330,40 +328,46 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       );
     }
+
+  /*Creación de una alerta que avisa de que no se puede comprar
+  el número de acciones indicadas*/
+
     Future<void> _showAlertaCompra(BuildContext context) async {
       return showDialog<void>(
         context: context,
-        builder: (_) => _AlertaCompra(),
+        builder: (_) => _Alerta('Error',"No puedes comprar tantas acciones"),
       );
     }
 
     /*Creación de una alerta que avisa de que no se pueden vender
   el número de acciones indicadas*/
-    Widget _AlertaVenta() {
-      return AlertDialog(
-        title: Text('Error'),
-        content:
-        Text("No tienes suficientes acciones para vender"),
-        actions: <Widget>[
-          MaterialButton(
-              child: Text("Aceptar"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }),
-        ],
-      );
-    }
+
     Future<void> _showAlertaVenta(BuildContext context) async {
       return showDialog<void>(
         context: context,
-        builder: (_) => _AlertaVenta(),
+        builder: (_) => _Alerta('Error',"No tienes suficientes acciones para vender"),
       );
     }
+
+  /*Creación de una alerta que avisa de los eventos en el mercado*/
+
+  Future<void> _showAlertaMercado(BuildContext context, String msg) async {
+    return showDialog<void>(
+      context: context,
+      builder: (_) => _Alerta('Información',msg),
+    );
+  }
+
 
     void _actualizar () {
       setState(() {
 
         mercado.actualizarMercado();
+
+        if(mercado.nuevoEvento)
+          {
+            _showAlertaMercado(context, mercado.mensajeEvento);
+          }
 
       });
     }
@@ -400,8 +404,8 @@ class _MyHomePageState extends State<MyHomePage> {
           }
 
           // Se envía al historial la nueva transacción
-          todos.add(numeroAcciones.toString() + ' acciones compradas de ' + mercado.getEmpresa(cont).nombre + ' al precio de ' + (precioAccion * numeroAcciones).toString() + '\$ , '
-              + precioAccion.toString() + '\$ por accion');
+          todos.add(numeroAcciones.toString() + ' acciones compradas de ' + mercado.getEmpresa(cont).nombre + ' al precio de \$' + (precioAccion * numeroAcciones).toString() + ' , \$'
+              + precioAccion.toString() + ' por accion');
           print(todos.last);
 
           ActualizarHistory(todos.last);
@@ -448,6 +452,10 @@ class _MyHomePageState extends State<MyHomePage> {
             _showAlertaVenta(context);
           }
         }
+        else
+          {
+            _showAlertaVenta(context);
+          }
       });
     }
 

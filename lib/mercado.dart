@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:proyecto_bolsa/GestorFiltros.dart';
 
 import 'empresa.dart';
@@ -15,6 +16,10 @@ class Mercado{
     ,'Moderna','AstraZeneca','Adobe','Paypal','Bank of America','Mastercard','Johnson & Johnson','Nestlé','Nvidia','Intel','AMD','Visa','Warner Bros','Nike','Adidas'];
 
   var empresasAparecidas = [];
+
+  var nuevoEvento = false;
+
+  var mensajeEvento = '';
 
   Mercado()
   {
@@ -60,7 +65,8 @@ class Mercado{
 
     void actualizarMercado()
     {
-
+      nuevoEvento = false;
+      mensajeEvento = '';
       // Cada vez que se actualiza el mercado, los valores retroceden y el valor más antiguo se pierda
       desplazarValoresAlaDerecha();
 
@@ -125,7 +131,10 @@ class Mercado{
 
         empresas.add(nuevaEmpresa);
 
-        print(nuevaEmpresa.nombre + ' ha entrado en el mercado');
+        mensajeEvento = nuevaEmpresa.nombre + ' ha entrado en el mercado';
+        nuevoEvento = true;
+        print(mensajeEvento);
+
       }
 
     }
@@ -146,18 +155,21 @@ class Mercado{
             min = i;
           }
         }
-
-        print(empresas[min].nombre + ' se ha retirado del mercado');
+        mensajeEvento = empresas[min].nombre + ' se ha retirado del mercado\n';
+        print(mensajeEvento);
 
         // Se eliminan las acciones del jugador que se hayan invertido en una empresa que se ha arruinado y por tanto pierde el dinero
         var indice = jugador.acciones.buscarAccionesEmpresa(empresas[min].nombre);
 
         if(indice > -1)
         {
-          print('El jugador ha perdido : ' + jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal().toString() + ' acciones en ' + empresas[min].nombre);
+          mensajeEvento += 'El jugador ha perdido : ' + jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal().toString() + ' acciones en ' + empresas[min].nombre;
+          print(mensajeEvento);
           // se elimina el array de las acciones de empresa que se han eliminado
           jugador.acciones.accionesEmpresas.removeAt(indice);
         }
+
+        nuevoEvento = true;
 
         // finalmente se elimina la empresa que se ha arruinado
         empresas.removeAt(min);
