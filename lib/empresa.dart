@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:proyecto_bolsa/valorEmpresa.dart';
 
-class empresa{
+class Empresa{
 
   var nombre;
   List<ValorEmpresa> data = [];
@@ -14,7 +14,7 @@ class empresa{
   var suerte = Random();
   
 
-  empresa(n)
+  Empresa(n)
   {
     this.nombre = n;
     this.data = [

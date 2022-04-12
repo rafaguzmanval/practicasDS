@@ -9,6 +9,7 @@ import 'package:proyecto_bolsa/PaqueteAccionesCompradas.dart';
 import 'package:proyecto_bolsa/empresa.dart';
 import 'package:proyecto_bolsa/mercado.dart';
 import 'valorEmpresa.dart';
+import 'Grafica.dart';
 
 void main() {
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Simulador Bolsa',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Bolsa Home Page'),
     );
   }
 }
@@ -92,7 +93,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     @override
     Widget build(BuildContext context) {
-
       mercado.addJugador(jugador);
       nombre = mercado.empresas[cont].nombre;
 
@@ -108,10 +108,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: Icon(Icons.align_vertical_bottom_outlined),
               ),
               Tab(
-                icon: Icon(Icons.feed_outlined),
+                icon: Icon(Icons.account_balance_wallet),
               ),
               Tab(
-                icon: Icon(Icons.brightness_5_sharp),
+                icon: Icon(Icons.feed_outlined),
               ),
             ]),
           ),
@@ -134,20 +134,25 @@ class _MyHomePageState extends State<MyHomePage> {
                                 margin: const EdgeInsets.only(left: 50),
                                 height: 50,
                                 width: 100,
-                                child: MaterialButton(child: Text('<-', style: TextStyle(color: Colors.white)),onPressed: (){
-                                  setState(() {
-                                    this.nombre = this.mercado.getEmpresa(cont).nombre;
-                                    this.cont = (this.cont - 1) % this.mercado.empresas.length as int;
-
-                                  });
-                                }, color: Colors.blue),
+                                child: MaterialButton(child: Text('<-',
+                                    style: TextStyle(color: Colors.white)),
+                                    onPressed: () {
+                                      setState(() {
+                                        this.nombre = this.mercado
+                                            .getEmpresa(cont)
+                                            .nombre;
+                                        this.cont = (this.cont - 1) %
+                                            this.mercado.empresas.length as int;
+                                      });
+                                    },
+                                    color: Colors.blue),
                               ),
 
                               Container(
                                 margin: const EdgeInsets.only(left: 130),
                                 height: 50,
                                 width: 150,
-                                child:Text(
+                                child: Text(
                                   this.nombre,
                                   style: TextStyle(fontSize: 20),
                                 ),
@@ -156,12 +161,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                 margin: const EdgeInsets.only(left: 100),
                                 height: 50,
                                 width: 100,
-                                child: MaterialButton(child: Text('->', style: TextStyle(color: Colors.white)),onPressed: (){
-                                  setState(() {
-                                    this.nombre = this.mercado.getEmpresa(cont).nombre;
-                                    this.cont= (this.cont + 1) % mercado.empresas.length as int ;
-                                  });
-                                }, color: Colors.blue),
+                                child: MaterialButton(child: Text('->',
+                                    style: TextStyle(color: Colors.white)),
+                                    onPressed: () {
+                                      setState(() {
+                                        this.nombre = this.mercado
+                                            .getEmpresa(cont)
+                                            .nombre;
+                                        this.cont = (this.cont + 1) %
+                                            mercado.empresas.length as int;
+                                      });
+                                    },
+                                    color: Colors.blue),
                               ),
                             ],)
                       ),
@@ -177,46 +188,68 @@ class _MyHomePageState extends State<MyHomePage> {
                               margin: const EdgeInsets.only(top: 10),
                               width: 350,
                               height: 150,
-                              child: charts.LineChart(_getSeriesData(), animate: true,),
+                              child: Grafica(mercado.getEmpresa(cont)),
                             ),
                             Column(
                                 children: [
                                   Container(
-                                    margin: const EdgeInsets.only(top: 80, left: 15),
+                                    margin: const EdgeInsets.only(
+                                        top: 80, left: 15),
                                     width: 100,
                                     height: 40,
-                                    decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
-                                    child:Text('Valor empresa: \$'+this.mercado.getEmpresa(cont).data.last.valor.toString(),textAlign: TextAlign.center,),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.blue)),
+                                    child: Text(
+                                      'Valor empresa: \$' + this.mercado
+                                          .getEmpresa(cont)
+                                          .data
+                                          .last
+                                          .valor
+                                          .toString(),
+                                      textAlign: TextAlign.center,),
                                   ),
 
                                   Container(
-                                    margin: const EdgeInsets.only(top: 10, left: 15),
+                                    margin: const EdgeInsets.only(
+                                        top: 10, left: 15),
                                     width: 100,
                                     height: 40,
-                                    decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
-                                    child:Text('Valor accion: \$'+mercado.getEmpresa(cont).getPrecioAccion().toString(),textAlign: TextAlign.center,),
-                                  )]
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.blue)),
+                                    child: Text('Valor accion: \$' +
+                                        mercado.getEmpresa(cont)
+                                            .getPrecioAccion()
+                                            .toString(),
+                                      textAlign: TextAlign.center,),
+                                  )
+                                ]
                             ),
 
                             Container(
                               margin: const EdgeInsets.only(left: 50),
                               height: 50,
                               width: 100,
-                              child: MaterialButton(child: Text('Actualizar', style: TextStyle(color: Colors.white)),onPressed: (){
-                                _actualizar();
-                              }, color: Colors.blue),
+                              child: MaterialButton(child: Text('Actualizar',
+                                  style: TextStyle(color: Colors.white)),
+                                  onPressed: () {
+                                    _actualizar();
+                                  },
+                                  color: Colors.blue),
                             ),
                           ],),
                       ),
 
                       Container(
                           margin: const EdgeInsets.only(top: 10, bottom: 10),
-                          width: 250,
-                          height: 45,
-                          decoration: BoxDecoration(border:Border.all(color: Colors.grey, width: 3)),
-                          child: Text(('Saldo: \$' + jugador.getSaldo().toString()),textScaleFactor: 2, textAlign: TextAlign.center,)
+                          width: 350,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 3)),
+                          child: Text(('Saldo: \$' + jugador.getSaldo()
+                              .toString()) + '\nNº acciones en ' + nombre +
+                              ': ' + _stringNAccionesEmpresa(nombre),
+                            textScaleFactor: 1.5, textAlign: TextAlign.center,)
                       ),
-
 
 
                       Container(
@@ -227,19 +260,25 @@ class _MyHomePageState extends State<MyHomePage> {
                             children: [
                               Container(
                                 width: 150,
-                                margin: const EdgeInsets.only(top: 10, bottom: 10, right: 30, left: 150),
+                                margin: const EdgeInsets.only(
+                                    top: 10, bottom: 10, right: 30, left: 150),
                                 child: TextField(
                                   controller: controller,
                                   textAlign: TextAlign.center,
                                 ),
                               ),
 
-                              MaterialButton(child: Text('Comprar', style: TextStyle(color: Colors.white)),onPressed: (){
-                                setState(() {
-                                  numAcciones.insert(0, int.parse(controller.text));
-                                  _comprarAcciones(numAcciones.elementAt(0));
-                                });
-                              }, color: Colors.green),
+                              MaterialButton(child: Text('Comprar',
+                                  style: TextStyle(color: Colors.white)),
+                                  onPressed: () {
+                                    setState(() {
+                                      numAcciones.insert(
+                                          0, int.parse(controller.text));
+                                      _comprarAcciones(
+                                          numAcciones.elementAt(0));
+                                    });
+                                  },
+                                  color: Colors.green),
                             ],
                           )
                       ),
@@ -253,19 +292,27 @@ class _MyHomePageState extends State<MyHomePage> {
                             children: [
                               Container(
                                 width: 150,
-                                margin: const EdgeInsets.only(top: 10, bottom: 10, right: 30, left: 150),
+                                margin: const EdgeInsets.only(
+                                    top: 10, bottom: 10, right: 30, left: 150),
                                 child: TextField(
                                   controller: controllerVenta,
                                   textAlign: TextAlign.center,
+                                  onChanged: (text) {
+                                    AccionesAvender = int.parse(text);
+                                  },
                                 ),
                               ),
 
-                              MaterialButton(child: Text('Vender', style: TextStyle(color: Colors.white)),onPressed: (){
-                                setState(() {
-                                  AccionesAvender = int.parse(controllerVenta.text);
-                                  _venderAcciones(AccionesAvender);
-                                });
-                              }, color: Colors.red),
+                              MaterialButton(child: Text('Vender',
+                                  style: TextStyle(color: Colors.white)),
+                                  onPressed: () {
+                                    setState(() {
+                                      AccionesAvender =
+                                          int.parse(controllerVenta.text);
+                                      _venderAcciones(AccionesAvender);
+                                    });
+                                  },
+                                  color: Colors.red),
                             ],
                           )
                       ),
@@ -298,20 +345,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       );
-    }
-
-    // este método introduce en la gráfica los valores que tiene una empresa.
-    List<charts.Series<ValorEmpresa, int>> _getSeriesData() {
-      List<charts.Series<ValorEmpresa, int>> series = [
-        charts.Series(
-            id: "Sales",
-            data: mercado.getEmpresa(cont).data,
-            domainFn: (ValorEmpresa series, _) => series.hora,
-            measureFn: (ValorEmpresa series, _) => series.valor.truncate(),
-            colorFn: (ValorEmpresa series, _) => charts.MaterialPalette.blue.shadeDefault
-        )
-      ];
-      return series;
     }
 
     Widget _Alerta(String tituloTexto,String textoAlerta) {
@@ -495,4 +528,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
       return devolver;
     }
+
+    String _stringNAccionesEmpresa(nombre){
+      int indice = jugador.acciones.buscarAccionesEmpresa(nombre);
+      String acciones = '0';
+      if(indice>-1) acciones = jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal().toString();
+
+      return acciones;
+    }
+
+
   }

@@ -38,7 +38,7 @@ class Mercado{
           }
 
         empresasAparecidas.add(nombreEmpresas[numero]);
-        var nuevaEmpresa = empresa(nombreEmpresas[numero]);
+        var nuevaEmpresa = Empresa(nombreEmpresas[numero]);
 
         empresas.add(nuevaEmpresa);
       }
@@ -52,7 +52,7 @@ class Mercado{
     }
 
 
-  empresa getEmpresaPorNombre(String nombre){
+  Empresa getEmpresaPorNombre(String nombre){
     var empresa = null;
 
     for(int i=0; i<empresas.length && empresa==null; i++){
@@ -77,7 +77,7 @@ class Mercado{
       mercadoDinamico();
     }
 
-    empresa getEmpresa(int i)
+    Empresa getEmpresa(int i)
     {
       return empresas[i];
     }
@@ -127,7 +127,7 @@ class Mercado{
 
         empresasAparecidas.add(nombreEmpresas[numero]);
 
-        var nuevaEmpresa = empresa(nombreEmpresas[numero]);
+        var nuevaEmpresa = Empresa(nombreEmpresas[numero]);
 
         empresas.add(nuevaEmpresa);
 
