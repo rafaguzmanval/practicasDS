@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:flutter/services.dart';
 import 'package:proyecto_bolsa/AccionesEmpresa.dart';
 import 'package:proyecto_bolsa/Jugador.dart';
 import 'package:proyecto_bolsa/PaqueteAccionesCompradas.dart';
@@ -9,7 +11,9 @@ import 'package:proyecto_bolsa/mercado.dart';
 import 'valorEmpresa.dart';
 
 void main() {
+
   runApp(const MyApp());
+
 }
 
 
@@ -60,6 +64,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String historico=' ';
 
   int cont=0;
 
@@ -70,307 +75,411 @@ class _MyHomePageState extends State<MyHomePage> {
   var nombre = 'Empresa defecto';
 
   final controller = TextEditingController();
-  final List<String> todos=[];
+  final controllerVenta = TextEditingController();
+
+
+  final List<String> todos=[' '];
+  final List<int> numAcciones=[];
+  int AccionesAvender=0;
+
   @override
-  Widget build(BuildContext context) {
+  void initState(){
+    const duracion = Duration(seconds:10);
+    Timer.periodic(duracion, (Timer t) => _actualizar());
 
-    mercado.addJugador(jugador);
-    nombre = mercado.empresas[cont].nombre;
+    super.initState();
+  }
 
+    @override
+    Widget build(BuildContext context) {
 
+      mercado.addJugador(jugador);
+      nombre = mercado.empresas[cont].nombre;
 
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 3,
-      child: Scaffold(
-        key: GlobalKey<ScaffoldState>(),
-        appBar: AppBar(
-          title: const Text('Bolsa'),
-          bottom: const TabBar(tabs: <Widget>[
-            Tab(
-              icon: Icon(Icons.align_vertical_bottom_outlined),
-            ),
-            Tab(
-              icon: Icon(Icons.feed_outlined),
-            ),
-            Tab(
-              icon: Icon(Icons.brightness_5_sharp),
-            ),
-          ]),
-        ),
-        backgroundColor: Colors.white,
+      return DefaultTabController(
+        initialIndex: 0,
+        length: 3,
+        child: Scaffold(
+          key: GlobalKey<ScaffoldState>(),
+          appBar: AppBar(
+            title: const Text('Bolsa'),
+            bottom: const TabBar(tabs: <Widget>[
+              Tab(
+                icon: Icon(Icons.align_vertical_bottom_outlined),
+              ),
+              Tab(
+                icon: Icon(Icons.feed_outlined),
+              ),
+              Tab(
+                icon: Icon(Icons.brightness_5_sharp),
+              ),
+            ]),
+          ),
+          backgroundColor: Colors.white,
 
-        body: TabBarView(
-          children: <Widget>[
-            SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                        margin: const EdgeInsets.only(top: 10),
-                        width: 650,
-                        height: 150,
-                        child:
-                        Row(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(left: 100),
-                              height: 50,
-                              width: 100,
-                              child: MaterialButton(child: Text('<-', style: TextStyle(color: Colors.white)),onPressed: (){
-                                setState(() {
-                                  this.nombre = this.mercado.getEmpresa(cont).nombre;
-                                  this.cont = (this.cont - 1) % this.mercado.empresas.length as int;
+          body: TabBarView(
+            children: <Widget>[
+              SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                          margin: const EdgeInsets.only(top: 10),
+                          width: 650,
+                          height: 150,
+                          child:
+                          Row(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(left: 50),
+                                height: 50,
+                                width: 100,
+                                child: MaterialButton(child: Text('<-', style: TextStyle(color: Colors.white)),onPressed: (){
+                                  setState(() {
+                                    this.nombre = this.mercado.getEmpresa(cont).nombre;
+                                    this.cont = (this.cont - 1) % this.mercado.empresas.length as int;
 
-                                });
-                              }, color: Colors.blue),
-                            ),
-
-                            Container(
-                              margin: const EdgeInsets.only(left: 100),
-                              height: 50,
-                              width: 100,
-                              child:Text(
-                                this.nombre,
-                                style: TextStyle(fontSize: 20),
+                                  });
+                                }, color: Colors.blue),
                               ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(left: 100),
-                              height: 50,
-                              width: 100,
-                              child: MaterialButton(child: Text('->', style: TextStyle(color: Colors.white)),onPressed: (){
-                                setState(() {
-                                  this.nombre = this.mercado.getEmpresa(cont).nombre;
-                                  this.cont= (this.cont + 1) % mercado.empresas.length as int ;
-                                });
-                              }, color: Colors.blue),
-                            ),
-                          ],)
-                    ),
 
-                    Container(
-                      child: const Text(
-                        'Pulsa el botón para generar nuevos valores',
+                              Container(
+                                margin: const EdgeInsets.only(left: 130),
+                                height: 50,
+                                width: 150,
+                                child:Text(
+                                  this.nombre,
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(left: 100),
+                                height: 50,
+                                width: 100,
+                                child: MaterialButton(child: Text('->', style: TextStyle(color: Colors.white)),onPressed: (){
+                                  setState(() {
+                                    this.nombre = this.mercado.getEmpresa(cont).nombre;
+                                    this.cont= (this.cont + 1) % mercado.empresas.length as int ;
+                                  });
+                                }, color: Colors.blue),
+                              ),
+                            ],)
                       ),
-                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
-                      alignment: Alignment.centerLeft,
 
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      width: 650,
-                      height: 450,
-                      child: Row(
-                        children: [
-
-                          Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            width: 350,
-                            height: 150,
-                            child: charts.LineChart(_getSeriesData(), animate: true,),
-                          ),
-
-                          Container(
-                            margin: const EdgeInsets.only(left: 100),
-                            height: 50,
-                            width: 100,
-                            child: MaterialButton(child: Text('Actualizar', style: TextStyle(color: Colors.white)),onPressed: (){
-                              _actualizar();
-                            }, color: Colors.blue),
-                          ),
-                        ],),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      width: 650,
-                      height: 450,
-                      child: Text(('Saldo: \$' + jugador.getSaldo().toString()))
-                    ),
-                    Container(
+                      Container(
                         margin: const EdgeInsets.only(top: 10),
                         width: 650,
-                        height: 450,
-                      child: MaterialButton(child: Text('Comprar', style: TextStyle(color: Colors.white)),onPressed: (){
-                        _comprarAcciones(1);
-                      }, color: Colors.green),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      width: 650,
-                      height: 450,
-                      child: MaterialButton(child: Text('Vender', style: TextStyle(color: Colors.white)),onPressed: (){
-                        _venderAcciones(1);
-                      }, color: Colors.red),
-                    )
-                    
-
-                    /*Container(
-                        margin: const EdgeInsets.only(top: 10),
-                        width: 350,
-                        height: 280,
-                        child:
-                        new Column(
+                        height: 250,
+                        child: Row(
                           children: [
 
-                            TextField(
-                              controller: controller,
+                            Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              width: 350,
+                              height: 150,
+                              child: charts.LineChart(_getSeriesData(), animate: true,),
                             ),
-                            new Container (
-                              margin: const EdgeInsets.only(top: 20,bottom: 10),
-                              child: new FloatingActionButton(child: Icon(Icons.add),onPressed: (){
+                            Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 80, left: 15),
+                                    width: 100,
+                                    height: 40,
+                                    decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+                                    child:Text('Valor empresa: \$'+this.mercado.getEmpresa(cont).data.last.valor.toString(),textAlign: TextAlign.center,),
+                                  ),
+
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 10, left: 15),
+                                    width: 100,
+                                    height: 40,
+                                    decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+                                    child:Text('Valor accion: \$'+mercado.getEmpresa(cont).getPrecioAccion().toString(),textAlign: TextAlign.center,),
+                                  )]
+                            ),
+
+                            Container(
+                              margin: const EdgeInsets.only(left: 50),
+                              height: 50,
+                              width: 100,
+                              child: MaterialButton(child: Text('Actualizar', style: TextStyle(color: Colors.white)),onPressed: (){
+                                _actualizar();
+                              }, color: Colors.blue),
+                            ),
+                          ],),
+                      ),
+
+                      Container(
+                          margin: const EdgeInsets.only(top: 10, bottom: 10),
+                          width: 250,
+                          height: 45,
+                          decoration: BoxDecoration(border:Border.all(color: Colors.grey, width: 3)),
+                          child: Text(('Saldo: \$' + jugador.getSaldo().toString()),textScaleFactor: 2, textAlign: TextAlign.center,)
+                      ),
+
+
+
+                      Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          width: 650,
+                          height: 80,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 150,
+                                margin: const EdgeInsets.only(top: 10, bottom: 10, right: 30, left: 150),
+                                child: TextField(
+                                  controller: controller,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+
+                              MaterialButton(child: Text('Comprar', style: TextStyle(color: Colors.white)),onPressed: (){
                                 setState(() {
-                                  todos.insert(0,controller.text);
+                                  numAcciones.insert(0, int.parse(controller.text));
+                                  _comprarAcciones(numAcciones.elementAt(0));
                                 });
-                              }),
+                              }, color: Colors.green),
+                            ],
+                          )
+                      ),
 
-                            ),
 
-                          ],
-                        )
-                    ),*/
-                  ],
+                      Container(
+                          margin: const EdgeInsets.only(top: 10),
+                          width: 650,
+                          height: 150,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 150,
+                                margin: const EdgeInsets.only(top: 10, bottom: 10, right: 30, left: 150),
+                                child: TextField(
+                                  controller: controllerVenta,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+
+                              MaterialButton(child: Text('Vender', style: TextStyle(color: Colors.white)),onPressed: (){
+                                setState(() {
+                                  AccionesAvender = int.parse(controllerVenta.text);
+                                  _venderAcciones(AccionesAvender);
+                                });
+                              }, color: Colors.red),
+                            ],
+                          )
+                      ),
+                    ],
+                  ),
                 ),
-              ),
 
-            ),
-            SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Text('${_TextoAccionesPoseidas()}'),
-                  ],
+              ),
+              SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    children: <Widget>[
+                      Text('${_TextoAccionesPoseidas()}'),
+                    ],
+                  ),
                 ),
-              ),
 
-            ),
-            Center(
-              child: Text("Aqui va otra cosa o nada"),
-            ),
-          ],
+              ),
+              SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    children: <Widget>[
+                      Text(historico),
+                    ],
+                  ),
+                ),
+
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
+    }
 
-  // este método introduce en la gráfica los valores que tiene una empresa.
-  List<charts.Series<ValorEmpresa, int>> _getSeriesData() {
-    List<charts.Series<ValorEmpresa, int>> series = [
-      charts.Series(
-          id: "Sales",
-          data: mercado.getEmpresa(cont).data,
-          domainFn: (ValorEmpresa series, _) => series.hora,
-          measureFn: (ValorEmpresa series, _) => series.valor,
-          colorFn: (ValorEmpresa series, _) => charts.MaterialPalette.blue.shadeDefault
-      )
-    ];
-    return series;
-  }
+    // este método introduce en la gráfica los valores que tiene una empresa.
+    List<charts.Series<ValorEmpresa, int>> _getSeriesData() {
+      List<charts.Series<ValorEmpresa, int>> series = [
+        charts.Series(
+            id: "Sales",
+            data: mercado.getEmpresa(cont).data,
+            domainFn: (ValorEmpresa series, _) => series.hora,
+            measureFn: (ValorEmpresa series, _) => series.valor.truncate(),
+            colorFn: (ValorEmpresa series, _) => charts.MaterialPalette.blue.shadeDefault
+        )
+      ];
+      return series;
+    }
 
-  void _actualizar () {
-    setState(() {
+    /*Creación de una alerta que avisa de que no se pueden comprar
+  el número de acciones indicadas*/
+    Widget _AlertaCompra() {
+      return AlertDialog(
+        title: Text('Error'),
+        content:
+        Text("No puedes comprar tantas acciones"),
+        actions: <Widget>[
+          MaterialButton(
+              child: Text("Aceptar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+        ],
+      );
+    }
+    Future<void> _showAlertaCompra(BuildContext context) async {
+      return showDialog<void>(
+        context: context,
+        builder: (_) => _AlertaCompra(),
+      );
+    }
 
-      mercado.actualizarMercado();
+    /*Creación de una alerta que avisa de que no se pueden vender
+  el número de acciones indicadas*/
+    Widget _AlertaVenta() {
+      return AlertDialog(
+        title: Text('Error'),
+        content:
+        Text("No tienes suficientes acciones para vender"),
+        actions: <Widget>[
+          MaterialButton(
+              child: Text("Aceptar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+        ],
+      );
+    }
+    Future<void> _showAlertaVenta(BuildContext context) async {
+      return showDialog<void>(
+        context: context,
+        builder: (_) => _AlertaVenta(),
+      );
+    }
 
-    });
-  }
-  
-  void _comprarAcciones(int numeroAcciones)
-  {
-    setState(() {
-      var precioAccion = mercado.getEmpresa(cont).getPrecioAccion();
-      String nombreEmpresaActual = mercado.getEmpresa(cont).nombre;
+    void _actualizar () {
+      setState(() {
 
-      //Solo se pueden comprar las acciones si el jugador tiene el dinero suficiente. Podría impedirse en la interfaz que se pudiesen añadir más de las que se pueden
-      if(jugador.getSaldo() > (precioAccion * numeroAcciones))
-      {
-        // se decrementa el saldo del jugador
-        jugador.modificarSaldo(-precioAccion * numeroAcciones);
+        mercado.actualizarMercado();
 
-        // se crea un nuevo paquete de acciones que se compran y se comprueba si ya existe un array de acciones de la empresa de la que se quiere comprar
-        var paquete = new PaqueteAccionesCompradas(numeroAcciones,precioAccion);
-        int indice = jugador.acciones.buscarAccionesEmpresa(nombreEmpresaActual);
-        if(indice > -1)// si existe la empresa entonces añadimos al paquete al array ya existente
-          {
+      });
+    }
+
+    String ActualizarHistory(String actualizacion){
+      historico = historico + actualizacion + '\n';
+
+      return historico;
+
+    }
+
+    void _comprarAcciones(int numeroAcciones)
+    {
+      setState(() {
+        var precioAccion = mercado.getEmpresa(cont).getPrecioAccion();
+        String nombreEmpresaActual = mercado.getEmpresa(cont).nombre;
+
+        //Solo se pueden comprar las acciones si el jugador tiene el dinero suficiente. Podría impedirse en la interfaz que se pudiesen añadir más de las que se pueden
+        if(jugador.getSaldo() > (precioAccion * numeroAcciones))
+        {
+          // se decrementa el saldo del jugador
+          jugador.modificarSaldo(-precioAccion * numeroAcciones);
+
+          // se crea un nuevo paquete de acciones que se compran y se comprueba si ya existe un array de acciones de la empresa de la que se quiere comprar
+          var paquete = new PaqueteAccionesCompradas(numeroAcciones,precioAccion);
+          int indice = jugador.acciones.buscarAccionesEmpresa(nombreEmpresaActual);
+          if(indice > -1)// si existe la empresa entonces añadimos al paquete al array ya existente
+              {
             jugador.acciones.accionesEmpresas[indice].paqueteAcciones.add(paquete);
           }
-        else
+          else
           {// si no, creamos un nuevo array con los paquetes de acciones de la empresa seleccionada
             jugador.acciones.accionesEmpresas.add(new AccionesEmpresa(nombreEmpresaActual,paquete));
           }
 
-        // Se envía al historial la nueva transacción
-        todos.add(numeroAcciones.toString() + ' acciones compradas de ' + mercado.getEmpresa(cont).nombre + ' al precio de ' + (precioAccion * numeroAcciones).toString() + '\$ , '
-            + precioAccion.toString() + '\$ por accion');
-        print(todos.last);
-      }
-    });
-
-
-
-  }
-  
-  void _venderAcciones(int numeroAcciones)
-  {
-    setState(() {
-      var precioAccion = mercado.getEmpresa(cont).getPrecioAccion();
-      String nombreEmpresaActual = mercado.getEmpresa(cont).nombre;
-
-      //Se buscan en las acciones del jugador si existen algunas que hayan sido compradas y que sean de la empresa que está seleccionada en el momento
-      int indice = jugador.acciones.buscarAccionesEmpresa(nombreEmpresaActual);
-      if (indice > -1) {
-
-        //Si el numero de acciones que se quieren vender es mayor que el que se ha comprado, no hay transacción. En la interfaz se debería impedir que se introdujesen
-        // mas de las que se tienen. Y tampoco se pueden vender 0 acciones naturalmente.
-        var accionesJugador = jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal();
-        if (accionesJugador >= numeroAcciones && numeroAcciones > 0 && accionesJugador > 0)
-        {
-          jugador.modificarSaldo(precioAccion * numeroAcciones);
-          jugador.acciones.accionesEmpresas[indice].eliminarAcciones(numeroAcciones, nombreEmpresaActual);
-
           // Se envía al historial la nueva transacción
-          todos.add(numeroAcciones.toString() + ' acciones vendidas de ' + mercado.getEmpresa(cont).nombre + ' al precio de \$' +
-                  (precioAccion * numeroAcciones).toString() + ' , \$' + precioAccion.toString() + 'por accion');
+          todos.add(numeroAcciones.toString() + ' acciones compradas de ' + mercado.getEmpresa(cont).nombre + ' al precio de ' + (precioAccion * numeroAcciones).toString() + '\$ , '
+              + precioAccion.toString() + '\$ por accion');
           print(todos.last);
 
-          // si se han vendido todas las acciones, se elimina el array de las accionesEmpresa
-          if(jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal() < 1)
+          ActualizarHistory(todos.last);
+        }
+        else{
+          _showAlertaCompra(context);
+        }
+      });
+
+    }
+
+    void _venderAcciones(int numeroAcciones)
+    {
+      setState(() {
+        var precioAccion = mercado.getEmpresa(cont).getPrecioAccion();
+        String nombreEmpresaActual = mercado.getEmpresa(cont).nombre;
+
+        //Se buscan en las acciones del jugador si existen algunas que hayan sido compradas y que sean de la empresa que está seleccionada en el momento
+        int indice = jugador.acciones.buscarAccionesEmpresa(nombreEmpresaActual);
+        if (indice > -1) {
+
+          //Si el numero de acciones que se quieren vender es mayor que el que se ha comprado, no hay transacción. En la interfaz se debería impedir que se introdujesen
+          // mas de las que se tienen. Y tampoco se pueden vender 0 acciones naturalmente.
+          var accionesJugador = jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal();
+
+          if (accionesJugador >= numeroAcciones && numeroAcciones > 0 && accionesJugador > 0)
+          {
+            jugador.modificarSaldo(precioAccion * numeroAcciones);
+            jugador.acciones.accionesEmpresas[indice].eliminarAcciones(numeroAcciones, nombreEmpresaActual);
+
+            // Se envía al historial la nueva transacción
+            todos.add(numeroAcciones.toString() + ' acciones vendidas de ' + mercado.getEmpresa(cont).nombre + ' al precio de \$' +
+                (precioAccion * numeroAcciones).toString() + ' , \$' + precioAccion.toString() + ' por accion');
+            print(todos.last);
+
+            ActualizarHistory(todos.last);
+
+            // si se han vendido todas las acciones, se elimina el array de las accionesEmpresa
+            if(jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal() < 1)
             {
               jugador.acciones.accionesEmpresas.removeAt(indice);
             }
+          }else{
+            _showAlertaVenta(context);
+          }
         }
-      }
-    });
-  }
+      });
+    }
 
-  // función auxiliar para el historial de transacciones
-  String _textoDeAcciones()
-  {
-    String devolver = '';
-    for(int i = 0; i < todos.length; i++)
+    // función auxiliar para el historial de transacciones
+    String _textoDeAcciones()
+    {
+      String devolver = '';
+      for(int i = 0; i < todos.length; i++)
       {
         devolver += todos[i] + '\n';
       }
 
-    return devolver;
-  }
-
-  String _TextoAccionesPoseidas()
-  {
-    String devolver = '';
-    for(int i = 0; i < jugador.acciones.accionesEmpresas.length; i++)
-    {
-      devolver += (jugador.acciones.accionesEmpresas[i].idEmpresa as String) + ': \n';
-          for(int j = 0; j < jugador.acciones.accionesEmpresas[i].paqueteAcciones.length; j++)
-            {
-              devolver += jugador.acciones.accionesEmpresas[i].paqueteAcciones[j].NumeroAccionesCompradas.toString() + ' acciones por : \$'
-                  + jugador.acciones.accionesEmpresas[i].paqueteAcciones[j].DineroGastado.toString() + ' \n';
-            }
-      devolver += 'TOTAL: ' + jugador.acciones.accionesEmpresas[i].getNumeroAccionesTotal().toString()
-          + ' acciones  por : \$' + jugador.acciones.accionesEmpresas[i].getTotalDineroInvertido().toString() + ' \n';
-      devolver += '----------------------------------------------------------------------\n';
+      return devolver;
     }
 
-    return devolver;
+    String _TextoAccionesPoseidas()
+    {
+      String devolver = '';
+
+
+      for(int i = 0; i < jugador.acciones.accionesEmpresas.length; i++)
+      {
+        var precioAccion = mercado.getEmpresaPorNombre(jugador.acciones.accionesEmpresas[i].idEmpresa).getPrecioAccion();
+        devolver += (jugador.acciones.accionesEmpresas[i].idEmpresa as String) + ': \n';
+
+        devolver += 'Precio por acción: \$' + precioAccion.toString() + '\n';
+        devolver += 'TOTAL: ' + jugador.acciones.accionesEmpresas[i].getNumeroAccionesTotal().toString()
+            + ' acciones  por : \$' +
+            (precioAccion*jugador.acciones.accionesEmpresas[i].getNumeroAccionesTotal()).toString() + ' \n';
+        devolver += '----------------------------------------------------------------------\n';
+      }
+
+      return devolver;
+    }
   }
-}
