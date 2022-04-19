@@ -58,28 +58,4 @@ class AccionesEmpresa
         }
   }
 
-  // un algoritmo de burbuja para ordenar decrecientemente del paquete de acciones más caro al más barato
-  void algoritmoBurbujaMayorAMenor()
-  {
-    for(int i = 0; i < paqueteAcciones.length; i++)
-      {
-        var max = paqueteAcciones[i];
-        var j = i;
-        for(int j = i; j < paqueteAcciones.length; j++)
-          {
-            if((max.DineroGastado as int) <= (paqueteAcciones[j].DineroGastado as int))
-              {
-                max = paqueteAcciones[j];
-              }
-          }
-
-        if(j != i)
-          {
-            paqueteAcciones[j] = paqueteAcciones[i];
-            paqueteAcciones[i] = max;
-          }
-
-      }
-  }
-
 }
