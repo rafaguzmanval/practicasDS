@@ -279,7 +279,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                     });
                                   },
                                   color: Colors.green),
+
+                              MaterialButton(child: Text('Max',
+                                  style: TextStyle(color: Colors.white)),
+                                  onPressed: () {
+                                    setState(() {
+                                      controller.text = _maxAccionesComprar().toString();
+                                    });
+                                  },
+                                  color: Colors.yellow),
                             ],
+
                           )
                       ),
 
@@ -313,6 +323,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                     });
                                   },
                                   color: Colors.red),
+
+                              MaterialButton(child: Text('Max',
+                                  style: TextStyle(color: Colors.white)),
+                                  onPressed: () {
+                                    setState(() {
+                                      controllerVenta.text = _stringNAccionesEmpresa(nombre);
+                                    });
+                                  },
+                                  color: Colors.yellow),
                             ],
                           )
                       ),
@@ -411,6 +430,12 @@ class _MyHomePageState extends State<MyHomePage> {
       return historico;
 
     }
+
+    int _maxAccionesComprar()
+    {
+      return jugador.getSaldo() ~/ mercado.getEmpresa(cont).getPrecioAccion();
+    }
+
 
     void _comprarAcciones(int numeroAcciones)
     {
