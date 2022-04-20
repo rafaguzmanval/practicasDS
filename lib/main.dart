@@ -10,6 +10,7 @@ import 'package:proyecto_bolsa/empresa.dart';
 import 'package:proyecto_bolsa/mercado.dart';
 import 'valorEmpresa.dart';
 import 'Grafica.dart';
+import 'dart:ui';
 
 void main() {
 
@@ -96,6 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
       mercado.addJugador(jugador);
       nombre = mercado.empresas[cont].nombre;
 
+      double porcentaje_pantalla = window.physicalSize.width/MediaQuery.of(context).devicePixelRatio;
+
       return DefaultTabController(
         initialIndex: 0,
         length: 3,
@@ -124,78 +127,75 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                          margin: const EdgeInsets.only(top: 10),
-                          width: 650,
-                          height: 150,
-                          child:
-                          Row(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(left: 50),
-                                height: 50,
-                                width: 100,
-                                child: MaterialButton(child: Text('<-',
-                                    style: TextStyle(color: Colors.white)),
-                                    onPressed: () {
-                                      setState(() {
-                                        this.nombre = this.mercado
-                                            .getEmpresa(cont)
-                                            .nombre;
-                                        this.cont = (this.cont - 1) %
-                                            this.mercado.empresas.length as int;
-                                      });
-                                    },
-                                    color: Colors.blue),
-                              ),
+                              margin: const EdgeInsets.only(top: 10),
+                              width: porcentaje_pantalla,
+                              height: 150,
+                              child:
+                              Row(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(left: (porcentaje_pantalla*0.15)),
+                                    height: 50,
+                                    width: porcentaje_pantalla * 0.1,
+                                    child: MaterialButton(child: Text('<-',
+                                        style: TextStyle(color: Colors.white, fontSize: 25*MediaQuery.of(context).size.width/porcentaje_pantalla)),
+                                        onPressed: () {
+                                          setState(() {
+                                            this.nombre = this.mercado
+                                                .getEmpresa(cont)
+                                                .nombre;
+                                            this.cont = (this.cont - 1) %
+                                                this.mercado.empresas.length as int;
+                                          });
+                                        },
+                                        color: Colors.blue),
+                                  ),
 
-                              Container(
-                                margin: const EdgeInsets.only(left: 130),
-                                height: 50,
-                                width: 150,
-                                child: Text(
-                                  this.nombre,
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(left: 100),
-                                height: 50,
-                                width: 100,
-                                child: MaterialButton(child: Text('->',
-                                    style: TextStyle(color: Colors.white)),
-                                    onPressed: () {
-                                      setState(() {
-                                        this.nombre = this.mercado
-                                            .getEmpresa(cont)
-                                            .nombre;
-                                        this.cont = (this.cont + 1) %
-                                            mercado.empresas.length as int;
-                                      });
-                                    },
-                                    color: Colors.blue),
-                              ),
-                            ],)
+                                  Container(
+                                    margin: EdgeInsets.only(left: porcentaje_pantalla*0.05),
+                                    height: 50,
+                                    width: porcentaje_pantalla * 0.4,
+                                    child: Text(
+                                      this.nombre,
+                                      style: TextStyle(fontSize: 30*MediaQuery.of(context).size.width/porcentaje_pantalla), textAlign: TextAlign.center,),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: porcentaje_pantalla*0.05),
+                                    height: 50,
+                                    width: porcentaje_pantalla * 0.1,
+                                    child: MaterialButton(child: Text('->',
+                                        style: TextStyle(color: Colors.white,fontSize: 25*MediaQuery.of(context).size.width/porcentaje_pantalla)),
+                                        onPressed: () {
+                                          setState(() {
+                                            this.nombre = this.mercado
+                                                .getEmpresa(cont)
+                                                .nombre;
+                                            this.cont = (this.cont + 1) %
+                                                mercado.empresas.length as int;
+                                          });
+                                        },
+                                        color: Colors.blue),
+                                  ),
+                                ],)
                       ),
 
                       Container(
-                        margin: const EdgeInsets.only(top: 10),
-                        width: 650,
+                        margin: EdgeInsets.only(left: porcentaje_pantalla*0.07),
+                        width: porcentaje_pantalla*0.8,
                         height: 250,
-                        child: Row(
+                        child: Column(
                           children: [
 
                             Container(
                               margin: const EdgeInsets.only(top: 10),
-                              width: 350,
-                              height: 150,
+                              width: porcentaje_pantalla*0.8,
+                              height: 170,
                               child: Grafica(mercado.getEmpresa(cont)),
                             ),
-                            Column(
+                            Row(
                                 children: [
                                   Container(
-                                    margin: const EdgeInsets.only(
-                                        top: 80, left: 15),
-                                    width: 100,
+                                    width: porcentaje_pantalla*0.2,
                                     height: 40,
                                     decoration: BoxDecoration(
                                         border: Border.all(color: Colors.blue)),
@@ -206,13 +206,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                           .last
                                           .valor
                                           .toString(),
-                                      textAlign: TextAlign.center,),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 14*MediaQuery.of(context).size.width/porcentaje_pantalla,),),
                                   ),
 
                                   Container(
-                                    margin: const EdgeInsets.only(
-                                        top: 10, left: 15),
-                                    width: 100,
+                                    margin: EdgeInsets.only(left: porcentaje_pantalla*0.1),
+                                    width:  porcentaje_pantalla*0.2,
                                     height: 40,
                                     decoration: BoxDecoration(
                                         border: Border.all(color: Colors.blue)),
@@ -220,21 +220,21 @@ class _MyHomePageState extends State<MyHomePage> {
                                         mercado.getEmpresa(cont)
                                             .getPrecioAccion()
                                             .toString(),
-                                      textAlign: TextAlign.center,),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 15*MediaQuery.of(context).size.width/porcentaje_pantalla),),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: porcentaje_pantalla*0.1),
+                                    height: 50,
+                                    width: 100,
+                                    child: MaterialButton(child: Text('Actualizar',
+                                        style: TextStyle(color: Colors.white),),
+                                        onPressed: () {
+                                          _actualizar();
+                                        },
+                                        color: Colors.blue),
                                   )
                                 ]
-                            ),
-
-                            Container(
-                              margin: const EdgeInsets.only(left: 50),
-                              height: 50,
-                              width: 100,
-                              child: MaterialButton(child: Text('Actualizar',
-                                  style: TextStyle(color: Colors.white)),
-                                  onPressed: () {
-                                    _actualizar();
-                                  },
-                                  color: Colors.blue),
                             ),
                           ],),
                       ),
@@ -254,21 +254,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
                       Container(
                           margin: const EdgeInsets.only(top: 20),
-                          width: 650,
+                          width: porcentaje_pantalla,
                           height: 80,
                           child: Row(
                             children: [
                               Container(
-                                width: 150,
-                                margin: const EdgeInsets.only(
-                                    top: 10, bottom: 10, right: 30, left: 150),
+                                width: porcentaje_pantalla*0.3,
+                                margin: EdgeInsets.only(
+                                    top: 10, bottom: 10, right: 30, left: porcentaje_pantalla*0.3),
                                 child: TextField(
                                   controller: controller,
                                   textAlign: TextAlign.center,
                                 ),
                               ),
 
-                              MaterialButton(child: Text('Comprar',
+                              MaterialButton(
+                                  minWidth: porcentaje_pantalla*0.2,
+                                  child: Text('Comprar',
                                   style: TextStyle(color: Colors.white)),
                                   onPressed: () {
                                     setState(() {
@@ -280,7 +282,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                   },
                                   color: Colors.green),
 
-                              MaterialButton(child: Text('Max',
+                              MaterialButton(
+                                  minWidth: porcentaje_pantalla*0.15,
+                                  child: Text('Max',
                                   style: TextStyle(color: Colors.white)),
                                   onPressed: () {
                                     setState(() {
@@ -296,14 +300,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
                       Container(
                           margin: const EdgeInsets.only(top: 10),
-                          width: 650,
+                          width: porcentaje_pantalla,
                           height: 150,
                           child: Row(
                             children: [
                               Container(
-                                width: 150,
-                                margin: const EdgeInsets.only(
-                                    top: 10, bottom: 10, right: 30, left: 150),
+                                width: porcentaje_pantalla*0.3,
+                                margin: EdgeInsets.only(
+                                    top: 10, bottom: 10, right: 30, left: porcentaje_pantalla*0.3),
                                 child: TextField(
                                   controller: controllerVenta,
                                   textAlign: TextAlign.center,
@@ -313,7 +317,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               ),
 
-                              MaterialButton(child: Text('Vender',
+                              MaterialButton(
+                                minWidth: porcentaje_pantalla*0.2,
+                                  child: Text('Vender',
                                   style: TextStyle(color: Colors.white)),
                                   onPressed: () {
                                     setState(() {
@@ -324,7 +330,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                   },
                                   color: Colors.red),
 
-                              MaterialButton(child: Text('Max',
+                              MaterialButton(
+                                minWidth: porcentaje_pantalla*0.15,
+                                  child: Text('Max',
                                   style: TextStyle(color: Colors.white)),
                                   onPressed: () {
                                     setState(() {
