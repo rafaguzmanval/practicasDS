@@ -137,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     margin: EdgeInsets.only(left: (porcentaje_pantalla*0.15)),
                                     height: 50,
                                     width: porcentaje_pantalla * 0.1,
-                                    child: MaterialButton(child: Text('<-',
+                                    child: MaterialButton(child: Text('<',
                                         style: TextStyle(color: Colors.white, fontSize: 25*MediaQuery.of(context).size.width/porcentaje_pantalla)),
                                         onPressed: () {
                                           setState(() {
@@ -163,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     margin: EdgeInsets.only(left: porcentaje_pantalla*0.05),
                                     height: 50,
                                     width: porcentaje_pantalla * 0.1,
-                                    child: MaterialButton(child: Text('->',
+                                    child: MaterialButton(child: Text('>',
                                         style: TextStyle(color: Colors.white,fontSize: 25*MediaQuery.of(context).size.width/porcentaje_pantalla)),
                                         onPressed: () {
                                           setState(() {
@@ -195,8 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             Row(
                                 children: [
                                   Container(
-                                    width: porcentaje_pantalla*0.2,
-                                    height: 40,
+                                    width: porcentaje_pantalla*0.225,
                                     decoration: BoxDecoration(
                                         border: Border.all(color: Colors.blue)),
                                     child: Text(
@@ -211,9 +210,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
 
                                   Container(
-                                    margin: EdgeInsets.only(left: porcentaje_pantalla*0.1),
-                                    width:  porcentaje_pantalla*0.2,
-                                    height: 40,
+                                    margin: EdgeInsets.only(left: porcentaje_pantalla*0.05),
+                                    width:  porcentaje_pantalla*0.225,
                                     decoration: BoxDecoration(
                                         border: Border.all(color: Colors.blue)),
                                     child: Text('Valor accion: \$' +
@@ -224,11 +222,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                       style: TextStyle(fontSize: 15*MediaQuery.of(context).size.width/porcentaje_pantalla),),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(left: porcentaje_pantalla*0.1),
+                                    margin: EdgeInsets.only(left: porcentaje_pantalla*0.05),
                                     height: 50,
-                                    width: 100,
+                                    width: porcentaje_pantalla*0.25,
                                     child: MaterialButton(child: Text('Actualizar',
-                                        style: TextStyle(color: Colors.white),),
+                                        style: TextStyle(color: Colors.white, fontSize:0.03*porcentaje_pantalla),),
                                         onPressed: () {
                                           _actualizar();
                                         },
@@ -259,9 +257,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Row(
                             children: [
                               Container(
-                                width: porcentaje_pantalla*0.3,
+                                width: porcentaje_pantalla*0.2,
                                 margin: EdgeInsets.only(
-                                    top: 10, bottom: 10, right: 30, left: porcentaje_pantalla*0.3),
+                                    top: 10, bottom: 10, right: porcentaje_pantalla*0.05, left: porcentaje_pantalla*0.3),
                                 child: TextField(
                                   controller: controller,
                                   textAlign: TextAlign.center,
@@ -269,7 +267,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
 
                               MaterialButton(
-                                  minWidth: porcentaje_pantalla*0.2,
+                                  minWidth: porcentaje_pantalla*0.15,
                                   child: Text('Comprar',
                                   style: TextStyle(color: Colors.white)),
                                   onPressed: () {
@@ -283,7 +281,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   color: Colors.green),
 
                               MaterialButton(
-                                  minWidth: porcentaje_pantalla*0.15,
+                                  minWidth: porcentaje_pantalla*0.1,
                                   child: Text('Max',
                                   style: TextStyle(color: Colors.white)),
                                   onPressed: () {
@@ -305,9 +303,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Row(
                             children: [
                               Container(
-                                width: porcentaje_pantalla*0.3,
+                                width: porcentaje_pantalla*0.2,
                                 margin: EdgeInsets.only(
-                                    top: 10, bottom: 10, right: 30, left: porcentaje_pantalla*0.3),
+                                    top: 10, bottom: 10, right: porcentaje_pantalla*0.05, left: porcentaje_pantalla*0.3),
                                 child: TextField(
                                   controller: controllerVenta,
                                   textAlign: TextAlign.center,
@@ -318,7 +316,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
 
                               MaterialButton(
-                                minWidth: porcentaje_pantalla*0.2,
+                                minWidth: porcentaje_pantalla*0.15,
                                   child: Text('Vender',
                                   style: TextStyle(color: Colors.white)),
                                   onPressed: () {
@@ -331,7 +329,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   color: Colors.red),
 
                               MaterialButton(
-                                minWidth: porcentaje_pantalla*0.15,
+                                minWidth: porcentaje_pantalla*0.1,
                                   child: Text('Max',
                                   style: TextStyle(color: Colors.white)),
                                   onPressed: () {
