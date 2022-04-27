@@ -65,10 +65,6 @@ void main() {
       var nombreEmp = find.byKey(ObjectKey("nombreEmp"));
       var textEmp = nombreEmp.evaluate().single.widget as Text;
 
-      /*expect ( find.text('Saldo: \$20000\nNº acciones en ' + (textEmp.data as String) + ': 0') , findsOneWidget );
-      print('Saldo: \$20000\nNº acciones en ' + (textEmp.data as String) + ': 0');
-      print("\n");*/
-
       //Introducimos en el campo de texto las acciones que vamos a comprar
       var numAcc = 2;
       await tester.enterText(find.byKey(ObjectKey("CampoComprar")), numAcc.toString());
@@ -91,31 +87,75 @@ void main() {
       * para obtener el saldo restante*/
       var Widvalor = find.byKey(ObjectKey("ValorAccion"));
       var Textvalor = Widvalor.evaluate().single.widget as Text;
-
       var Strvalor = Textvalor.data.toString();
       var finale = Strvalor.substring(15);
 
       int precioAcciones = (int.parse(finale)*numAcc);
-      //int SaldoRestante = 20000 - precioAcciones;
 
-      /*print('Saldo: \$'+(precio.toString())+'\nNº acciones en ' + (textEmp.data as String) + ': '+ numAcc.toString());
-      expect ( find.text('Saldo: \$'+(precio.toString())+'\nNº acciones en ' + (textEmp.data as String) + ': '+ numAcc.toString()) , findsOneWidget );
-      */
 
-      String Texthistorial = numAcc.toString() + " acciones compradas de " + (textEmp.data as String) +
-          " al precio de \$" +precioAcciones.toString() + " , \$" + finale +" por accion";
+      /*Generamos la cadena que debería salir tras comprar acciones
+      * */
+      String Texthistorial =" " + numAcc.toString() + " acciones compradas de " + (textEmp.data as String) +
+          " al precio de \$" +precioAcciones.toString() + " , \$" + finale +" por accion\n";
 
+      /*Buscamos el botón para cambiar de pestaña
+      * y nos movemos a la tercera, la del historial*/
       var botonHistory = find.byKey(ObjectKey("Pesta3"));
-      //var tab = botonHistory.evaluate().single.widget;
       await tester.tap(botonHistory);
-      //await tester.pump();
-      //await tester.widget(botonHistory);
+      await tester.pumpAndSettle();
 
+      /*En la pestaña del historial buscamos que tras la compra, esta
+      * se haya reflejado en esta pestaña comparando su contenido con
+      * la cadena que hemos creado anteriormente*/
       var historial = find.byKey(ObjectKey("TextHistorico"));
-      print(historial);
-      //var StrHistorico = textHistorico.toString();
+      var aux = historial.evaluate().single.widget as Text;
+      var StrHistorico = aux.data.toString();
 
-      //expect(find.text(Texthistorial), findsOneWidget);
+      print (Texthistorial);
+      expect(StrHistorico, Texthistorial);
     });
   });
+
+  testWidgets('Comprobar boton actualizar cambia valor de las acciones', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.runAsync(() async {
+      await tester.pumpWidget(const MyApp());
+
+      //var nombreEmp = find.byKey(ObjectKey("nombreEmp"));
+      //var textEmp = nombreEmp.evaluate().single.widget as Text;
+
+      /*Buscamos el campo con el valor actual de la acción
+      * De ese campo sacamos el un int con el valor de la acción
+      * */
+      var Widvalor = find.byKey(ObjectKey("ValorAccion"));
+      var Textvalor = Widvalor.evaluate().single.widget as Text;
+      var Strvalor = Textvalor.data.toString();
+
+      /*Buscamos el boton de compra mediante el campo key
+      * Bajamos la pantalla hasta que el botón sea visible
+      * Pulsamos el botón para comprar el número de acciones indicado
+      * */
+      var botonAct = find.text("Actualizar");
+      await tester.dragUntilVisible(
+        botonAct,
+        find.byType(SingleChildScrollView),
+        const Offset(0, 600),
+      );
+      await tester.tap(botonAct);
+      await tester.pump();
+
+      /*Buscamos el campo con el valor actual de la acción
+      * De ese campo sacamos el un int con el valor de la acción
+      * */
+      var WidvalorF = find.byKey(ObjectKey("ValorAccion"));
+      var TextvalorF = WidvalorF.evaluate().single.widget as Text;
+      var StrvalorF = TextvalorF.data.toString();
+
+      print(Strvalor);
+      print(StrvalorF);
+
+      expect(find.text(Strvalor),findsNothing);
+    });
+  });
+
 }
