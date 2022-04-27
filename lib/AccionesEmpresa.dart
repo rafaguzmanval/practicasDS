@@ -41,6 +41,23 @@ class AccionesEmpresa
   {
       int accionesVendidas = nAcciones;
 
+      // NUEVO CÓDIGO
+      for(int i = paqueteAcciones.length - 1; i >= 0; i--)
+      {
+        if(accionesVendidas >= paqueteAcciones[i].NumeroAccionesCompradas)
+        {
+          accionesVendidas -= paqueteAcciones[i].NumeroAccionesCompradas as int;
+          paqueteAcciones.removeLast();
+        }
+        else
+        {
+          paqueteAcciones[i].NumeroAccionesCompradas -= accionesVendidas;
+          break;
+        }
+      }
+
+      // ANTIGUO CÓDIGO QUE FALLABA
+      /*
       for(int i = 0; i < paqueteAcciones.length && accionesVendidas > 0 ;i++)
         {
           // si un paquete tiene una cantidad menor o igual a las acciones que se eliminan, entonces se elimina el objeto paquete.
@@ -56,6 +73,9 @@ class AccionesEmpresa
               break;
             }
         }
+        */
+
+
   }
 
 }
