@@ -16,11 +16,11 @@ class Grafica extends Container{
     super.build(context);
 
     return Container(
-              margin: const EdgeInsets.only(top: 10),
-              width: 350,
-              height: 150,
-              child: charts.LineChart(_getSeriesData(), animate: true,),
-          );
+      margin: const EdgeInsets.only(top: 10),
+      width: 350,
+      height: 150,
+      child: charts.LineChart(_getSeriesData(), animate: true,),
+    );
   }
 
   // este método introduce en la gráfica los valores que tiene una empresa.

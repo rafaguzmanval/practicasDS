@@ -115,6 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Tab(
                 icon: Icon(Icons.feed_outlined),
+                key: ObjectKey("Pesta3"),
               ),
             ]),
           ),
@@ -157,6 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     width: porcentaje_pantalla * 0.4,
                                     child: Text(
                                       this.nombre,
+                                      key: ObjectKey("nombreEmp"),
                                       style: TextStyle(fontSize: 30*MediaQuery.of(context).size.width/porcentaje_pantalla), textAlign: TextAlign.center,),
                                   ),
                                   Container(
@@ -218,6 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                         mercado.getEmpresa(cont)
                                             .getPrecioAccion()
                                             .toString(),
+                                      key: ObjectKey("ValorAccion"),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(fontSize: 15*MediaQuery.of(context).size.width/porcentaje_pantalla),),
                                   ),
@@ -261,6 +264,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 margin: EdgeInsets.only(
                                     top: 10, bottom: 10, right: porcentaje_pantalla*0.05, left: porcentaje_pantalla*0.3),
                                 child: TextField(
+                                  key: ObjectKey("CampoComprar"),
                                   controller: controller,
                                   textAlign: TextAlign.center,
                                 ),
@@ -268,6 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                               MaterialButton(
                                   minWidth: porcentaje_pantalla*0.15,
+                                  key: ObjectKey("botonCompra"),
                                   child: Text('Comprar',
                                   style: TextStyle(color: Colors.white)),
                                   onPressed: () {
@@ -360,7 +365,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Center(
                   child: Column(
                     children: <Widget>[
-                      Text(historico),
+                      Text(historico,
+                            key: const ObjectKey("TextHistorico")
+                      ),
                     ],
                   ),
                 ),

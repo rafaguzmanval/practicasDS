@@ -61,4 +61,7 @@ class Empresa{
     return data.last.valor ~/ _numeroAcciones;
   }
 
+  int getNumeroAcciones(){
+    return _numeroAcciones;
+  }
 }
