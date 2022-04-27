@@ -3,7 +3,8 @@ import 'package:proyecto_bolsa/Acciones.dart';
 import 'package:proyecto_bolsa/AccionesEmpresa.dart';
 import 'package:proyecto_bolsa/Jugador.dart';
 import 'package:proyecto_bolsa/PaqueteAccionesCompradas.dart';
-import 'package:proyecto_bolsa/mercado.dart';
+import 'package:proyecto_bolsa/FiltroBeneficios.dart';
+import 'package:proyecto_bolsa/FiltroGastos.dart';
 
 void main () {
   group ('Jugador', () {
@@ -20,6 +21,27 @@ void main () {
       final jugador = new Jugador();
       jugador.modificarSaldo(-1000);
       expect ( jugador.getSaldo() , 19000);
+    });
+  });
+
+  group('Filtro', (){
+    test ('Se aplican los beneficios', () {
+      final filtroB = new FiltroBeneficios();
+      var valor = 10000;
+      var res = filtroB.ejecutar(valor);
+      //Se comprueba que el incremento es un tercio o menos
+      var comprobacion = (valor/3 >= res);
+
+      expect ( comprobacion , true);
+    });
+    test ('Se aplican los gastos', () {
+      final filtroG = new FiltroGastos();
+      var valor = 10000;
+      var res = filtroG.ejecutar(valor);
+      //Se comprueba que el gasto es un octavo o mas
+      var comprobacion = (-valor/8 >= res);
+
+      expect ( comprobacion , true);
     });
   });
 
