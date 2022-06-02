@@ -30,18 +30,18 @@ class Mercado{
     this.jugador = jugador;
 
     for(int i = 0 ; i < 7; i++)
-      {
-        var numero = rand.nextInt(nombreEmpresas.length);
-        while(empresasAparecidas.contains(nombreEmpresas[numero]))
-          {
-            numero = rand.nextInt(nombreEmpresas.length);
-          }
+    {
+      var numero = rand.nextInt(nombreEmpresas.length);
+      while(empresasAparecidas.contains(nombreEmpresas[numero]))
+        {
+          numero = rand.nextInt(nombreEmpresas.length);
+        }
 
-        empresasAparecidas.add(nombreEmpresas[numero]);
-        var nuevaEmpresa = Empresa(nombreEmpresas[numero]);
+      empresasAparecidas.add(nombreEmpresas[numero]);
+      var nuevaEmpresa = Empresa(nombreEmpresas[numero]);
 
-        empresas.add(nuevaEmpresa);
-      }
+      empresas.add(nuevaEmpresa);
+    }
 
   }
 

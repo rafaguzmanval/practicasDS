@@ -11,6 +11,7 @@ import 'package:proyecto_bolsa/mercado.dart';
 import 'valorEmpresa.dart';
 import 'Grafica.dart';
 import 'dart:ui';
+import 'login.dart';
 
 void main() {
 
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Simulador Bolsa',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Bolsa Home Page'),
+      home: login()//const MyHomePage(title: 'Bolsa Home Page'),
     );
   }
 }
@@ -428,6 +430,9 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
 
         mercado.actualizarMercado();
+
+        //Si alguna empresa quiebra cambiamos la gráfica que hay en pantalla
+        if(cont>=mercado.empresas.length) cont = mercado.empresas.length-1;
 
         if(mercado.nuevoEvento)
           {
