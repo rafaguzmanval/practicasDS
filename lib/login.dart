@@ -1,54 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'dart:async';
-
-class Usuario{
-  int id;
-  String? usuario;
-  String? contrasena;
-  int? saldo;
-
-  static const  String _baseAddress='clados.ugr.es';
-
-  static const  String _applicationName='DS1_4/api/v1';
-
-  Usuario({required this.id, required this.usuario, required this.contrasena, required this.saldo});
-
-  @override
-  String toString()
-  {
-    return "id: $id, name: '$usuario', password: '$contrasena', saldo: $saldo";
-  }
-
-  Map<String, dynamic> toJson() => {
-    'id':id,
-    'name': usuario,
-    'password': contrasena,
-    'saldo': saldo
-  };
-
-  Usuario.fromJson(Map<String, dynamic> json):
-        id = json['id'],
-        usuario = json['name'],
-        contrasena=json['password'],
-        saldo = json['saldo'];
-
-  //////////// get //////////////////
-  static Future<Usuario> getUsuario(String name) async {
-    var uri = Uri.https(_baseAddress, '$_applicationName/jugadors/$name');
-    final response = await http.get(uri
-    ,headers: <String, String>{
-    'Content-Type': 'application/json; charset=UTF-8',
-    }    );
-
-    if (response.statusCode == 200) {
-      return Usuario.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to get project');
-    }
-  }
-}
+import 'package:proyecto_bolsa/myhomepage.dart';
+import 'package:proyecto_bolsa/API.dart';
 
 class login extends StatefulWidget{
   @override
@@ -107,29 +60,38 @@ class _loginState extends State<login>{
                 ),
                 child: FlatButton(
                   child: Text("Registrarse",style: TextStyle(color:Colors.white,fontSize: 10),),
-                  onPressed: (){},
+                  onPressed: (){ Navigator.push(context, MaterialPageRoute(builder: (context) =>register()));},
                 ),
               ),
-              if (_usuarioIntroducido)
 
+              if (_usuarioIntroducido)
                 FutureBuilder<Usuario>(
                     future: _usuarioFuture,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState ==
                           ConnectionState.done){
-                        print(snapshot.toString());
                         if (snapshot.hasData) {
-                          return Text(snapshot.data.toString());
+                          bool correcta = comprobarContrasena(snapshot.data.toString());
+
+                          if(correcta){
+                            Future.delayed(Duration.zero,(){
+                              abrirApp();
+                            });
+                            return const CircularProgressIndicator();
+                          }
+                          else
+                            return Text("Contraseña incorrecta");
                         }
                         else if (snapshot.hasError) {
-                          return Text('${snapshot.error}');
+                          return Text("El usuario no existe");
                         }
                       }
                       return const CircularProgressIndicator();
                     })
 
+
               else
-                const Text("Prueba")
+                const Text("")
             ],
           ),
         )
@@ -141,9 +103,131 @@ class _loginState extends State<login>{
 
   void comprobarLog(){
       _usuarioIntroducido = true;
-      _usuarioFuture = Usuario.getUsuario(usuario.text);
       setState(() {
-
+        _usuarioFuture = Usuario.getUsuario(usuario.text);
       });
+
+  }
+
+  bool comprobarContrasena(String datos){
+    String p = "";
+    int posicionP = datos.indexOf("password: \'")+11;
+    for(int i = posicionP; datos[i]!="\'"; i++){
+      p+=datos[i];
+    }
+
+    return (p==contrasena.text);
+  }
+
+  void abrirApp(){
+    Navigator.push(context, MaterialPageRoute(builder: (context) =>MyHomePage(title: 'Bolsa Home Page', usuario: usuario.text)));
+  }
+}
+
+class register extends StatefulWidget{
+  @override
+  _registerState createState() => _registerState();
+}
+
+class _registerState extends State<register> {
+  TextEditingController usuario = new TextEditingController();
+  TextEditingController contrasena = new TextEditingController();
+  bool _datosIntroducidos = false;
+  Future<Usuario>? _usuarioFuture;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+          margin: EdgeInsets.only(left: 55, right: 55),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Proyecto Bolsa", style: TextStyle(color: Colors.white,
+                  fontSize: 55,
+                  backgroundColor: Colors.blue,)),
+                SizedBox(height: 80,),
+                Text("Registrar", style: TextStyle(color: Colors.white,
+                  fontSize: 20,
+                  backgroundColor: Colors.blue,)),
+                SizedBox(height: 80,),
+                TextField(
+                  controller: usuario,
+                  decoration: InputDecoration(
+                      hintText: "Usuario"
+                  ),
+                ),
+                SizedBox(height: 30,),
+                TextField(
+                  controller: contrasena,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      hintText: "Contraseña"
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 50),
+                  width: 200,
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: FlatButton(
+                    child: Text("Registrar",
+                      style: TextStyle(color: Colors.white, fontSize: 20),),
+                    onPressed: () {
+                      registrar();
+                    },
+                  ),
+                ),
+
+                if (_datosIntroducidos)
+                  if(usuario.text!="" && contrasena.text!="")
+                    FutureBuilder<Usuario>(
+                        future: _usuarioFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            if (snapshot.hasData) {
+                                Future.delayed(Duration.zero, () {
+                                  abrirApp();
+                                });
+                                return const CircularProgressIndicator();
+
+                            }
+                            else if (snapshot.hasError) {
+                              return Text("El nombre de usuario ya existe");
+                            }
+                          }
+                          return const CircularProgressIndicator();
+                        })
+
+                    else if(usuario.text=="")
+                      const Text("Campo usuario vacío")
+
+                    else
+                      const Text("Campo contraseña vacío")
+                else
+                  const Text("")
+              ],
+            ),
+          )
+      ),
+
+
+    );
+  }
+
+  void registrar() {
+    _datosIntroducidos = true;
+    setState(() {
+      _usuarioFuture = Usuario.createUsuario(name: usuario.text,password: contrasena.text);
+    });
+  }
+
+  void abrirApp() {
+    Navigator.push(context, MaterialPageRoute(
+        builder: (context) => MyHomePage(title: 'Bolsa Home Page', usuario: usuario.text)));
   }
 }

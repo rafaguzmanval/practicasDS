@@ -8,13 +8,13 @@ class Empresa{
   var nombre;
   List<ValorEmpresa> data = [];
 
-  var _numeroAcciones = 1000;
+  var _numeroAcciones;
 
   
   var suerte = Random();
   
 
-  Empresa(n)
+  Empresa(n,valor, acciones)
   {
     this.nombre = n;
     this.data = [
@@ -48,10 +48,10 @@ class Empresa{
       new ValorEmpresa(27, 0),
       new ValorEmpresa(28, 0),
       new ValorEmpresa(29, 0),
-      new ValorEmpresa(30, suerte.nextInt(1000000)),
+      new ValorEmpresa(30, valor),
     ];
 
-
+    _numeroAcciones = acciones;
 
   }
 
@@ -64,4 +64,5 @@ class Empresa{
   int getNumeroAcciones(){
     return _numeroAcciones;
   }
+
 }

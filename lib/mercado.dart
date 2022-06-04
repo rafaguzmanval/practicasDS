@@ -1,13 +1,13 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:proyecto_bolsa/GestorFiltros.dart';
+import 'package:proyecto_bolsa/API.dart';
 
 import 'empresa.dart';
 
 class Mercado{
   var empresas = [];
-  var gestorF;
   var jugador;
 
   var nombreEmpresas = ['Apple','Microsoft','Tesla','Amazon','Google','Yahoo','Sony','CDproyect','Nintendo','Samsung','Huawei','Xiaomi','Electronic Arts','Ubisoft'
@@ -23,12 +23,17 @@ class Mercado{
 
   Mercado()
   {
+    /*
     gestorF = GestorFiltros(this);
 
-    var rand = Random();
+    var rand = Random();*/
 
     this.jugador = jugador;
 
+    this.empresas = [new Empresa("", 0, 1)];
+
+
+    /*
     for(int i = 0 ; i < 7; i++)
     {
       var numero = rand.nextInt(nombreEmpresas.length);
@@ -41,7 +46,7 @@ class Mercado{
       var nuevaEmpresa = Empresa(nombreEmpresas[numero]);
 
       empresas.add(nuevaEmpresa);
-    }
+    }*/
 
   }
 
@@ -63,26 +68,46 @@ class Mercado{
     return empresa;
   }
 
-    void actualizarMercado()
+    Future<Mercado> iniciarMercado() async{
+      var peticion = await EmpresaAPI.getEmpresas();
+
+      empresas=[];
+
+      for(var i=0; i<peticion.length;i++) {
+        empresas.add(new Empresa(peticion[i].nombre,peticion[i].valor,peticion[i].acciones));
+      }
+
+      return this;
+    }
+
+    Future<Mercado> actualizarMercado() async
     {
-      nuevoEvento = false;
-      mensajeEvento = '';
-      // Cada vez que se actualiza el mercado, los valores retroceden y el valor más antiguo se pierda
+      var peticion = await EmpresaAPI.getEmpresas();
+
+      for(var i=0; i<empresas.length;i++){
+        if(peticion.contains(empresas[i])){
+          empresas.removeAt(i);
+        }
+      }
+
       desplazarValoresAlaDerecha();
 
-      // se llama al gestor de filtros para que genere el último valor
-      gestorF.PeticionFiltros();
+      for(var i=0; i<peticion.length;i++) {
+        if(!empresas.contains(peticion[i])){
+          empresas.add(new Empresa(peticion[i].nombre,peticion[i].valor,peticion[i].acciones));
+        }
+        else{
+          empresas[i].data.last.valor = peticion[i].valor;
+        }
+      }
 
-      //El mercado dinámico introduce y elimina empresas del el mercado con las que se puede interaccionar
-      mercadoDinamico();
+      return this;
     }
 
     Empresa getEmpresa(int i)
     {
       return empresas[i];
     }
-
-
 
     int getNumeroEmpresas()
     {
@@ -127,11 +152,11 @@ class Mercado{
 
         empresasAparecidas.add(nombreEmpresas[numero]);
 
-        var nuevaEmpresa = Empresa(nombreEmpresas[numero]);
+        //var nuevaEmpresa = Empresa(nombreEmpresas[numero]);
 
-        empresas.add(nuevaEmpresa);
+        //empresas.add(nuevaEmpresa);
 
-        mensajeEvento = nuevaEmpresa.nombre + ' ha entrado en el mercado';
+        //mensajeEvento = nuevaEmpresa.nombre + ' ha entrado en el mercado';
         nuevoEvento = true;
         print(mensajeEvento);
 
