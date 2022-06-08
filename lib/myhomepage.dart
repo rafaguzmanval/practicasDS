@@ -50,20 +50,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var jugador ;
 
-  late Timer temporizador;
-
   _MyHomePageState(String u){
     usuario = u;
     jugador = new Jugador(usuario);
     jugador.setSaldo(usuario);
     this._iniciarMercado();
     this._iniciarAcciones(usuario);
-    this._sincronizarTemporizador();
   }
 
   @override
   void initState(){
     super.initState();
+    this._actualizar();
   }
 
   @override
@@ -390,7 +388,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _actualizar () async{
     var reloj = int.parse(await Reloj.getReloj());
-    temporizador.cancel();
     await Future.delayed(Duration(seconds:reloj));
     setState(() {
 
@@ -400,7 +397,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if(cont>=mercado.empresas.length) cont = mercado.empresas.length-1;
 
     });
-    temporizador = Timer.periodic(Duration(seconds:10), (Timer t) => _actualizar());
+    _actualizar();
   }
 
   String ActualizarHistory(String actualizacion){
@@ -425,7 +422,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if(jugador.getSaldo() > (precioAccion * numeroAcciones) &&  mercado.getEmpresa(cont).getNumeroAcciones()>0)
       {
         // se decrementa el saldo del jugador
-        jugador.modificarSaldo(-precioAccion * numeroAcciones, usuario);
+        jugador.modificarSaldo(-precioAccion * numeroAcciones);
         AccionesAPI.comprar(numeroAcciones,nombreEmpresaActual,usuario);
 
         // se crea un nuevo paquete de acciones que se compran y se comprueba si ya existe un array de acciones de la empresa de la que se quiere comprar
@@ -453,56 +450,48 @@ class _MyHomePageState extends State<MyHomePage> {
 
   }
 
-  void _venderAcciones(int numeroAcciones)
-  {
-      var precioAccion = mercado.getEmpresa(cont).getPrecioAccion();
-      String nombreEmpresaActual = mercado.getEmpresa(cont).nombre;
+  void _venderAcciones(int numeroAcciones) {
+    var precioAccion = mercado.getEmpresa(cont).getPrecioAccion();
+    String nombreEmpresaActual = mercado
+        .getEmpresa(cont)
+        .nombre;
 
-      //Se buscan en las acciones del jugador si existen algunas que hayan sido compradas y que sean de la empresa que está seleccionada en el momento
-      int indice = jugador.acciones.buscarAccionesEmpresa(nombreEmpresaActual);
-      if (indice > -1) {
+    //Se buscan en las acciones del jugador si existen algunas que hayan sido compradas y que sean de la empresa que está seleccionada en el momento
+    int indice = jugador.acciones.buscarAccionesEmpresa(nombreEmpresaActual);
+    if (indice > -1) {
+      //Si el numero de acciones que se quieren vender es mayor que el que se ha comprado, no hay transacción. En la interfaz se debería impedir que se introdujesen
+      // mas de las que se tienen. Y tampoco se pueden vender 0 acciones naturalmente.
+      var accionesJugador = jugador.acciones.accionesEmpresas[indice]
+          .getNumeroAccionesTotal();
 
-        //Si el numero de acciones que se quieren vender es mayor que el que se ha comprado, no hay transacción. En la interfaz se debería impedir que se introdujesen
-        // mas de las que se tienen. Y tampoco se pueden vender 0 acciones naturalmente.
-        var accionesJugador = jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal();
+      if (accionesJugador >= numeroAcciones && numeroAcciones > 0 &&
+          accionesJugador > 0) {
+        jugador.modificarSaldo(precioAccion * numeroAcciones);
+        AccionesAPI.vender(-numeroAcciones, nombreEmpresaActual, usuario);
+        jugador.acciones.accionesEmpresas[indice].eliminarAcciones(
+            numeroAcciones, nombreEmpresaActual);
 
-        if (accionesJugador >= numeroAcciones && numeroAcciones > 0 && accionesJugador > 0)
-        {
-          jugador.modificarSaldo(precioAccion * numeroAcciones, usuario);
-          AccionesAPI.vender(-numeroAcciones,nombreEmpresaActual,usuario);
-          jugador.acciones.accionesEmpresas[indice].eliminarAcciones(numeroAcciones, nombreEmpresaActual);
+        // Se envía al historial la nueva transacción
+        todos.add(numeroAcciones.toString() + ' acciones vendidas de ' + mercado
+            .getEmpresa(cont)
+            .nombre + ' al precio de \$' +
+            (precioAccion * numeroAcciones).toString() + ' , \$' +
+            precioAccion.toString() + ' por accion');
+        print(todos.last);
 
-          // Se envía al historial la nueva transacción
-          todos.add(numeroAcciones.toString() + ' acciones vendidas de ' + mercado.getEmpresa(cont).nombre + ' al precio de \$' +
-              (precioAccion * numeroAcciones).toString() + ' , \$' + precioAccion.toString() + ' por accion');
-          print(todos.last);
-
-          ActualizarHistory(todos.last);
-          // si se han vendido todas las acciones, se elimina el array de las accionesEmpresa
-          if(jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal() < 1)
-          {
-            jugador.acciones.accionesEmpresas.removeAt(indice);
-          }
-        }else{
-          _showAlertaVenta(context);
+        ActualizarHistory(todos.last);
+        // si se han vendido todas las acciones, se elimina el array de las accionesEmpresa
+        if (jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal() <
+            1) {
+          jugador.acciones.accionesEmpresas.removeAt(indice);
         }
-      }
-      else
-      {
+      } else {
         _showAlertaVenta(context);
       }
-  }
-
-  // función auxiliar para el historial de transacciones
-  String _textoDeAcciones()
-  {
-    String devolver = '';
-    for(int i = 0; i < todos.length; i++)
-    {
-      devolver += todos[i] + '\n';
     }
-
-    return devolver;
+    else {
+      _showAlertaVenta(context);
+    }
   }
 
   String _TextoAccionesPoseidas()
@@ -557,10 +546,5 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
 
     });
-  }
-
-  void _sincronizarTemporizador() async{
-    var reloj = int.parse(await Reloj.getReloj());
-    temporizador = Timer.periodic(Duration(seconds:reloj), (Timer t) => _actualizar());
   }
 }
