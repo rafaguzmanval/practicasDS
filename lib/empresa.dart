@@ -8,7 +8,7 @@ class Empresa{
   var nombre;
   List<ValorEmpresa> data = [];
 
-  var _numeroAcciones;
+  var numeroAcciones;
 
   
   var suerte = Random();
@@ -51,18 +51,18 @@ class Empresa{
       new ValorEmpresa(30, valor),
     ];
 
-    _numeroAcciones = acciones;
+    numeroAcciones = acciones;
 
   }
 
 
   int getPrecioAccion()
   {
-    return data.last.valor ~/ _numeroAcciones;
+    return data.last.valor ~/ numeroAcciones;
   }
 
   int getNumeroAcciones(){
-    return _numeroAcciones;
+    return numeroAcciones;
   }
 
 }

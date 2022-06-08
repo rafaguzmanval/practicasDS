@@ -12,7 +12,7 @@ class Acciones
     int dev = -1;
     for(int i = 0; i < accionesEmpresas.length;i++)
       {
-        if(accionesEmpresas[i].idEmpresa as String == nombre)
+        if(accionesEmpresas[i].idEmpresa.toString() == nombre.toString())
           {
             dev = i;
             break;

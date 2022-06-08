@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:proyecto_bolsa/AccionesEmpresa.dart';
@@ -32,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int cont=0;
 
-  var jugador = new Jugador();
+
 
   var mercado = new Mercado();
 
@@ -48,16 +50,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String usuario="";
 
+  var jugador ;
+
+  late Timer temporizador;
+
   _MyHomePageState(String u){
     usuario = u;
+    jugador = new Jugador(usuario);
+    jugador.setSaldo(usuario);
     this._iniciarMercado();
+    this._iniciarAcciones(usuario);
+    temporizador = Timer.periodic(Duration(seconds:10), (Timer t) => _actualizar());
   }
 
   @override
   void initState(){
-    const duracion = Duration(seconds:10);
-    Timer.periodic(duracion, (Timer t) => _actualizar());
-
     super.initState();
   }
 
@@ -192,17 +199,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                     key: ObjectKey("ValorAccion"),
                                     textAlign: TextAlign.center,
                                     style: TextStyle(fontSize: 15*MediaQuery.of(context).size.width/porcentaje_pantalla),),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: porcentaje_pantalla*0.05),
-                                  height: 50,
-                                  width: porcentaje_pantalla*0.25,
-                                  child: MaterialButton(child: Text('Actualizar',
-                                    style: TextStyle(color: Colors.white, fontSize:0.03*porcentaje_pantalla),),
-                                      onPressed: () {
-                                        _actualizar();
-                                      },
-                                      color: Colors.blue),
                                 )
                               ]
                           ),
@@ -250,7 +246,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                     numAcciones.insert(
                                         0, int.parse(controller.text));
                                     _comprarAcciones(
-                                        numAcciones.elementAt(0));
+                                        numAcciones.elementAt(0)
+                                    );
+                                    _actualizar();
                                   });
                                 },
                                 color: Colors.green),
@@ -284,9 +282,6 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: TextField(
                                 controller: controllerVenta,
                                 textAlign: TextAlign.center,
-                                onChanged: (text) {
-                                  AccionesAvender = int.parse(text);
-                                },
                               ),
                             ),
 
@@ -299,6 +294,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     AccionesAvender =
                                         int.parse(controllerVenta.text);
                                     _venderAcciones(AccionesAvender);
+                                    _actualizar();
                                   });
                                 },
                                 color: Colors.red),
@@ -394,18 +390,17 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-  void _actualizar () {
+  void _actualizar () async{
+    var reloj = int.parse(await Reloj.getReloj());
+    temporizador.cancel();
+    await Future.delayed(Duration(seconds:reloj));
+    temporizador = Timer.periodic(Duration(seconds:10), (Timer t) => _actualizar());
     setState(() {
 
       _actualizarMercado();
 
       //Si alguna empresa quiebra cambiamos la gráfica que hay en pantalla
       if(cont>=mercado.empresas.length) cont = mercado.empresas.length-1;
-
-      if(mercado.nuevoEvento)
-      {
-        _showAlertaMercado(context, mercado.mensajeEvento);
-      }
 
     });
   }
@@ -425,7 +420,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _comprarAcciones(int numeroAcciones)
   {
-    setState(() {
       var precioAccion = mercado.getEmpresa(cont).getPrecioAccion();
       String nombreEmpresaActual = mercado.getEmpresa(cont).nombre;
 
@@ -433,7 +427,8 @@ class _MyHomePageState extends State<MyHomePage> {
       if(jugador.getSaldo() > (precioAccion * numeroAcciones))
       {
         // se decrementa el saldo del jugador
-        jugador.modificarSaldo(-precioAccion * numeroAcciones);
+        jugador.modificarSaldo(-precioAccion * numeroAcciones, usuario);
+        AccionesAPI.comprar(numeroAcciones,nombreEmpresaActual,usuario);
 
         // se crea un nuevo paquete de acciones que se compran y se comprueba si ya existe un array de acciones de la empresa de la que se quiere comprar
         var paquete = new PaqueteAccionesCompradas(numeroAcciones,precioAccion);
@@ -457,13 +452,12 @@ class _MyHomePageState extends State<MyHomePage> {
       else{
         _showAlertaCompra(context);
       }
-    });
+    _actualizar();
 
   }
 
   void _venderAcciones(int numeroAcciones)
   {
-    setState(() {
       var precioAccion = mercado.getEmpresa(cont).getPrecioAccion();
       String nombreEmpresaActual = mercado.getEmpresa(cont).nombre;
 
@@ -477,7 +471,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
         if (accionesJugador >= numeroAcciones && numeroAcciones > 0 && accionesJugador > 0)
         {
-          jugador.modificarSaldo(precioAccion * numeroAcciones);
+          jugador.modificarSaldo(precioAccion * numeroAcciones, usuario);
+          AccionesAPI.vender(-numeroAcciones,nombreEmpresaActual,usuario);
           jugador.acciones.accionesEmpresas[indice].eliminarAcciones(numeroAcciones, nombreEmpresaActual);
 
           // Se envía al historial la nueva transacción
@@ -486,7 +481,6 @@ class _MyHomePageState extends State<MyHomePage> {
           print(todos.last);
 
           ActualizarHistory(todos.last);
-
           // si se han vendido todas las acciones, se elimina el array de las accionesEmpresa
           if(jugador.acciones.accionesEmpresas[indice].getNumeroAccionesTotal() < 1)
           {
@@ -500,7 +494,7 @@ class _MyHomePageState extends State<MyHomePage> {
       {
         _showAlertaVenta(context);
       }
-    });
+    _actualizar();
   }
 
   // función auxiliar para el historial de transacciones
@@ -522,7 +516,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     for(int i = 0; i < jugador.acciones.accionesEmpresas.length; i++)
     {
-      var precioAccion = mercado.getEmpresaPorNombre(jugador.acciones.accionesEmpresas[i].idEmpresa).getPrecioAccion();
+      var precioAccion = mercado.getEmpresaPorNombre(jugador.acciones.accionesEmpresas[i].idEmpresa.toString()).getPrecioAccion();
       var accionesDelJugador = jugador.acciones.accionesEmpresas[i].getNumeroAccionesTotal();
       var dineroTotalInvertido = jugador.acciones.accionesEmpresas[i].getTotalDineroInvertido();
 
@@ -557,6 +551,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _actualizarMercado() async{
     await mercado.actualizarMercado();
+    setState(() {
+
+    });
+  }
+
+  void _iniciarAcciones(String nombre) async{
+    await jugador.actualizarAcciones(nombre);
     setState(() {
 
     });
