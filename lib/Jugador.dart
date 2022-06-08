@@ -13,7 +13,7 @@ class Jugador{
     this.setSaldo(name);
   }
 
-  void modificarSaldo(int valor, String name)
+  void modificarSaldo(int valor)
   {
     this._saldo+=valor;
   }
