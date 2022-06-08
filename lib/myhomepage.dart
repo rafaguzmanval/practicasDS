@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
     jugador.setSaldo(usuario);
     this._iniciarMercado();
     this._iniciarAcciones(usuario);
-    temporizador = Timer.periodic(Duration(seconds:10), (Timer t) => _actualizar());
+    this._sincronizarTemporizador();
   }
 
   @override
@@ -422,7 +422,7 @@ class _MyHomePageState extends State<MyHomePage> {
       String nombreEmpresaActual = mercado.getEmpresa(cont).nombre;
 
       //Solo se pueden comprar las acciones si el jugador tiene el dinero suficiente. Podría impedirse en la interfaz que se pudiesen añadir más de las que se pueden
-      if(jugador.getSaldo() > (precioAccion * numeroAcciones))
+      if(jugador.getSaldo() > (precioAccion * numeroAcciones) &&  mercado.getEmpresa(cont).getNumeroAcciones()>0)
       {
         // se decrementa el saldo del jugador
         jugador.modificarSaldo(-precioAccion * numeroAcciones, usuario);
@@ -557,5 +557,10 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
 
     });
+  }
+
+  void _sincronizarTemporizador() async{
+    var reloj = int.parse(await Reloj.getReloj());
+    temporizador = Timer.periodic(Duration(seconds:reloj), (Timer t) => _actualizar());
   }
 }

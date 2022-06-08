@@ -58,7 +58,10 @@ class Empresa{
 
   int getPrecioAccion()
   {
-    return data.last.valor ~/ numeroAcciones;
+    int precio = 0;
+    if(numeroAcciones>0)
+      precio = data.last.valor ~/ numeroAcciones;
+    return precio;
   }
 
   int getNumeroAcciones(){
