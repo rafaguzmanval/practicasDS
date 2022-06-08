@@ -450,7 +450,6 @@ class _MyHomePageState extends State<MyHomePage> {
       else{
         _showAlertaCompra(context);
       }
-      _actualizarMercado();
 
   }
 
@@ -492,7 +491,6 @@ class _MyHomePageState extends State<MyHomePage> {
       {
         _showAlertaVenta(context);
       }
-      _actualizarMercado();
   }
 
   // función auxiliar para el historial de transacciones
