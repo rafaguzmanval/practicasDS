@@ -392,7 +392,6 @@ class _MyHomePageState extends State<MyHomePage> {
     var reloj = int.parse(await Reloj.getReloj());
     temporizador.cancel();
     await Future.delayed(Duration(seconds:reloj));
-    temporizador = Timer.periodic(Duration(seconds:10), (Timer t) => _actualizar());
     setState(() {
 
       _actualizarMercado();
@@ -401,6 +400,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if(cont>=mercado.empresas.length) cont = mercado.empresas.length-1;
 
     });
+    temporizador = Timer.periodic(Duration(seconds:10), (Timer t) => _actualizar());
   }
 
   String ActualizarHistory(String actualizacion){
