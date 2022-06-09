@@ -2,46 +2,31 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:proyecto_bolsa/Acciones.dart';
 import 'package:proyecto_bolsa/AccionesEmpresa.dart';
 import 'package:proyecto_bolsa/Jugador.dart';
+import 'package:proyecto_bolsa/API.dart';
 import 'package:proyecto_bolsa/PaqueteAccionesCompradas.dart';
-import 'package:proyecto_bolsa/FiltroBeneficios.dart';
-import 'package:proyecto_bolsa/FiltroGastos.dart';
 
 void main () {
   group ('Jugador', () {
-    test (' value should start at 20000', () {
-      final jugador = new Jugador();
-      expect ( jugador.getSaldo() , 20000);
+    test (' value should start at 20000', () async {
+      var jugador = await Usuario.getUsuario("Jose");
+
+      expect ( jugador.saldo , 20000);
     });
-    test (' value should be incremented ', () {
-      final jugador = new Jugador();
+    test (' value should be incremented ', () async {
+      var usuario = await Usuario.getUsuario("Jose");
+
+      var jugador = new Jugador(usuario.usuario.toString());
+      await Future.delayed(Duration(seconds: 5));
       jugador.modificarSaldo(1000);
       expect ( jugador.getSaldo() , 21000);
     });
-    test (' value should be decreased ', () {
-      final jugador = new Jugador();
+    test (' value should be decreased ', () async {
+      var usuario = await Usuario.getUsuario("Emilio");
+
+      var jugador = new Jugador(usuario.usuario.toString());
+      await Future.delayed(Duration(seconds: 5));
       jugador.modificarSaldo(-1000);
       expect ( jugador.getSaldo() , 19000);
-    });
-  });
-
-  group('Filtro', (){
-    test ('Se aplican los beneficios', () {
-      final filtroB = new FiltroBeneficios();
-      var valor = 10000;
-      var res = filtroB.ejecutar(valor);
-      //Se comprueba que el incremento es un tercio o menos
-      var comprobacion = (valor/3 >= res);
-
-      expect ( comprobacion , true);
-    });
-    test ('Se aplican los gastos', () {
-      final filtroG = new FiltroGastos();
-      var valor = 10000;
-      var res = filtroG.ejecutar(valor);
-      //Se comprueba que el gasto es un octavo o mas
-      var comprobacion = (-valor/8 >= res);
-
-      expect ( comprobacion , true);
     });
   });
 

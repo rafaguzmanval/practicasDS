@@ -5,22 +5,37 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:proyecto_bolsa/main.dart';
+import 'package:proyecto_bolsa/myhomepage.dart';
 
 void main() {
-  testWidgets('Comprar accion', (WidgetTester tester) async {
+  testWidgets('Iniciar sesion', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.runAsync(() async {
       await tester.pumpWidget(const MyApp());
 
-      var nombreEmp = find.byKey(ObjectKey("nombreEmp"));
-      var textEmp = nombreEmp.evaluate().single.widget as Text;
+      //Introducimos el login
+      var usuario = "Prueba";
+      await tester.enterText(find.byKey(ObjectKey("usuario")), usuario);
 
-      expect ( find.text('Saldo: \$20000\nNº acciones en ' + (textEmp.data as String) + ': 0') , findsOneWidget );
-      print('Saldo: \$20000\nNº acciones en ' + (textEmp.data as String) + ': 0');
+      //Introducimos la contraseña
+      var contrasenia = "Prueba";
+      await tester.enterText(find.byKey(ObjectKey("contraseña")), contrasenia);
+
+      //Pulsamos el boton
+      var boton = find.byKey(ObjectKey("boton"));
+      await tester.tap(boton);
+      await tester.pump();
+
+      //El usuario existe y la contraseña no es incorrecta
+      expect ( find.text('El usuario no existe') , findsNothing );
+      expect ( find.text('Contraseña incorrecta') , findsNothing );
+      /*print('Saldo: \$20000\nNº acciones en ' + (textEmp.data as String) + ': 0');
       print("\n");
 
 
@@ -53,7 +68,7 @@ void main() {
       int precio = 20000 - (int.parse(finale)*numAcc);
 
       print('Saldo: \$'+(precio.toString())+'\nNº acciones en ' + (textEmp.data as String) + ': '+ numAcc.toString());
-      expect ( find.text('Saldo: \$'+(precio.toString())+'\nNº acciones en ' + (textEmp.data as String) + ': '+ numAcc.toString()) , findsOneWidget );
+      expect ( find.text('Saldo: \$'+(precio.toString())+'\nNº acciones en ' + (textEmp.data as String) + ': '+ numAcc.toString()) , findsOneWidget );*/
     });
   });
 
@@ -61,7 +76,6 @@ void main() {
     // Build our app and trigger a frame.
     await tester.runAsync(() async {
       await tester.pumpWidget(const MyApp());
-
       var nombreEmp = find.byKey(ObjectKey("nombreEmp"));
       var textEmp = nombreEmp.evaluate().single.widget as Text;
 
@@ -119,7 +133,7 @@ void main() {
   testWidgets('Comprobar boton actualizar cambia valor de las acciones', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.runAsync(() async {
-      await tester.pumpWidget(const MyApp());
+      await tester.pumpWidget(const MyHomePage(title: 'Bolsa Home Page', usuario: "Prueba"));
 
       //var nombreEmp = find.byKey(ObjectKey("nombreEmp"));
       //var textEmp = nombreEmp.evaluate().single.widget as Text;

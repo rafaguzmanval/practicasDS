@@ -15,12 +15,6 @@ class Mercado{
     'Cocacola','Disney','Mercadona','Seat','Bitcoin','Cepsa','El Pozo','Prosegur','Mercedes','Alphabet','Alibaba','Berkshire','Netflix','Walmart','PepsiCo','SpaceX','Pfizer'
     ,'Moderna','AstraZeneca','Adobe','Paypal','Bank of America','Mastercard','Johnson & Johnson','Nestlé','Nvidia','Intel','AMD','Visa','Warner Bros','Nike','Adidas'];
 
-  var empresasAparecidas = [];
-
-  var nuevoEvento = false;
-
-  var mensajeEvento = '';
-
   Mercado()
   {
 

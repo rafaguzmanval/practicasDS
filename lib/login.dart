@@ -26,6 +26,7 @@ class _loginState extends State<login>{
               Text("Proyecto Bolsa",style: TextStyle(color:Colors.white,fontSize: 55,backgroundColor: Colors.blue,)),
               SizedBox(height: 80,),
               TextField(
+                key: ObjectKey("usuario"),
                 controller: usuario,
                 decoration: InputDecoration(
                   hintText: "Usuario"
@@ -33,6 +34,7 @@ class _loginState extends State<login>{
               ),
               SizedBox(height: 30,),
               TextField(
+                key: ObjectKey("contraseña"),
                 controller: contrasena,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -47,6 +49,7 @@ class _loginState extends State<login>{
                   borderRadius: BorderRadius.circular(10)
                 ),
                 child: FlatButton(
+                  key: ObjectKey("boton"),
                   child: Text("Login",style: TextStyle(color:Colors.white,fontSize: 20),),
                   onPressed: (){comprobarLog();},
                 ),

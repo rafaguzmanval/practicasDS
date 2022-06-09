@@ -56,25 +56,6 @@ class AccionesEmpresa
         }
       }
 
-      // ANTIGUO CÓDIGO QUE FALLABA
-      /*
-      for(int i = 0; i < paqueteAcciones.length && accionesVendidas > 0 ;i++)
-        {
-          // si un paquete tiene una cantidad menor o igual a las acciones que se eliminan, entonces se elimina el objeto paquete.
-          if(accionesVendidas >= (paqueteAcciones[i].NumeroAccionesCompradas as int))
-            {
-              accionesVendidas -= paqueteAcciones[i].NumeroAccionesCompradas as int;
-              paqueteAcciones.removeAt(i);
-            }
-          else
-            {
-              // si se venden menos de las que hay en el paquete entonces se restan
-              paqueteAcciones[i].NumeroAccionesCompradas -= accionesVendidas;
-              break;
-            }
-        }
-        */
-
 
   }
 

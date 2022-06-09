@@ -244,7 +244,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                     _comprarAcciones(
                                         numAcciones.elementAt(0)
                                     );
-                                    _actualizar();
                                   });
                                 },
                                 color: Colors.green),
@@ -290,7 +289,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                     AccionesAvender =
                                         int.parse(controllerVenta.text);
                                     _venderAcciones(AccionesAvender);
-                                    _actualizar();
                                   });
                                 },
                                 color: Colors.red),
@@ -376,15 +374,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  /*Creación de una alerta que avisa de los eventos en el mercado*/
-
-  Future<void> _showAlertaMercado(BuildContext context, String msg) async {
-    return showDialog<void>(
-      context: context,
-      builder: (_) => _Alerta('Información',msg),
-    );
-  }
-
 
   void _actualizar () async{
     var reloj = int.parse(await Reloj.getReloj());
@@ -409,7 +398,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int _maxAccionesComprar()
   {
-    return jugador.getSaldo() ~/ mercado.getEmpresa(cont).getPrecioAccion();
+    var max= jugador.getSaldo() ~/ mercado.getEmpresa(cont).getPrecioAccion();
+
+    if(max > mercado.getEmpresa(cont).numeroAcciones){
+      max = mercado.getEmpresa(cont).numeroAcciones;
+    }
+
+    return max;
   }
 
 
@@ -528,10 +523,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _iniciarMercado() async{
-    await mercado.iniciarMercado();
-    setState(() {
+    Future<Mercado> m = mercado.iniciarMercado();
+    m.then((value) => {
+      setState(() {
 
+      })
     });
+
   }
 
   void _actualizarMercado() async{
